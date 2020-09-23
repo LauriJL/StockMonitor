@@ -275,6 +275,8 @@
     <Content Include="Views\TransactionsPortfolio\_PortfolioTransactions.cshtml" />
     <Content Include="Views\Portfolio\_PortfolioTransactions.cshtml" />
     <Content Include="Views\Portfolio\Index2.cshtml" />
+    <Content Include="Views\Transactions\_ModalTransactionEdit.cshtml" />
+    <Content Include="Views\Transactions\_ModalTransactionDelete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

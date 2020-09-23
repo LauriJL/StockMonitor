@@ -1,0 +1,62 @@
+﻿@model StockMonitor_2.Models.Transactions
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+      integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
+      crossorigin="anonymous">
+
+@{
+    Layout = null;
+}
+
+<div class="modal fade" id="ModalTransactionDelete">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Poista kaupan tiedot</h2>
+            </div>
+            <div class="modal-body">
+                <h4 style="color:red">Oletko varma että haluat poistaa tämän kaupan järjestelmästä?</h4>
+                <div>
+                    <hr />
+                    <dl class="dl-horizontal">
+                        <dt>Yritys</dt>
+                        <dd>@Html.DisplayFor(model => model.Yritys)</dd>
+                        <dt>Osto/Myynti</dt>
+                        <dd>@Html.DisplayFor(model => model.TransactionTypes.Type)</dd>
+                        <dt>Pvm</dt>
+                        <dd>@Html.DisplayFor(model => model.Pvm)</dd>
+                        <dt>Määrä</dt>
+                        <dd>@Html.DisplayFor(model => model.Maara)</dd>
+                        <dt>á Hinta</dt>
+                        <dd>@Html.DisplayFor(model => model.aHinta)</dd>
+                        <dt>Summa</dt>
+                        <dd>@Html.DisplayFor(model => model.Total)</dd>
+                        <dt>Valuutta</dt>
+                        <dd>@Html.DisplayFor(model => model.Currency.Currency1)</dd>
+                        <dt>Kurssi</dt>
+                        <dd>@Html.DisplayFor(model => model.Kurssi)</dd>
+                        <dt>Summa (€)</dt>
+                        <dd>@Html.DisplayFor(model => model.TotalEuros)</dd>
+                        <dt>Kulut</dt>
+                        <dd>@Html.DisplayFor(model => model.Kulut)</dd>
+                        <dt>Kaupan loppusumma (€)</dt>
+                        <dd>@Html.DisplayFor(model => model.Grandtotal)</dd>
+                    </dl>
+
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-actions no-color">
+                            <input type="submit" value="Poista" class="btn btn-danger" />
+                            @*<a class="btn btn-info" @Html.ActionLink("Takaisin", "Index")*@
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="@Url.Action("Index","Transactions")" class="btn btn-success" title="Sulje"><i class="far fa-check"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+

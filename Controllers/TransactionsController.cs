@@ -196,10 +196,6 @@ namespace StockMonitor_2.Controllers
             int pageNumber = (page ?? 1);
 
             return View(transactions.ToPagedList(pageNumber, pageSize));
-            //return View(transactions);
-
-            //var transactions = db.Transactions.Include(t => t.Currency).Include(t => t.Users).Include(t => t.TransactionTypes);
-            //return View(transactions.ToList());
         }
 
         // GET: Transactions/Details/5
@@ -246,8 +242,7 @@ namespace StockMonitor_2.Controllers
             return View(transactions);
         }
 
-        // GET: Transactions/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult _ModalTransactionEdit(int? id)
         {
             if (id == null)
             {
@@ -261,12 +256,10 @@ namespace StockMonitor_2.Controllers
             ViewBag.Valuutta = new SelectList(db.Currency, "Currency1", "Currency1", transactions.Valuutta);
             ViewBag.Kayttaja = new SelectList(db.Users, "KayttajaNimi", "Rooli", transactions.Kayttaja);
             ViewBag.OstoMyynti = new SelectList(db.TransactionTypes, "Type", "Type", transactions.OstoMyynti);
-            return View(transactions);
+            return PartialView("_ModalTransactionEdit", transactions);
         }
 
-        // POST: Transactions/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Transactions/_ModalTransactionEdit
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,Kayttaja,OstoMyynti,Pvm,Yritys,Maara,MaaraForPortfolio,aHinta,Total,TotalForPortfolio,Valuutta,Kurssi,TotalEuros,Kulut,Grandtotal")] Transactions transactions)
@@ -280,11 +273,11 @@ namespace StockMonitor_2.Controllers
             ViewBag.Valuutta = new SelectList(db.Currency, "Currency1", "Currency1", transactions.Valuutta);
             ViewBag.Kayttaja = new SelectList(db.Users, "KayttajaNimi", "Rooli", transactions.Kayttaja);
             ViewBag.OstoMyynti = new SelectList(db.TransactionTypes, "Type", "Type", transactions.OstoMyynti);
-            return View(transactions);
+            return PartialView("_ModalTransactionEdit", transactions);
         }
 
-        // GET: Transactions/Delete/5
-        public ActionResult Delete(int? id)
+        // GET: Transactions/_ModalTransactionDelete
+        public ActionResult _ModalTransactionDelete(int? id)
         {
             if (id == null)
             {
@@ -298,8 +291,8 @@ namespace StockMonitor_2.Controllers
             return View(transactions);
         }
 
-        // POST: Transactions/Delete/5
-        [HttpPost, ActionName("Delete")]
+        // POST: Transactions/_ModalTransactionDelete
+        [HttpPost, ActionName("_ModalTransactionDelete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
@@ -317,5 +310,65 @@ namespace StockMonitor_2.Controllers
             }
             base.Dispose(disposing);
         }
+
+        // GET: Transactions/Edit/5
+        //public ActionResult Edit(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Transactions transactions = db.Transactions.Find(id);
+        //    if (transactions == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    ViewBag.Valuutta = new SelectList(db.Currency, "Currency1", "Currency1", transactions.Valuutta);
+        //    ViewBag.Kayttaja = new SelectList(db.Users, "KayttajaNimi", "Rooli", transactions.Kayttaja);
+        //    ViewBag.OstoMyynti = new SelectList(db.TransactionTypes, "Type", "Type", transactions.OstoMyynti);
+        //    return View(transactions);
+        //}
+        // POST: Transactions/Edit/5
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Edit([Bind(Include = "ID,Kayttaja,OstoMyynti,Pvm,Yritys,Maara,MaaraForPortfolio,aHinta,Total,TotalForPortfolio,Valuutta,Kurssi,TotalEuros,Kulut,Grandtotal")] Transactions transactions)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.Entry(transactions).State = EntityState.Modified;
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+        //    ViewBag.Valuutta = new SelectList(db.Currency, "Currency1", "Currency1", transactions.Valuutta);
+        //    ViewBag.Kayttaja = new SelectList(db.Users, "KayttajaNimi", "Rooli", transactions.Kayttaja);
+        //    ViewBag.OstoMyynti = new SelectList(db.TransactionTypes, "Type", "Type", transactions.OstoMyynti);
+        //    return View(transactions);
+        //}
+        // GET: Transactions/Delete/5
+        //public ActionResult Delete(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Transactions transactions = db.Transactions.Find(id);
+        //    if (transactions == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(transactions);
+        //}
+
+        // POST: Transactions/Delete/5
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult DeleteConfirmed(int id)
+        //{
+        //    Transactions transactions = db.Transactions.Find(id);
+        //    db.Transactions.Remove(transactions);
+        //    db.SaveChanges();
+        //    return RedirectToAction("Index");
+        //}
     }
 }

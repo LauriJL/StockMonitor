@@ -98,10 +98,10 @@
             <td style="display:none;">@Html.DisplayFor(modelItem => item.TotalForPortfolio)</td>
             <td style="display:none;">@Html.DisplayFor(modelItem => item.MaaraForPortfolio)</td>
             <td>
-                <a class="btn btn-primary" @Html.ActionLink("Muokkaa", "Edit", new { id = item.ID })
-                <a class="btn btn-danger" @Html.ActionLink("Poista", "Delete", new { id = item.ID })
-                @*@Html.ActionLink("Muokkaa", "Edit", new { id = item.ID }) |
-                @Html.ActionLink("Poista", "Delete", new { id = item.ID })*@
+                <button class="getTransactionId far fa-edit fa-2x" data-toggle="modal" data-transactionid="@item.ID" style="color:darkorange;border:none;background-color:transparent" title="Muokkaa"></button>
+                <button class="getTransactionId2 far fa-trash-alt fa-2x" data-transactionid2="@item.ID" style="color:red;border:none;background-color:transparent" title="Poista"></button>
+                @*<a class="btn btn-primary" @Html.ActionLink("Muokkaa", "Edit", new { id = item.ID })
+                <a class="btn btn-danger" @Html.ActionLink("Poista", "Delete", new { id = item.ID })*@
             </td>
         </tr>
     }
