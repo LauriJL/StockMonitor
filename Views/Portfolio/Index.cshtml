@@ -48,46 +48,41 @@
             <td>@Html.DisplayFor(modelItem => item.VoittoTappio_)</td>
             <td><a class="btn btn-success" @Html.ActionLink("Tiedot", "Details", new { id = item.ID })</td>
             @*<a class="btn btn-success" @Html.ActionLink("Tiedot", "Details", new { id = item.ID })
-        *@</tr>
+            *@
+        </tr>
     }
-
+    <tr>
+        <td></td>
+        <td style="font-weight:bold">@Model.Sum(m => m.MaaraYht)</td>
+        <td style="font-weight:bold">@Model.Sum(h => h.HankintaArvo)</td>
+        <td></td>
+        <td style="font-weight:bold">@Model.Sum(a => a.ArvoNytAll)</td>
+        <td id="voittoTappio" style="font-weight:bold">@Model.Sum(v => v.VoittoTappioE)</td>
+        <td></td>
+    </tr>
+    @{ 
+        string num = @Model.Sum(v => v.VoittoTappioE).ToString().Replace(',', '.');
+    }
+    
 </table>
 
 <br />
 Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
 @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter1 = ViewBag.currentFilter1 }))
 
-@*TEST: Haetaan dataa avoimesta rajapinnasta*@
-
-@*<p id="nyt"></p>
+@*Javascript: ArvoNytAll tyylit*@
 
 <script type="text/javascript">
-    var companies = []
-    $('#Portfolio td').each(function () {
-        var td = $(this).text();  //get current td's text
-        var tdArray = [];
-        $(this).find('td').each(function () {
-            var td = $(this).text();  //get current td's text
-            var items = {}; //create an empty object
-            items[tr] = td; // add elements to object
-            tdArray.push(items); //push the object to array
-        });
-    });
-
-
-    const FH_AAPL_url = 'https://finnhub.io/api/v1/quote?symbol=AAPL&token=btdnsi748v6p1d4q5pcg'
-
-    async function getAAPL() {
-        const response = await fetch(FH_AAPL_url);
-        const data = await response.json();
-
-        const { c } = data;
-        document.getElementById('nyt').textContent = c.toFixed(2);
-        console.log(data.c);
+    var arvoNytAllString = @Model.Sum(v => v.VoittoTappioE).ToString().Replace(',', '.');
+    function changeColor() {
+        var sum = arvoNytAllString;
+        console.log(arvoNytAllString);
+        console.log(sum);
+        if (sum < 0)
+            document.getElementById('voittoTappio').style.color = 'red'
+        else
+            document.getElementById('voittoTappio').style.color = 'green'
     }
-
-    getAAPL();
-
-    setInterval(getAAPL, 6000);
-</script>*@
+    changeColor();
+</script>
 
