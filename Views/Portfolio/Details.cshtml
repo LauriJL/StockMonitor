@@ -1,0 +1,60 @@
+﻿@model StockMonitor_2.Models.Portfolio
+
+<h2>@Html.DisplayFor(model => model.Yritys)</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt style="font-size:x-large;">Current price</dt>
+        <dd><span id='currentPrice' style="font-size:x-large;color:green"></span></dd>
+        <dt style="font-size:large;">Open</dt>
+        <dd><span id='openingPrice' style="font-size:large;color:black"></span></dd>
+        <dt style="font-size:large;">High</dt>
+        <dd><span id='highPrice' style="font-size:large;color:black"></span></dd>
+        <dt style ="font-size:large;">Low</dt>
+        <dd><span id='lowPrice' style="font-size:large;color:black"></span></dd>
+        <dt style="font-size:large;">Previous close</dt>
+        <dd><span id='previousClose' style="font-size:large;color:black"></dd>
+</dl>
+</div>
+
+
+<p>
+    @Html.ActionLink("Takaisin", "Index")
+</p>
+
+@*Javascript: Get stock data from API (finnhub.io)*@
+<script type="text/javascript">
+
+    //Construct url
+    var a = 'https://finnhub.io/api/v1/quote?symbol=';
+    var b = '@Html.DisplayFor(model => model.Yritys)';
+    var c = '&token=btdnsi748v6p1d4q5pcg';
+    function url() {
+        u = a + b + c
+        return u
+    }
+    url();
+
+    //Get data from url
+    const url1 = u;    
+    async function getStockInfo() {
+
+        // Storing response
+        const response = await fetch(url1);
+
+        // Storing data in JSON
+        var data = await response.json();
+        console.log(data);
+
+        //Javascript destructuring
+        const { c, o, h, l, pc } = data;
+        document.getElementById('currentPrice').textContent = c.toFixed(2);
+        document.getElementById('openingPrice').textContent = o.toFixed(2);
+        document.getElementById('highPrice').textContent = h.toFixed(2);
+        document.getElementById('lowPrice').textContent = l.toFixed(2);
+        document.getElementById('previousClose').textContent = pc.toFixed(2);
+    }
+    getStockInfo();
+
+</script>

@@ -1,0 +1,70 @@
+﻿@*@model IEnumerable<StockMonitor_2.Models.Transactions>*@
+@model PagedList.IPagedList<StockMonitor_2.Models.Transactions>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css"/>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Transactions</h2>
+
+<p>
+    @Html.ActionLink("Lisää uusi", "Create")<br/>
+    @Html.ActionLink("Portfolio", "Index", "Portfolio")
+</p>
+
+@using (Html.BeginForm("Index","Transactions", FormMethod.Get))
+{
+    <div class="input-group">
+        <p class="px-1">@Html.Label("Hae nimellä:")</p>
+        <p class="px-1">@Html.TextBox("SearchString1",ViewBag.currentFilter as string, new { @class = "form-control"})</p>
+        <p class="px-1"><input type="submit" value="Hae" class="form-control"/></p>
+    </div>
+}
+
+<br/>
+
+<table class="table">
+    <tr>
+        <th>@Html.ActionLink("Yritys", "Index", new { sortOrder = ViewBag.YritysSortParam, currentFilter = ViewBag.currentFilter })</th>
+        <th>@Html.ActionLink("Osto/Myynti", "Index", new { sortOrder = ViewBag.OstoMyyntiSortParam, currentFilter = ViewBag.currentFilter })</th>
+        <th>@Html.ActionLink("Pvm", "Index", new { sortOrder = ViewBag.PvmSortParam, currentFilter = ViewBag.currentFilter })</th>
+        <th>@Html.ActionLink("Määrä", "Index", new { sortOrder = ViewBag.MaaraSortParam, currentFilter = ViewBag.currentFilter })</th>
+        <th>@Html.ActionLink("á Hinta", "Index", new { sortOrder = ViewBag.aHintaSortParam, currentFilter = ViewBag.currentFilter })</th>
+        <th>@Html.ActionLink("Summa", "Index", new { sortOrder = ViewBag.SummaSortParam, currentFilter = ViewBag.currentFilter })</th>
+        <th>@Html.ActionLink("Valuutta", "Index", new { sortOrder = ViewBag.ValuuttaSortParam, currentFilter = ViewBag.currentFilter })</th>
+        <th>@Html.ActionLink("Kurssi", "Index", new { sortOrder = ViewBag.KurssiSortParam, currentFilter = ViewBag.currentFilter })</th>
+        <th>@Html.ActionLink("Summa (€)", "Index", new { sortOrder = ViewBag.SummaESortParam, currentFilter = ViewBag.currentFilter })</th>
+        <th>@Html.ActionLink("Kulut", "Index", new { sortOrder = ViewBag.KulutSortParam, currentFilter = ViewBag.currentFilter })</th>
+        <th>@Html.ActionLink("Kaupan loppusumma (€)", "Index", new { sortOrder = ViewBag.GrandtotalSortParam, currentFilter = ViewBag.currentFilter })</th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>@Html.DisplayFor(modelItem => item.Yritys)</td>
+    <td>@Html.DisplayFor(modelItem => item.TransactionTypes.Type)</td>
+    <td>@Html.DisplayFor(modelItem => item.Pvm)</td>
+    <td>@Html.DisplayFor(modelItem => item.Maara)</td>
+    <td>@Html.DisplayFor(modelItem => item.aHinta)</td>
+    <td>@Html.DisplayFor(modelItem => item.Total)</td>
+    <td>@Html.DisplayFor(modelItem => item.Currency.Currency1)</td>
+    <td>@Html.DisplayFor(modelItem => item.Kurssi)</td>
+    <td>@Html.DisplayFor(modelItem => item.TotalEuros)</td>
+    <td>@Html.DisplayFor(modelItem => item.Kulut)</td>
+    <td>@Html.DisplayFor(modelItem => item.Grandtotal)</td>
+    <td style="display:none;">@Html.DisplayFor(modelItem => item.TotalForPortfolio)</td>
+    <td style="display:none;">@Html.DisplayFor(modelItem => item.MaaraForPortfolio)</td>
+    <td>
+        @Html.ActionLink("Muokkaa", "Edit", new { id = item.ID }) |
+        @Html.ActionLink("Poista", "Delete", new { id = item.ID })
+    </td>
+</tr>
+}
+
+</table>
+
+<br/>
+Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.currentFilter}))

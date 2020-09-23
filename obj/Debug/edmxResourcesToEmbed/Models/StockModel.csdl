@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="StockMonitorModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Company">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="Symbol" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Nimi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Pörssi" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="Maa" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+    <Property Name="Toimiala" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Exchange" Relationship="Self.FK__Company__Pörssi__5AEE82B9" FromRole="Company" ToRole="Exchange" />
+    <NavigationProperty Name="IndustrySectors" Relationship="Self.FK__Company__Toimial__60A75C0F" FromRole="Company" ToRole="IndustrySectors" />
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <EntityType Name="Country">
+    <Key>
+      <PropertyRef Name="Maa" />
+    </Key>
+    <Property Name="Maa" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Alue" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Currency">
+    <Key>
+      <PropertyRef Name="Currency1" />
+    </Key>
+    <Property Name="Currency1" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Transactions" Relationship="Self.FK__Transacti__Valuu__4CA06362" FromRole="Currency" ToRole="Transactions" />
+  </EntityType>
+  <EntityType Name="Exchange">
+    <Key>
+      <PropertyRef Name="Symbol" />
+    </Key>
+    <Property Name="Symbol" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Nimi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Maa" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Company" Relationship="Self.FK__Company__Pörssi__5AEE82B9" FromRole="Exchange" ToRole="Company" />
+  </EntityType>
+  <EntityType Name="IndustrySectors">
+    <Key>
+      <PropertyRef Name="Sector" />
+    </Key>
+    <Property Name="Sector" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Industry" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Company" Relationship="Self.FK__Company__Toimial__60A75C0F" FromRole="IndustrySectors" ToRole="Company" />
+  </EntityType>
+  <EntityType Name="Portfolio">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Kayttaja" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Yritys" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="MaaraYht" Type="Int32" />
+    <Property Name="HankintaArvo" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="aHintaNyt" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="ArvoNytAll" Type="Decimal" Precision="19" Scale="4" annotation:StoreGeneratedPattern="Computed" />
+    <Property Name="VoittoTappioE" Type="Decimal" Precision="19" Scale="4" annotation:StoreGeneratedPattern="Computed" />
+    <Property Name="VoittoTappio_" Type="Decimal" Precision="19" Scale="4" annotation:StoreGeneratedPattern="Computed" />
+  </EntityType>
+  <EntityType Name="Transactions">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Kayttaja" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="OstoMyynti" Type="String" MaxLength="6" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Pvm" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Yritys" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Maara" Type="Int32" Nullable="false" />
+    <Property Name="MaaraForPortfolio" Type="Int32" annotation:StoreGeneratedPattern="Computed" />
+    <Property Name="aHinta" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="Total" Type="Decimal" Precision="19" Scale="4" annotation:StoreGeneratedPattern="Computed" />
+    <Property Name="TotalForPortfolio" Type="Decimal" Precision="19" Scale="4" annotation:StoreGeneratedPattern="Computed" />
+    <Property Name="Valuutta" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Kurssi" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="TotalEuros" Type="Decimal" Precision="19" Scale="4" annotation:StoreGeneratedPattern="Computed" />
+    <Property Name="Kulut" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="Grandtotal" Type="Decimal" Precision="19" Scale="4" annotation:StoreGeneratedPattern="Computed" />
+    <NavigationProperty Name="Currency" Relationship="Self.FK__Transacti__Valuu__4CA06362" FromRole="Transactions" ToRole="Currency" />
+    <NavigationProperty Name="Users" Relationship="Self.FK__Transacti__Kaytt__6477ECF3" FromRole="Transactions" ToRole="Users" />
+    <NavigationProperty Name="TransactionTypes" Relationship="Self.FK__Transacti__OstoM__44FF419A" FromRole="Transactions" ToRole="TransactionTypes" />
+  </EntityType>
+  <EntityType Name="TransactionTypes">
+    <Key>
+      <PropertyRef Name="Type" />
+    </Key>
+    <Property Name="Type" Type="String" MaxLength="6" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Transactions" Relationship="Self.FK__Transacti__OstoM__44FF419A" FromRole="TransactionTypes" ToRole="Transactions" />
+  </EntityType>
+  <EntityType Name="UserRoles">
+    <Key>
+      <PropertyRef Name="Role" />
+    </Key>
+    <Property Name="Role" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Users" Relationship="Self.FK__Users__Rooli__6754599E" FromRole="UserRoles" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="KayttajaNimi" />
+    </Key>
+    <Property Name="KayttajaNimi" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Rooli" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Etunimi" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="Sukunimi" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="Salasana" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="Sahkoposti" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Transactions" Relationship="Self.FK__Transacti__Kaytt__6477ECF3" FromRole="Users" ToRole="Transactions" />
+    <NavigationProperty Name="UserRoles" Relationship="Self.FK__Users__Rooli__6754599E" FromRole="Users" ToRole="UserRoles" />
+  </EntityType>
+  <Association Name="FK__Company__Pörssi__5AEE82B9">
+    <End Role="Exchange" Type="Self.Exchange" Multiplicity="0..1" />
+    <End Role="Company" Type="Self.Company" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Exchange">
+        <PropertyRef Name="Symbol" />
+      </Principal>
+      <Dependent Role="Company">
+        <PropertyRef Name="Pörssi" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Company__Toimial__60A75C0F">
+    <End Role="IndustrySectors" Type="Self.IndustrySectors" Multiplicity="0..1" />
+    <End Role="Company" Type="Self.Company" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="IndustrySectors">
+        <PropertyRef Name="Sector" />
+      </Principal>
+      <Dependent Role="Company">
+        <PropertyRef Name="Toimiala" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Transacti__Valuu__4CA06362">
+    <End Role="Currency" Type="Self.Currency" Multiplicity="1" />
+    <End Role="Transactions" Type="Self.Transactions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Currency">
+        <PropertyRef Name="Currency1" />
+      </Principal>
+      <Dependent Role="Transactions">
+        <PropertyRef Name="Valuutta" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Transacti__Kaytt__6477ECF3">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Transactions" Type="Self.Transactions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="KayttajaNimi" />
+      </Principal>
+      <Dependent Role="Transactions">
+        <PropertyRef Name="Kayttaja" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Transacti__OstoM__44FF419A">
+    <End Role="TransactionTypes" Type="Self.TransactionTypes" Multiplicity="1" />
+    <End Role="Transactions" Type="Self.Transactions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TransactionTypes">
+        <PropertyRef Name="Type" />
+      </Principal>
+      <Dependent Role="Transactions">
+        <PropertyRef Name="OstoMyynti" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Users__Rooli__6754599E">
+    <End Role="UserRoles" Type="Self.UserRoles" Multiplicity="1" />
+    <End Role="Users" Type="Self.Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserRoles">
+        <PropertyRef Name="Role" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="Rooli" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="StockMonitorEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Company" EntityType="Self.Company" />
+    <EntitySet Name="Country" EntityType="Self.Country" />
+    <EntitySet Name="Currency" EntityType="Self.Currency" />
+    <EntitySet Name="Exchange" EntityType="Self.Exchange" />
+    <EntitySet Name="IndustrySectors" EntityType="Self.IndustrySectors" />
+    <EntitySet Name="Portfolio" EntityType="Self.Portfolio" />
+    <EntitySet Name="Transactions" EntityType="Self.Transactions" />
+    <EntitySet Name="TransactionTypes" EntityType="Self.TransactionTypes" />
+    <EntitySet Name="UserRoles" EntityType="Self.UserRoles" />
+    <EntitySet Name="Users" EntityType="Self.Users" />
+    <AssociationSet Name="FK__Company__Pörssi__5AEE82B9" Association="Self.FK__Company__Pörssi__5AEE82B9">
+      <End Role="Exchange" EntitySet="Exchange" />
+      <End Role="Company" EntitySet="Company" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Company__Toimial__60A75C0F" Association="Self.FK__Company__Toimial__60A75C0F">
+      <End Role="IndustrySectors" EntitySet="IndustrySectors" />
+      <End Role="Company" EntitySet="Company" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Transacti__Valuu__4CA06362" Association="Self.FK__Transacti__Valuu__4CA06362">
+      <End Role="Currency" EntitySet="Currency" />
+      <End Role="Transactions" EntitySet="Transactions" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Transacti__Kaytt__6477ECF3" Association="Self.FK__Transacti__Kaytt__6477ECF3">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Transactions" EntitySet="Transactions" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Transacti__OstoM__44FF419A" Association="Self.FK__Transacti__OstoM__44FF419A">
+      <End Role="TransactionTypes" EntitySet="TransactionTypes" />
+      <End Role="Transactions" EntitySet="Transactions" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Users__Rooli__6754599E" Association="Self.FK__Users__Rooli__6754599E">
+      <End Role="UserRoles" EntitySet="UserRoles" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

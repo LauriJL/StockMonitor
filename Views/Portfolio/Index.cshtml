@@ -1,0 +1,93 @@
+﻿@model PagedList.IPagedList<StockMonitor_2.Models.Portfolio>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Portfolio";
+}
+
+<h2>Portfolio</h2>
+
+@Html.ActionLink("Kaupat", "Index", "Transactions")
+<br />
+
+@using (Html.BeginForm("Index", "Portfolio", FormMethod.Get))
+{
+    <div class="input-group">
+        <p class="px-1">@Html.Label("Hae nimellä:")</p>
+        <p class="px-1">@Html.TextBox("SearchString2", ViewBag.currentFilter1 as string, new { @class = "form-control" })</p>
+        <p class="px-1"><input type="submit" value="Hae" class="form-control" /></p>
+    </div>
+}
+
+<br />
+<table class="table" id="portfolio">
+    <tr>
+        @*<th>Omistaja</th>*@
+        <th>@Html.ActionLink("Yritys", "Index", new { sortOrder = ViewBag.YritysSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
+        <th>@Html.ActionLink("Osakkeiden määrä yhteensä", "Index", new { sortOrder = ViewBag.OsakkeetYhtSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
+        <th>@Html.ActionLink("Hankinta-arvo yhteensä", "Index", new { sortOrder = ViewBag.HankintaYhtSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
+        <th>@Html.ActionLink("Osakkeen hinta nyt", "Index", new { sortOrder = ViewBag.OsakeNytSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
+        <th>@Html.ActionLink("Omistuksen arvo nyt", "Index", new { sortOrder = ViewBag.OmistusNytSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
+        <th>@Html.ActionLink("Voitto/tappio (€)", "Index", new { sortOrder = ViewBag.VoittoTappioSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
+        <th>@Html.ActionLink("Voitto/tappio %", "Index", new { sortOrder = ViewBag.VoittoTappioProsSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr class="showCompanyClass" data-companyid="@item.Yritys">
+            @*<td>@Html.DisplayFor(modelItem => item.Kayttaja)</td>*@
+            <td id="yritys">@Html.DisplayFor(modelItem => item.Yritys)</td>
+            <td>@Html.DisplayFor(modelItem => item.MaaraYht)</td>
+            <td>@Html.DisplayFor(modelItem => item.HankintaArvo)</td>
+            @*<td input type="text" id="hintaNyt"></td>*@
+            <td>@Html.DisplayFor(modelItem => item.aHintaNyt)</td>
+            <td>@Html.DisplayFor(modelItem => item.ArvoNytAll)</td>
+            <td>@Html.DisplayFor(modelItem => item.VoittoTappioE)</td>
+            <td>@Html.DisplayFor(modelItem => item.VoittoTappio_)</td>
+            <td><a class="btn btn-success" @Html.ActionLink("Tiedot", "Details", new { id = item.ID })</td>
+            @*<a class="btn btn-success" @Html.ActionLink("Tiedot", "Details", new { id = item.ID })
+        *@</tr>
+    }
+
+</table>
+
+<br />
+Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter1 = ViewBag.currentFilter1 }))
+
+@*TEST: Haetaan dataa avoimesta rajapinnasta*@
+
+@*<p id="nyt"></p>
+
+<script type="text/javascript">
+    var companies = []
+    $('#Portfolio td').each(function () {
+        var td = $(this).text();  //get current td's text
+        var tdArray = [];
+        $(this).find('td').each(function () {
+            var td = $(this).text();  //get current td's text
+            var items = {}; //create an empty object
+            items[tr] = td; // add elements to object
+            tdArray.push(items); //push the object to array
+        });
+    });
+
+
+    const FH_AAPL_url = 'https://finnhub.io/api/v1/quote?symbol=AAPL&token=btdnsi748v6p1d4q5pcg'
+
+    async function getAAPL() {
+        const response = await fetch(FH_AAPL_url);
+        const data = await response.json();
+
+        const { c } = data;
+        document.getElementById('nyt').textContent = c.toFixed(2);
+        console.log(data.c);
+    }
+
+    getAAPL();
+
+    setInterval(getAAPL, 6000);
+</script>*@
+

@@ -1,0 +1,136 @@
+﻿@model StockMonitor_2.Models.Transactions
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Transactions</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Pvm)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pvm)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Yritys)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Yritys)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Maara)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Maara)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MaaraForPortfolio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MaaraForPortfolio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.aHinta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.aHinta)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Total)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Total)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalForPortfolio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalForPortfolio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Kurssi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Kurssi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalEuros)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalEuros)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Kulut)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Kulut)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Grandtotal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Grandtotal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Currency.Currency1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Currency.Currency1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Users.Rooli)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Users.Rooli)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TransactionTypes.Type)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TransactionTypes.Type)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

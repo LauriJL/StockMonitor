@@ -1,0 +1,35 @@
+﻿@model IEnumerable<StockMonitor_2.ViewModels.TransactionsPortfolio>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Pvm</th>
+            <th>Osto/Myynti</th>
+            <th>Määrä</th>
+            <th>á Hinta</th>
+            <th>Summa</th>
+            <th>Valuutta</th>
+            <th>Kurssi</th>
+            <th>Summa (€))</th>
+            <th>Kulut</th>
+            <th>Kaupan loppusumma (€)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Pvm)</td>
+                <td>@Html.DisplayFor(modelItem => item.OstoMyynti)</td>
+                <td>@Html.DisplayFor(modelItem => item.Maara)</td>
+                <td>@Html.DisplayFor(modelItem => item.aHinta)</td>
+                <td>@Html.DisplayFor(modelItem => item.Total)</td>
+                <td>@Html.DisplayFor(modelItem => item.Valuutta)</td>
+                <td>@Html.DisplayFor(modelItem => item.Kurssi)</td>
+                <td>@Html.DisplayFor(modelItem => item.TotalEuros)</td>
+                <td>@Html.DisplayFor(modelItem => item.Kulut)</td>
+                <td>@Html.DisplayFor(modelItem => item.Grandtotal)</td>
+            </tr>
+        }
+    </tbody>
+</table>
