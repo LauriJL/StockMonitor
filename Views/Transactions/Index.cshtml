@@ -2,12 +2,54 @@
 @model PagedList.IPagedList<StockMonitor_2.Models.Transactions>
 @using PagedList.Mvc;
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+      integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
+      crossorigin="anonymous">
 
 @{
     ViewBag.Title = "Kaupat";
 }
 
+@*JQuery*@
+@section scripts{
+    @*Modal Edit*@
+    <script type="text/javascript">
+        $(function () {
+            $(".getTransactionId").click(function () {
+                let transactionID = $(this).data("transactionid");
+                var url = "/Transactions/_ModalTransactionEdit/?id=" + transactionID;
+
+                var $detailDivEdit = $("#transactionEdit");
+                $.get(url, function (data) {
+                    $detailDivEdit.replaceWith(data);
+                    $('#ModalTransactionEdit').modal('show');
+                });
+            });
+        });
+    </script>
+
+    @*Modal Delete*@
+    <script type="text/javascript">
+        $(function () {
+            $(".getTransactionId2").click(function () {
+                let transactionID = $(this).data("transactionid2");
+                var url = "/Transactions/_ModalTransactionDelete/?id=" + transactionID;
+
+                var $detailDivEdit = $("#transactionDelete");
+                $.get(url, function (data) {
+                    $detailDivEdit.replaceWith(data);
+                    $('#ModalTransactionDelete').modal('show');
+                });
+            });
+        });
+    </script>
+}
+
 <h2>Kaupat</h2>
+
+<div id="transactionEdit"></div>
+<div id="transactionDelete"></div>
+<br />
 
 <p><a class="btn btn-success" @Html.ActionLink("Lisää uusi", "Create")</p>
 
