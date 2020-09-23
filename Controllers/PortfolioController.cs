@@ -242,12 +242,17 @@ namespace StockMonitor_2.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Index2()
+        public ActionResult Index2(string searchString)
         {
             StockMonitorEntities11 db = new StockMonitorEntities11();
 
             var portfolio = from p in db.Portfolio
                             select p;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                portfolio = portfolio.Where(p => p.Yritys.Contains(searchString));
+            }
 
             return View(portfolio);
         }

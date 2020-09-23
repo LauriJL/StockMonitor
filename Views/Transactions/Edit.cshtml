@@ -2,10 +2,10 @@
 
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Muokkaa";
 }
 
-<h2>Edit</h2>
+    <h2>Muokkaa kaupan tietoja</h2>
 
 
 @using (Html.BeginForm())
@@ -13,7 +13,6 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Transactions</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.ID)
@@ -93,15 +92,12 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Tallenna" class="btn btn-success" />
+                <a class="btn btn-info" @Html.ActionLink("Takaisin", "Index")
             </div>
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Takaisin", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
