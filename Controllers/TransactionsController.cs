@@ -196,10 +196,6 @@ namespace StockMonitor_2.Controllers
             int pageNumber = (page ?? 1);
 
             return View(transactions.ToPagedList(pageNumber, pageSize));
-            //return View(transactions);
-
-            //var transactions = db.Transactions.Include(t => t.Currency).Include(t => t.Users).Include(t => t.TransactionTypes);
-            //return View(transactions.ToList());
         }
 
         // GET: Transactions/Details/5
@@ -265,8 +261,6 @@ namespace StockMonitor_2.Controllers
         }
 
         // POST: Transactions/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,Kayttaja,OstoMyynti,Pvm,Yritys,Maara,MaaraForPortfolio,aHinta,Total,TotalForPortfolio,Valuutta,Kurssi,TotalEuros,Kulut,Grandtotal")] Transactions transactions)
