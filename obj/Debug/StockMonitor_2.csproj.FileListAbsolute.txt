@@ -550,8 +550,8 @@ C:\Users\laurileskinen\GitHub\StockMonitor\bin\System.Net.Http.Formatting.xml
 C:\Users\laurileskinen\GitHub\StockMonitor\bin\System.Web.Http.xml
 C:\Users\laurileskinen\GitHub\StockMonitor\bin\System.Web.Http.WebHost.xml
 C:\Users\laurileskinen\GitHub\StockMonitor\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\laurileskinen\GitHub\StockMonitor\obj\Debug\StockMonitor_2.csprojAssemblyReference.cache
 C:\Users\laurileskinen\GitHub\StockMonitor\obj\Debug\StockMonitor_2.csproj.CoreCompileInputs.cache
 C:\Users\laurileskinen\GitHub\StockMonitor\obj\Debug\StockMonitor_2.csproj.CopyComplete
 C:\Users\laurileskinen\GitHub\StockMonitor\obj\Debug\StockMonitor_2.dll
 C:\Users\laurileskinen\GitHub\StockMonitor\obj\Debug\StockMonitor_2.pdb
+C:\Users\laurileskinen\GitHub\StockMonitor\obj\Debug\StockMonitor_2.csprojAssemblyReference.cache

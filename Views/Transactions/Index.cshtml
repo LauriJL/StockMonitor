@@ -1,29 +1,69 @@
 ﻿@*@model IEnumerable<StockMonitor_2.Models.Transactions>*@
 @model PagedList.IPagedList<StockMonitor_2.Models.Transactions>
 @using PagedList.Mvc;
-<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css"/>
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+      integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
+      crossorigin="anonymous">
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Kaupat";
 }
 
-<h2>Transactions</h2>
+@*JQuery*@
+@section scripts{
+    @*Modal Edit*@
+    <script type="text/javascript">
+        $(function () {
+            $(".getTransactionId").click(function () {
+                let transactionID = $(this).data("transactionid");
+                var url = "/Transactions/_ModalTransactionEdit/?id=" + transactionID;
 
-<p>
-    @Html.ActionLink("Lisää uusi", "Create")<br/>
-    @Html.ActionLink("Portfolio", "Index", "Portfolio")
-</p>
+                var $detailDivEdit = $("#transactionEdit");
+                $.get(url, function (data) {
+                    $detailDivEdit.replaceWith(data);
+                    $('#ModalTransactionEdit').modal('show');
+                });
+            });
+        });
+    </script>
 
-@using (Html.BeginForm("Index","Transactions", FormMethod.Get))
+    @*Modal Delete*@
+    <script type="text/javascript">
+        $(function () {
+            $(".getTransactionId2").click(function () {
+                let transactionID = $(this).data("transactionid2");
+                var url = "/Transactions/_ModalTransactionDelete/?id=" + transactionID;
+
+                var $detailDivEdit = $("#transactionDelete");
+                $.get(url, function (data) {
+                    $detailDivEdit.replaceWith(data);
+                    $('#ModalTransactionDelete').modal('show');
+                });
+            });
+        });
+    </script>
+}
+
+<h2>Kaupat</h2>
+
+<div id="transactionEdit"></div>
+<div id="transactionDelete"></div>
+<br />
+
+<p><a class="btn btn-success" @Html.ActionLink("Lisää uusi", "Create")</p>
+
+@using (Html.BeginForm("Index", "Transactions", FormMethod.Get, new { @class = "form-inline" }))
 {
     <div class="input-group">
-        <p class="px-1">@Html.Label("Hae nimellä:")</p>
-        <p class="px-1">@Html.TextBox("SearchString1",ViewBag.currentFilter as string, new { @class = "form-control"})</p>
-        <p class="px-1"><input type="submit" value="Hae" class="form-control"/></p>
+        <p>
+            <input type="submit" value="Hae" class="form-control" style="background-color:lightgray;font-weight:bold" />
+            @Html.TextBox("SearchString1", ViewBag.currentFilter as string, new { @class = "form-control" })
+        </p>
     </div>
 }
 
-<br/>
+<br />
 
 <table class="table">
     <tr>
@@ -41,30 +81,33 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-<tr>
-    <td>@Html.DisplayFor(modelItem => item.Yritys)</td>
-    <td>@Html.DisplayFor(modelItem => item.TransactionTypes.Type)</td>
-    <td>@Html.DisplayFor(modelItem => item.Pvm)</td>
-    <td>@Html.DisplayFor(modelItem => item.Maara)</td>
-    <td>@Html.DisplayFor(modelItem => item.aHinta)</td>
-    <td>@Html.DisplayFor(modelItem => item.Total)</td>
-    <td>@Html.DisplayFor(modelItem => item.Currency.Currency1)</td>
-    <td>@Html.DisplayFor(modelItem => item.Kurssi)</td>
-    <td>@Html.DisplayFor(modelItem => item.TotalEuros)</td>
-    <td>@Html.DisplayFor(modelItem => item.Kulut)</td>
-    <td>@Html.DisplayFor(modelItem => item.Grandtotal)</td>
-    <td style="display:none;">@Html.DisplayFor(modelItem => item.TotalForPortfolio)</td>
-    <td style="display:none;">@Html.DisplayFor(modelItem => item.MaaraForPortfolio)</td>
-    <td>
-        @Html.ActionLink("Muokkaa", "Edit", new { id = item.ID }) |
-        @Html.ActionLink("Poista", "Delete", new { id = item.ID })
-    </td>
-</tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.Yritys)</td>
+            <td>@Html.DisplayFor(modelItem => item.TransactionTypes.Type)</td>
+            <td>@Html.DisplayFor(modelItem => item.Pvm)</td>
+            <td>@Html.DisplayFor(modelItem => item.Maara)</td>
+            <td>@Html.DisplayFor(modelItem => item.aHinta)</td>
+            <td>@Html.DisplayFor(modelItem => item.Total)</td>
+            <td>@Html.DisplayFor(modelItem => item.Currency.Currency1)</td>
+            <td>@Html.DisplayFor(modelItem => item.Kurssi)</td>
+            <td>@Html.DisplayFor(modelItem => item.TotalEuros)</td>
+            <td>@Html.DisplayFor(modelItem => item.Kulut)</td>
+            <td>@Html.DisplayFor(modelItem => item.Grandtotal)</td>
+            <td style="display:none;">@Html.DisplayFor(modelItem => item.TotalForPortfolio)</td>
+            <td style="display:none;">@Html.DisplayFor(modelItem => item.MaaraForPortfolio)</td>
+            <td>
+                <a class="btn btn-primary" @Html.ActionLink("Muokkaa", "Edit", new { id = item.ID })
+                <a class="btn btn-danger" @Html.ActionLink("Poista", "Delete", new { id = item.ID })
+                @*@Html.ActionLink("Muokkaa", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Poista", "Delete", new { id = item.ID })*@
+            </td>
+        </tr>
+    }
 
 </table>
 
-<br/>
+<br />
 Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
-@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.currentFilter}))
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.currentFilter }))

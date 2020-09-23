@@ -19,10 +19,20 @@
     </script>
 }
 <body>
-    <h2>Portfolio2</h2>
+    <h2>Salkku2</h2>
 
+    @using (Html.BeginForm("Index2", "Portfolio", FormMethod.Get, new { @class = "form-inline" }))
+    {
+        <div class="input-group">
+            <p>
+                <input type="submit" value="Hae" class="form-control" style="background-color:lightgray;font-weight:bold" />
+                @Html.TextBox("SearchString", ViewBag.currentFilter1 as string, new { @class = "form-control" })
+            </p>
+        </div>
+    }
+    <br/>
     <div>
-        <div class="card-header" >
+        <div class="card-header">
             <a class="card-link">
                 <form>
                     <div class="input-group">

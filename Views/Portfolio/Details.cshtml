@@ -5,22 +5,22 @@
 <div>
     <hr />
     <dl class="dl-horizontal">
-        <dt style="font-size:x-large;">Current price</dt>
+        <dt style="font-size:x-large;">Kurssi nyt</dt>
         <dd><span id='currentPrice' style="font-size:x-large;color:green"></span></dd>
-        <dt style="font-size:large;">Open</dt>
+        <dt style="font-size:large;">Avaus</dt>
         <dd><span id='openingPrice' style="font-size:large;color:black"></span></dd>
-        <dt style="font-size:large;">High</dt>
+        <dt style="font-size:large;">Ylin</dt>
         <dd><span id='highPrice' style="font-size:large;color:black"></span></dd>
-        <dt style ="font-size:large;">Low</dt>
+        <dt style ="font-size:large;">Alin</dt>
         <dd><span id='lowPrice' style="font-size:large;color:black"></span></dd>
-        <dt style="font-size:large;">Previous close</dt>
+        <dt style="font-size:large;">Edellinen päätös</dt>
         <dd><span id='previousClose' style="font-size:large;color:black"></dd>
 </dl>
 </div>
 
 
 <p>
-    @Html.ActionLink("Takaisin", "Index")
+    <a class="btn btn-info" @Html.ActionLink("Takaisin", "Index")
 </p>
 
 @*Javascript: Get stock data from API (finnhub.io)*@
