@@ -47,8 +47,6 @@
             <td>@Html.DisplayFor(modelItem => item.VoittoTappioE)</td>
             <td>@Html.DisplayFor(modelItem => item.VoittoTappio_)</td>
             <td><a class="btn btn-success" @Html.ActionLink("Tiedot", "Details", new { id = item.ID })</td>
-            @*<a class="btn btn-success" @Html.ActionLink("Tiedot", "Details", new { id = item.ID })
-            *@
         </tr>
     }
     <tr>
@@ -70,9 +68,64 @@
 Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
 @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter1 = ViewBag.currentFilter1 }))
 
-@*Javascript: ArvoNytAll tyylit*@
-
 <script type="text/javascript">
+    //Get stock data from API(finnhub.io)
+    //Get company symbols from table
+    var table = document.getElementById('portfolio');
+    var companyList = [];
+    function getCompanies() {
+        var targetTDs = table.querySelectorAll('tr > td:first-child');
+        for (var i = 0; i < targetTDs.length; i++) {
+            var td = targetTDs[i];
+            companyList.push(td.innerHTML).toString();
+        }
+    }
+    getCompanies();
+
+    //Construct urls for fetching data from API (finnhub.io)
+    var a = 'https://finnhub.io/api/v1/quote?symbol=';
+    var b = "";
+    var c = '&token=btdnsi748v6p1d4q5pcg';
+    var urls = "";
+    var urllist = [];
+    function createUrls() {
+        for (var i = 0; i < companyList.length; i++) {
+            //List of company symbols n table
+            b = companyList[i];
+            //Construct urls with company symbols
+            urls = a + b + c;
+            //Create array of urls by pushing urls to 'urllist' array
+            urllist.push(urls);
+        }
+    }
+    createUrls();
+
+    //Get stock quotes from API and insert these into the 'Osakkeen hinta nyt' column
+    let quotelist = [];
+    //Fetch data from url
+    async function getPrices() {
+        for (let l = 0; l < urllist.length; l++) {
+            //Store response
+            const response = await fetch(urllist[l]);
+            //Store data in JSON
+            const data = await response.json();
+            //Add desctructured JSON data to quotelist array
+            quotelist.push(data.c);
+            console.log(quotelist);
+            // Insert compnay-specific quotes to 'Osakkeen hinta nyt' column
+            let cells = document.querySelectorAll('table tr td:nth-child(4)');
+            for (let i = 0; i < cells.length; ++i) {
+                cells[i].innerHTML = quotelist[i];
+            }
+        }
+    }
+    getPrices();
+
+    //Optional: Set interval for automatically retrieving quotes
+    //setInterval(getPrices, 6000);
+
+
+    //Sum row styles column
     var arvoNytAllString = @Model.Sum(v => v.VoittoTappioE).ToString().Replace(',', '.');
     function changeColor() {
         var sum = arvoNytAllString;
