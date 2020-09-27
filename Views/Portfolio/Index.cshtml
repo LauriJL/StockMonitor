@@ -36,14 +36,14 @@
 
     @foreach (var item in Model)
     {
-        <tr class="showCompanyClass" data-companyid="@item.Yritys">
+        <tr>
             @*<td>@Html.DisplayFor(modelItem => item.Kayttaja)</td>*@
             <td id="yritys">@Html.DisplayFor(modelItem => item.Yritys)</td>
-            <td>@Html.DisplayFor(modelItem => item.MaaraYht)</td>
+            <td id="totalShares">@Html.DisplayFor(modelItem => item.MaaraYht)</td>
             <td>@Html.DisplayFor(modelItem => item.HankintaArvo)</td>
             @*<td input type="text" id="hintaNyt"></td>*@
-            <td>@Html.DisplayFor(modelItem => item.aHintaNyt)</td>
-            <td>@Html.DisplayFor(modelItem => item.ArvoNytAll)</td>
+            <td id="priceNow" type="number">@Html.DisplayFor(modelItem => item.aHintaNyt)</td>
+            <td id="totalValue">@Html.DisplayFor(modelItem => item.ArvoNytAll)</td>
             <td>@Html.DisplayFor(modelItem => item.VoittoTappioE)</td>
             <td>@Html.DisplayFor(modelItem => item.VoittoTappio_)</td>
             <td><a class="btn btn-success" @Html.ActionLink("Tiedot", "Details", new { id = item.ID })</td>
@@ -53,7 +53,7 @@
         <td></td>
         <td style="font-weight:bold">@Model.Sum(m => m.MaaraYht)</td>
         <td style="font-weight:bold">@Model.Sum(h => h.HankintaArvo)</td>
-        <td></td>
+        <td id="priceNowB"></td>
         <td style="font-weight:bold">@Model.Sum(a => a.ArvoNytAll)</td>
         <td id="voittoTappio" style="font-weight:bold">@Model.Sum(v => v.VoittoTappioE)</td>
         <td></td>
@@ -63,12 +63,11 @@
     }
 
 </table>
-
-<br />
 Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
 @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter1 = ViewBag.currentFilter1 }))
 
 <script type="text/javascript">
+
     //Get stock data from API(finnhub.io)
     //Get company symbols from table
     var table = document.getElementById('portfolio');
@@ -101,6 +100,7 @@ Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageC
     createUrls();
 
     //Get stock quotes from API and insert these into the 'Osakkeen hinta nyt' column
+    //TESTING: calculate values for ArvoNytAll - incomplete (27.9.2020)
     let quotelist = [];
     //Fetch data from url
     async function getPrices() {
@@ -111,8 +111,7 @@ Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageC
             const data = await response.json();
             //Add desctructured JSON data to quotelist array
             quotelist.push(data.c);
-            console.log(quotelist);
-            // Insert compnay-specific quotes to 'Osakkeen hinta nyt' column
+            // Insert company-specific quotes to 'Osakkeen hinta nyt' column
             let cells = document.querySelectorAll('table tr td:nth-child(4)');
             for (let i = 0; i < cells.length; ++i) {
                 cells[i].innerHTML = quotelist[i];
@@ -121,21 +120,59 @@ Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageC
     }
     getPrices();
 
+    //TEST: calculate values for ArvoNytAll - incomplete (27.9.2020)
+    //function calculate() {
+    //    //var table = document.getElementById("portfolio");
+    //    var sTableName = document.getElementById("portfolio");
+
+    //    for (var i = 0; i < sTableName.rows.length; i++) {
+    //        var quantity = sTableName.rows[i].cells[1].innerText;
+    //        //var quantity = parseInt(document.getElementById('totalShares').innerHTML)
+
+    //        console.log(quantity);
+    //    }
+
+        //for (var i = 0, row; row = table.rows[i]; i++) {
+        //    for (var j = 0, col; col = row.cells[j]; j++) {
+        //        var quantity = parseInt(document.getElementById('totalShares').innerHTML);
+        //        console.log(quantity);
+        //        var price = parseFloat(document.getElementById('priceNow').innerHTML);
+        //        console.log(price);
+        //        var total = parseFloat(quantity * price);
+        //        document.getElementById('totalValue').textContent = total.toFixed(2);
+        //    }
+        //}
+    //}
+
+    //calculate();
+
     //Optional: Set interval for automatically retrieving quotes
     //setInterval(getPrices, 6000);
-
 
     //Sum row styles column
     var arvoNytAllString = @Model.Sum(v => v.VoittoTappioE).ToString().Replace(',', '.');
     function changeColor() {
         var sum = arvoNytAllString;
-        console.log(arvoNytAllString);
-        console.log(sum);
         if (sum < 0)
             document.getElementById('voittoTappio').style.color = 'red'
         else
             document.getElementById('voittoTappio').style.color = 'green'
     }
     changeColor();
+
+    //Clear column
+    //var arvoNytAllString = @Model.Sum(v => v.VoittoTappioE).ToString().Replace(',', '.');
+    function clearCell() {
+        var table = document.getElementById('portfolio');
+        var targetTDs = table.querySelectorAll('table tr td:nth-child(4)');
+        for (var i = 0; i < targetTDs.length; i++) {
+            if (value == undefined) {
+                $(this).val('');
+            }
+        }
+        
+    }
+    clearCell();
+
 </script>
 
