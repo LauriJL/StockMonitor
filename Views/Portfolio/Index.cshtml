@@ -17,26 +17,26 @@
     <script>
     var Yritys = "";
     //URL.muodostus
-    Yritys = "@item.Yritys";
+        yritys = "@item.Yritys";
+        console.log(yritys);
     var a = "https://finnhub.io/api/v1/quote?symbol=";
     var b = "";
     var c = "&token=btdnsi748v6p1d4q5pcg";
-        var url = a + Yritys + c;
-        console.log(url);
+        var url = a + yritys + c;
+        //console.log(url);
 
     async function getPrices()
     {
-        let aHintaNyt = "";
+        let ahintaNyt = "";
         const response = await fetch(url);
         const data = await response.json();
-        aHintaNyt = data.c;
-        console.log(data);
-        console.log(aHintaNyt);
+        ahintaNyt = data.c;
+        //console.log(data);
+        console.log(ahintaNyt);
         }
         getPrices();
     </script>
 }
-
 
 <br />
 <div>
@@ -46,10 +46,10 @@
 </div>
 
 
-Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
-@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter1 = ViewBag.currentFilter1 }))
+    Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter1 = ViewBag.currentFilter1 }))
 
-@*<script type="text/javascript">
+    <script type="text/javascript">
         //Get stock data from API(finnhub.io)
         //Get company symbols from table
         var table = document.getElementById('portfolio');
@@ -133,13 +133,13 @@ Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageC
         var arvoNytAllString = @Model.Sum(v => v.VoittoTappioE).ToString().Replace(',', '.');
         function changeColor() {
             var sum = arvoNytAllString;
-            console.log(arvoNytAllString);
-            console.log(sum);
+            //console.log(arvoNytAllString);
+            //console.log(sum);
             if (sum < 0)
                 document.getElementById('voittoTappio').style.color = 'red'
             else
                 document.getElementById('voittoTappio').style.color = 'green'
         }
-        //changeColor();
-    </script>*@
+        changeColor();
+    </script>
 

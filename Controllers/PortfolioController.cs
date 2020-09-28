@@ -149,17 +149,13 @@ namespace StockMonitor_2.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Index(string Yritys, float aHintaNyt)
+        public ActionResult Index([Bind(Include = "Yritys,aHintaNyt")] Portfolio portfolio, string yritys)
         {
-
-            if (Yritys == null)
+            if (ModelState.IsValid)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Portfolio portfolio = db.Portfolio.Find(Yritys);
-            if (portfolio == null)
-            {
-                return HttpNotFound();
+                db.Entry(portfolio).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
             }
             return View(portfolio);
         }
