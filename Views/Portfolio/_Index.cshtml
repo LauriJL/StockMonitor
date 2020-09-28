@@ -1,0 +1,64 @@
+﻿@model IEnumerable<StockMonitor_2.Models.Portfolio>
+
+@{
+    ViewBag.Title = "Salkku";
+}
+
+@*<h2>Salkku</h2>
+
+    <br />*@
+
+@using (Html.BeginForm("Index", "Portfolio", FormMethod.Get, new { @class = "form-inline" }))
+{
+    <div class="input-group">
+        <p>
+            <input type="submit" value="Hae" class="form-control" style="background-color:lightgray;font-weight:bold" />
+            @Html.TextBox("SearchString2", ViewBag.currentFilter1 as string, new { @class = "form-control" })
+        </p>
+    </div>
+}
+
+<br />
+<table class="table" id="portfolio">
+    <tr>
+        @*<th>Omistaja</th>*@
+        <th>@Html.ActionLink("Yritys", "Index", new { sortOrder = ViewBag.YritysSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
+        <th>@Html.ActionLink("Osakkeiden määrä yhteensä", "Index", new { sortOrder = ViewBag.OsakkeetYhtSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
+        <th>@Html.ActionLink("Hankinta-arvo yhteensä", "Index", new { sortOrder = ViewBag.HankintaYhtSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
+        <th>@Html.ActionLink("Osakkeen hinta nyt", "Index", new { sortOrder = ViewBag.OsakeNytSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
+        <th>@Html.ActionLink("Omistuksen arvo nyt", "Index", new { sortOrder = ViewBag.OmistusNytSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
+        <th>@Html.ActionLink("Voitto/tappio (€)", "Index", new { sortOrder = ViewBag.VoittoTappioSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
+        <th>@Html.ActionLink("Voitto/tappio %", "Index", new { sortOrder = ViewBag.VoittoTappioProsSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr class="showCompanyClass" data-companyid="@item.Yritys">
+            @*<td>@Html.DisplayFor(modelItem => item.Kayttaja)</td>*@
+            <td id="yritys">@Html.DisplayFor(modelItem => item.Yritys)</td>
+            <td>@Html.DisplayFor(modelItem => item.MaaraYht)</td>
+            <td>@Html.DisplayFor(modelItem => item.HankintaArvo)</td>
+            @*<td input type="text" id="hintaNyt"></td>*@
+            <td>@Html.DisplayFor(modelItem => item.aHintaNyt)</td>
+            <td>@Html.DisplayFor(modelItem => item.ArvoNytAll)</td>
+            <td>@Html.DisplayFor(modelItem => item.VoittoTappioE)</td>
+            <td>@Html.DisplayFor(modelItem => item.VoittoTappio_)</td>
+            <td><a class="btn btn-success" @Html.ActionLink("Tiedot", "Details", new { id = item.ID })</td>
+        </tr>
+
+    }
+    <tr>
+        <td></td>
+        <td style="font-weight:bold">@Model.Sum(m => m.MaaraYht)</td>
+        <td style="font-weight:bold">@Model.Sum(h => h.HankintaArvo)</td>
+        <td></td>
+        <td style="font-weight:bold">@Model.Sum(a => a.ArvoNytAll)</td>
+        <td id="voittoTappio" style="font-weight:bold">@Model.Sum(v => v.VoittoTappioE)</td>
+        <td></td>
+    </tr>
+    @{
+        string num = @Model.Sum(v => v.VoittoTappioE).ToString().Replace(',', '.');
+    }
+
+</table>

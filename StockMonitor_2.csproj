@@ -275,6 +275,7 @@
     <Content Include="Views\TransactionsPortfolio\_PortfolioTransactions.cshtml" />
     <Content Include="Views\Portfolio\_PortfolioTransactions.cshtml" />
     <Content Include="Views\Portfolio\Index2.cshtml" />
+    <Content Include="Views\Portfolio\_Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

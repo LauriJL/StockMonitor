@@ -19,6 +19,8 @@ namespace StockMonitor_2.Controllers
         // GET: Portfolio
         public ActionResult Index(string searchString2, string sortOrder, string currentFilter1, int? page, int? pagesize)
         {
+
+
             ViewBag.YritysSortParam = sortOrder == "OstoMyynti" ? "om_desc" : "OstoMyynti";
             ViewBag.OsakkeetYhtSortParam = sortOrder == "Osakkeiden määrä yhteensä" ? "osakkeetyht_desc" : "Osakkeiden määrä yhteensä";
             ViewBag.HankintaYhtSortParam = sortOrder == "Hankinta-arvo yhteensä" ? "hankintayht_desc" : "Hankinta-arvo yhteensä";
@@ -40,7 +42,7 @@ namespace StockMonitor_2.Controllers
             StockMonitorEntities11 db = new StockMonitorEntities11();
 
             var portfolio = from p in db.Portfolio
-                               select p;
+                            select p;
 
             if (!String.IsNullOrEmpty(searchString2))
             {
@@ -143,8 +145,23 @@ namespace StockMonitor_2.Controllers
             int pageNumber = (page ?? 1);
 
             return View(portfolio.ToPagedList(pageNumber, pageSize));
+        }
 
-            //return View(portfolio);
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Index(string Yritys, float aHintaNyt)
+        {
+
+            if (Yritys == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Portfolio portfolio = db.Portfolio.Find(Yritys);
+            if (portfolio == null)
+            {
+                return HttpNotFound();
+            }
+            return View(portfolio);
         }
 
         // GET: Portfolio/Details/5
@@ -201,8 +218,6 @@ namespace StockMonitor_2.Controllers
         }
 
         // POST: Portfolio/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,Kayttaja,Yritys,MaaraYht,HankintaArvo,aHintaNyt,ArvoNytAll,VoittoTappioE,VoittoTappio_")] Portfolio portfolio)
@@ -240,6 +255,16 @@ namespace StockMonitor_2.Controllers
             db.Portfolio.Remove(portfolio);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public ActionResult _Index()
+        {
+            StockMonitorEntities11 db = new StockMonitorEntities11();
+
+            var portfolio = from p in db.Portfolio
+                            select p;
+
+            return PartialView(portfolio);
         }
 
         public ActionResult Index2(string searchString)
