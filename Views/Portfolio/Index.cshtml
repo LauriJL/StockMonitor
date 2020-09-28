@@ -1,5 +1,6 @@
 ﻿@model PagedList.IPagedList<StockMonitor_2.Models.Portfolio>
 @using PagedList.Mvc;
+
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
@@ -48,6 +49,7 @@
             <td>@Html.DisplayFor(modelItem => item.VoittoTappio_)</td>
             <td><a class="btn btn-success" @Html.ActionLink("Tiedot", "Details", new { id = item.ID })</td>
         </tr>
+
     }
     <tr>
         <td></td>
@@ -64,6 +66,8 @@
 
 </table>
 
+
+
 <br />
 Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
 @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter1 = ViewBag.currentFilter1 }))
@@ -78,6 +82,13 @@ Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageC
         for (var i = 0; i < targetTDs.length; i++) {
             var td = targetTDs[i];
             companyList.push(td.innerHTML).toString();
+            //KompanyList ei muodostukaan taulukon riveistä, vaan model+silmukasta
+            //URL.muodostus
+            //API + kutsu
+            //Osakkeen arvon poiminta
+            //Oman kontrollerin kutsu, jossa välitetään osakekoodi sekä arvo (tehdään niin monta kertaa kuin on osakkeita)
+            //Joka kutsun yhteydessä oma kontrolleri päivittää kantaan parametrien perustella osakekohtaisen arvon
+            //em. silmukan lopuksi partial view +tyyppinen kutsu, joka palauttaa datan ja html+taulukon aikaisemmin määritettyyn paikkaan sivulla
         }
     }
     getCompanies();
