@@ -149,8 +149,9 @@ namespace StockMonitor_2.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Index([Bind(Include = "Yritys,aHintaNyt")] Portfolio portfolio, string yritys)
+        public ActionResult Index(FormCollection form, string yritys)
         {
+            Portfolio portfolio = db.Portfolio.Find(yritys);
             if (ModelState.IsValid)
             {
                 db.Entry(portfolio).State = EntityState.Modified;

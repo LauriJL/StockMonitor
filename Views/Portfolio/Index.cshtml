@@ -33,17 +33,22 @@
         ahintaNyt = data.c;
         //console.log(data);
         console.log(ahintaNyt);
+        document.getElementById('yritys').innerHTML = yritys;
+        document.getElementById('price').innerHTML = ahintaNyt;
         }
         getPrices();
     </script>
 }
-
-<br />
-<div>
-    @{
-        Html.RenderPartial("_Index");
-    }
+<div class="form-group">
+    <p id="yritys"></p>
+    <p id="price"></p>
+    <br />
 </div>
+    <div>
+        @{
+            Html.RenderPartial("_Index");
+        }
+    </div>
 
 
     Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
