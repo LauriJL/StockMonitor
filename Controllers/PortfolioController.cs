@@ -147,20 +147,6 @@ namespace StockMonitor_2.Controllers
             return View(portfolio.ToPagedList(pageNumber, pageSize));
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Index(FormCollection form, string yritys)
-        {
-            Portfolio portfolio = db.Portfolio.Find(yritys);
-            if (ModelState.IsValid)
-            {
-                db.Entry(portfolio).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(portfolio);
-        }
-
         // GET: Portfolio/Details/5
         public ActionResult Details(int? id)
         {
