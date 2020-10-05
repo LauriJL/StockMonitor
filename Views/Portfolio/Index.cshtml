@@ -23,50 +23,50 @@
 
 <br />
 <table class="table" id="portfolio">
-    <tr>
-        @*<th>Omistaja</th>*@
-        <th>@Html.ActionLink("Yritys", "Index", new { sortOrder = ViewBag.YritysSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
-        <th>@Html.ActionLink("Osakkeiden määrä yhteensä", "Index", new { sortOrder = ViewBag.OsakkeetYhtSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
-        <th>@Html.ActionLink("Hankinta-arvo yhteensä", "Index", new { sortOrder = ViewBag.HankintaYhtSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
-        <th>@Html.ActionLink("Osakkeen hinta nyt", "Index", new { sortOrder = ViewBag.OsakeNytSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
-        <th>@Html.ActionLink("Omistuksen arvo nyt", "Index", new { sortOrder = ViewBag.OmistusNytSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
-        <th>@Html.ActionLink("Voitto/tappio (€)", "Index", new { sortOrder = ViewBag.VoittoTappioSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
-        <th>@Html.ActionLink("Voitto/tappio %", "Index", new { sortOrder = ViewBag.VoittoTappioProsSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr class="showCompanyClass" data-companyid="@item.Yritys">
-            @*<td>@Html.DisplayFor(modelItem => item.Kayttaja)</td>*@
-            <td id="yritys">@Html.DisplayFor(modelItem => item.Yritys)</td>
-            <td>@Html.DisplayFor(modelItem => item.MaaraYht)</td>
-            <td>@Html.DisplayFor(modelItem => item.HankintaArvo)</td>
-            @*<td input type="text" id="hintaNyt"></td>*@
-            <td>@Html.DisplayFor(modelItem => item.aHintaNyt)</td>
-            <td>@Html.DisplayFor(modelItem => item.ArvoNytAll)</td>
-            <td>@Html.DisplayFor(modelItem => item.VoittoTappioE)</td>
-            <td>@Html.DisplayFor(modelItem => item.VoittoTappio_)</td>
-            <td><a class="btn btn-success" @Html.ActionLink("Tiedot", "Details", new { id = item.ID })</td>
+    <thead>
+        <tr>
+            @*<th>Omistaja</th>*@
+            <th>@Html.ActionLink("Yritys", "Index", new { sortOrder = ViewBag.YritysSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
+            <th>@Html.ActionLink("Osakkeiden määrä yhteensä", "Index", new { sortOrder = ViewBag.OsakkeetYhtSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
+            <th>@Html.ActionLink("Hankinta-arvo yhteensä", "Index", new { sortOrder = ViewBag.HankintaYhtSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
+            <th>@Html.ActionLink("Osakkeen hinta nyt", "Index", new { sortOrder = ViewBag.OsakeNytSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
+            <th>@Html.ActionLink("Omistuksen arvo nyt", "Index", new { sortOrder = ViewBag.OmistusNytSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
+            <th>@Html.ActionLink("Voitto/tappio (€)", "Index", new { sortOrder = ViewBag.VoittoTappioSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
+            <th>@Html.ActionLink("Voitto/tappio %", "Index", new { sortOrder = ViewBag.VoittoTappioProsSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
+            <th></th>
         </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="valuesRow">
+                @*<td>@Html.DisplayFor(modelItem => item.Kayttaja)</td>*@
+                <td id="yritys">@Html.DisplayFor(modelItem => item.Yritys)</td>
+                <td id="v1">@Html.DisplayFor(modelItem => item.MaaraYht)</td>
+                <td id="v2">@Html.DisplayFor(modelItem => item.HankintaArvo)</td>
+                @*<td input type="text" id="hintaNyt"></td>*@
+                <td id="v3">@Html.DisplayFor(modelItem => item.aHintaNyt)</td>
+                <td id="sumNow">@Html.DisplayFor(modelItem => item.ArvoNytAll)</td>
+                <td>@Html.DisplayFor(modelItem => item.VoittoTappioE)</td>
+                <td>@Html.DisplayFor(modelItem => item.VoittoTappio_)</td>
+                <td><a class="btn btn-success" @Html.ActionLink("Tiedot", "Details", new { id = item.ID })</td>
+            </tr>
 
-    }
-    <tr>
-        <td></td>
-        <td style="font-weight:bold">@Model.Sum(m => m.MaaraYht)</td>
-        <td style="font-weight:bold">@Model.Sum(h => h.HankintaArvo)</td>
-        <td></td>
-        <td style="font-weight:bold">@Model.Sum(a => a.ArvoNytAll)</td>
-        <td id="voittoTappio" style="font-weight:bold">@Model.Sum(v => v.VoittoTappioE)</td>
-        <td></td>
-    </tr>
-    @{
-        string num = @Model.Sum(v => v.VoittoTappioE).ToString().Replace(',', '.');
-    }
-
+        }
+        <tr>
+            <td></td>
+            <td style="font-weight:bold">@Model.Sum(m => m.MaaraYht)</td>
+            <td style="font-weight:bold">@Model.Sum(h => h.HankintaArvo)</td>
+            <td></td>
+            <td style="font-weight:bold">@Model.Sum(a => a.ArvoNytAll)</td>
+            <td id="voittoTappio" style="font-weight:bold">@Model.Sum(v => v.VoittoTappioE)</td>
+            <td></td>
+        </tr>
+        @{
+            string num = @Model.Sum(v => v.VoittoTappioE).ToString().Replace(',', '.');
+        }
+    </tbody>
 </table>
-
-
 
 <br />
 Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
@@ -79,16 +79,9 @@ Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageC
     var companyList = [];
     function getCompanies() {
         var targetTDs = table.querySelectorAll('tr > td:first-child');
-        for (var i = 0; i < targetTDs.length; i++) {
+        for (var i = 0; i < targetTDs.length-1; i++) {
             var td = targetTDs[i];
             companyList.push(td.innerHTML).toString();
-            //KompanyList ei muodostukaan taulukon riveistä, vaan model+silmukasta
-            //URL.muodostus
-            //API + kutsu
-            //Osakkeen arvon poiminta
-            //Oman kontrollerin kutsu, jossa välitetään osakekoodi sekä arvo (tehdään niin monta kertaa kuin on osakkeita)
-            //Joka kutsun yhteydessä oma kontrolleri päivittää kantaan parametrien perustella osakekohtaisen arvon
-            //em. silmukan lopuksi partial view +tyyppinen kutsu, joka palauttaa datan ja html+taulukon aikaisemmin määritettyyn paikkaan sivulla
         }
     }
     getCompanies();
@@ -122,10 +115,10 @@ Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageC
             const data = await response.json();
             //Add desctructured JSON data to quotelist array
             quotelist.push(data.c);
-            console.log(quotelist);
+            //console.log(quotelist);
             // Insert compnay-specific quotes to 'Osakkeen hinta nyt' column
             let cells = document.querySelectorAll('table tr td:nth-child(4)');
-            for (let i = 0; i < cells.length; ++i) {
+            for (let i = 0; i < cells.length-1; ++i) {
                 cells[i].innerHTML = quotelist[i];
             }
         }
@@ -135,13 +128,47 @@ Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageC
     //Optional: Set interval for automatically retrieving quotes
     //setInterval(getPrices, 6000);
 
+    function getCurrentTotal() {
+        //var Row = document.getElementById("valuesRow");
+        //var Cells = Row.getElementsByTagName("td");
+        var v1 = "";
+        var v1list = [];
+        var v1listNum = [];
+        var quotelistNum = [];
+        sum = [];
+        console.log(quotelist);
+
+        for (var i = 1, n = table.rows.length - 1; i < n; i++) {
+            for (var c = 7, m = table.rows[i].cells.length; c < m; c++) {
+                v1 = table.rows[i].cells[1].innerHTML;
+                v1list.push(v1);
+                v1listNum = v1list.map(function (x) {
+                    return parseInt(x, 10);
+                });
+                //quotelistNum = quotelist.map(function (x) {
+                //    return parseFloat(x, 10);
+                //});
+
+                //sum += Number(v1list[i]) * Number(quotelist[i]);
+
+               for (var i = 0; i < v1listNum.length; i++) {
+                    for (var j = 0; j < quotelist.length; j++) {
+                        sum += v1listNum[i] * quotelist[i];
+                    }
+                }
+            }
+        }
+        console.log(v1listNum);
+        console.log(sum);            
+    }
+    getCurrentTotal();
 
     //Sum row styles column
     var arvoNytAllString = @Model.Sum(v => v.VoittoTappioE).ToString().Replace(',', '.');
     function changeColor() {
         var sum = arvoNytAllString;
-        console.log(arvoNytAllString);
-        console.log(sum);
+        //console.log(arvoNytAllString);
+        //console.log(sum);
         if (sum < 0)
             document.getElementById('voittoTappio').style.color = 'red'
         else
