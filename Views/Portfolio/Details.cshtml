@@ -4,26 +4,55 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
 </head>
 <body>
+    @*Company data*@
     <div>
-        <h2><span id='companyName'></span></h2>
-        <h4>(@Html.DisplayFor(model => model.Yritys))</h4>
+        <dl class="dl-horizontal">
+            <div class="row">
+                <div class="col-sm-4">
+                    <h2><span id='companyName'></span></h2>
+                    <h4>(@Html.DisplayFor(model => model.Yritys))</h4>
+                </div>
+                <div class="col-sm-4" style="border-left:solid 1px">
+                    <br />
+                    <dt style="font-size:medium;font-weight:bold">Maa</dt>
+                    <dd><span id='country' style="font-size:medium"></span></dd>
+                    <dt style="font-size:medium;font-weight:bold">Valuutta</dt>
+                    <dd><span id='currency' style="font-size:medium"></span></dd>
+                    <dt style="font-size:medium;font-weight:bold">Pörssi</dt>
+                    <dd><span id='exchange' style="font-size:medium"></span></dd>
+                    <dt style="font-size:medium;font-weight:bold">Toimiala</dt>
+                    <dd><span id='sector' style="font-size:medium"></span></dd>
+                </div>
+            </div>
+
+        </dl>
     </div>
 
+    @*Financial data*@
     <div>
         <hr />
         <dl class="dl-horizontal">
             <div class="row">
                 <div class="col-sm-3">
-                    <dt style="font-size:x-large;">Kurssi nyt</dt>
-                    <dd><span id='currentPrice' style="font-size:x-large;color:green"></span></dd>
-                    <dt style="font-size:large;">Avaus</dt>
-                    <dd><span id='openingPrice' style="font-size:large;color:black"></span></dd>
-                    <dt style="font-size:large;">Ylin</dt>
-                    <dd><span id='highPrice' style="font-size:large;color:black"></span></dd>
-                    <dt style="font-size:large;">Alin</dt>
-                    <dd><span id='lowPrice' style="font-size:large;color:black"></span></dd>
-                    <dt style="font-size:large;">Edellinen päätös</dt>
-                    <dd><span id='previousClose' style="font-size:large;color:black"></dd>
+                    <dt style="font-size:medium;">Kurssi nyt</dt>
+                    <dd style="font-size:medium;"><span id='currentPrice' style="font-weight:bold;color:green"></span></dd>
+                    <dt style="font-size:medium;">Avaus</dt>
+                    <dd style="font-size:medium;"><span id='openingPrice'></span></dd>
+                    <dt style="font-size:medium;">Ylin</dt>
+                    <dd style="font-size:medium;"><span id='highPrice'></span></dd>
+                    <dt style="font-size:medium;">Alin</dt>
+                    <dd style="font-size:medium;"><span id='lowPrice'></span></dd>
+                    <dt style="font-size:medium;">Vaihto (määrä)</dt>
+                    <dd style="font-size:medium;"><span id='volume'></span></dd>
+                </div>
+                <div class="col-sm-3">
+                    <dt style="font-size:medium;">Edellinen päätös</dt>
+                    <dd style="font-size:medium;"><span id='previousClose'></span></dd>
+                    <dt style="font-size:medium;">Muutos</dt>
+                    <dd style="font-size:medium;"><span id='change'></span></dd>
+                    <dt style="font-size:medium;">Muutos %</dt>
+                    <dd style="font-size:medium;"><span id='changepercent'></span></dd>
+
                 </div>
                 <div class="col-sm-3">
                     <dt style="font-size:medium;font-weight:bold">P/E</dt>
@@ -39,78 +68,68 @@
                     <dt style="font-size:medium;font-weight:bold">EPS</dt>
                     <dd><span id='eps' style="font-size:medium"></span></dd>
                 </div>
-                <div class="col-sm-4">
-                    <dt style="font-size:medium;font-weight:bold">Maa</dt>
-                    <dd><span id='country' style="font-size:medium"></span></dd>
-                    <dt style="font-size:medium;font-weight:bold">Valuutta</dt>
-                    <dd><span id='currency' style="font-size:medium"></span></dd>
-                    <dt style="font-size:medium;font-weight:bold">Pörssi</dt>
-                    <dd><span id='exchange' style="font-size:medium"></span></dd>
-                    <dt style="font-size:medium;font-weight:bold">Toimiala</dt>
-                    <dd><span id='sector' style="font-size:medium"></span></dd>
-                </div>
             </div>
         </dl>
         <hr />
     </div>
-
+    @*Charts*@
     <div class="col-sm-12">
         <ul class="nav nav-pills">
-            <li class="active"><a data-toggle="tab" href="#5days">5 päivää</a></li>
+            <li class="active"><a data-toggle="tab" href="#5days">Viikko</a></li>
             <li><a data-toggle="tab" href="#30days">Kuukausi</a></li>
             <li><a data-toggle="tab" href="#6months">6 kuukautta</a></li>
             <li><a data-toggle="tab" href="#1year">1 vuosi</a></li>
-            @*<li><a data-toggle="tab" href="#2years">2 vuotta</a></li>
-        <li><a data-toggle="tab" href="#5years">5 vuotta</a></li>
-        <li><a data-toggle="tab" href="#10years">10 vuotta</a></li>*@
-            <li><a data-toggle="tab" href="#all">Kaikki</a></li>
+            <li><a data-toggle="tab" href="#5years">5 vuotta</a></li>
+            <li><a data-toggle="tab" href="#10years">10 vuotta</a></li>
         </ul>
     </div>
     <div class="tab-content">
-        <div id="5days" class="tab-pane fade in active">
+        <div id="5days" class="tab-pane fade in active">      
             <br />
             <br />
-            <h3>Viimeiset 5 päivää</h3>
-            <div class="col-sm-8" >
+            <h3>Viikko</h3>
+            <div class="col-sm-11">
                 <canvas id="chart5days" style="height:5vw;width:20vw"></canvas>
             </div>
         </div>
         <div id="30days" class="tab-pane fade">
             <br />
             <br />
-            <h3>Viimeiset 30 päivää</h3>
-            <div class="col-sm-8">
+            <h3>Kuukausi</h3>
+            <div class="col-sm-11">
                 <canvas id="chart1month" style="height:5vw;width:20vw"></canvas>
             </div>
-            @*<div class="col-sm-3">
-                <p hidden>Random text</p>
-            </div>*@
         </div>
         <div id="6months" class="tab-pane fade">
             <br />
             <br />
             <h3>Viimeiset 6 kuukautta</h3>
-            <div class="col-sm-8">
+            <div class="col-sm-11">
                 <canvas id="chart6month" style="height:5vw;width:20vw"></canvas>
             </div>
-            @*<div class="col-sm-3">
-                <p hidden>Random text</p>
-            </div>*@
         </div>
         <div id="1year" class="tab-pane fade">
             <br />
             <br />
             <h3>Viimeisin vuosi</h3>
-            <div class="col-sm-12">
-                <canvas id="chart1year"></canvas>
+            <div class="col-sm-11">
+                <canvas id="chart1year" style="height:5vw;width:20vw"></canvas>
             </div>
         </div>
-        <div id="all" class="tab-pane fade">
+        <div id="5years" class="tab-pane fade">
             <br />
             <br />
-            <h3>Kaikki</h3>
-            <div class="col-sm-12">
-                <canvas id="chartAll"></canvas>
+            <h3>Viimeiset 5 vuotta</h3>
+            <div class="col-sm-11">
+                <canvas id="chart5year" style="height:5vw;width:20vw"></canvas>
+            </div>
+        </div>
+        <div id="10years" class="tab-pane fade">
+            <br />
+            <br />
+            <h3>Viimeiset 10 vuotta</h3>
+            <div class="col-sm-11">
+                <canvas id="chart10year" style="height:5vw;width:20vw"></canvas>
             </div>
         </div>
     </div>
@@ -127,20 +146,22 @@
 </html>
 
 <script type="text/javascript">
-    //Get stock data from API(finnhub.io)
+    //Get stock data from API(alphavantage)
     //Construct url
-    var a = 'https://finnhub.io/api/v1/quote?symbol=';
+    var aStockData = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=';
     var b = '@Html.DisplayFor(model => model.Yritys)';
-    var c = '&token=btdnsi748v6p1d4q5pcg';
-    function urlFHQuote() {
-        uQuote = a + b + c
-        return uQuote
+    var cStockData = '&apikey=P3FY8FMGNJ4C88D6';
+    var uStockData = [];
+    function urlStockData() {
+        uQuote = aStockData + b + cStockData
+        //return uStockData
     }
-    urlFHQuote();
+    urlStockData();
+    //console.log(uQuote)
 
     //Get data from url
     //const url1 = uQuote;
-    async function getStockInfo() {
+    async function getStockData() {
 
         // Storing response
         //const response = await fetch(url1);
@@ -148,17 +169,31 @@
 
         // Storing data in JSON
         var data = await response.json();
-        //console.log(data);
+        console.log(data);
 
         //Javascript destructuring
-        const { c, o, h, l, pc } = data;
-        document.getElementById('currentPrice').textContent = c.toFixed(2);
-        document.getElementById('openingPrice').textContent = o.toFixed(2);
-        document.getElementById('highPrice').textContent = h.toFixed(2);
-        document.getElementById('lowPrice').textContent = l.toFixed(2);
-        document.getElementById('previousClose').textContent = pc.toFixed(2);
+        var pvm = data["Global Quote"]["07. latest trading day"];
+        var kurssiNyt = data["Global Quote"]["05. price"];
+        var avaus = data["Global Quote"]["02. open"];
+        var ylin = data["Global Quote"]["03. high"];
+        var alin = data["Global Quote"]["04. low"];
+        var edellinen = data["Global Quote"]["08. previous close"];
+        var maara = data["Global Quote"]["06. volume"];
+        var muutos = data["Global Quote"]["09. change"];
+        var muutosprosentti = data["Global Quote"]["10. change percent"];
+
+        document.getElementsByClassName('date').textContent = pvm;
+        document.getElementById('currentPrice').textContent = kurssiNyt;
+        document.getElementById('openingPrice').textContent = avaus;
+        document.getElementById('highPrice').textContent = ylin;
+        document.getElementById('lowPrice').textContent = alin;
+        document.getElementById('volume').textContent = maara;
+        document.getElementById('previousClose').textContent = edellinen;
+        document.getElementById('change').textContent = muutos;
+        document.getElementById('changepercent').textContent = muutosprosentti;
     }
-    getStockInfo();
+    getStockData();
+    //console.log(price);
 
 
     //Get company overview data (alphavantage)
@@ -180,7 +215,7 @@
 
         // Storing data in JSON
         var data = await response.json();
-        console.log(data);
+        //console.log(data);
 
         //Javascript destructuring
         const { Name, Exchange, Country, Currency, Sector, PERatio, PEGRatio, PriceToSalesRatioTTM, PriceToBookRatio, DividendPerShare, EPS } = data;
@@ -202,14 +237,15 @@
     //JSON data from alphavantage
 
         //Construct url (compact JSON)
+        //TimeSeries DAILY
         var aCompanyData = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=';
         var b = '@Html.DisplayFor(model => model.Yritys)';
         var cCompanyData = '&outputsize=full&apikey=P3FY8FMGNJ4C88D6';
-        function urlAVDailyCompact() {
+        function urlAVDaily() {
             uDaily = aCompanyData + b + cCompanyData
             return uDaily
         }
-        urlAVDailyCompact();
+        urlAVDaily();
 
         //Get compact data from url - compact data used for one week and one month
         async function getDailyDataUrl() {
@@ -224,19 +260,19 @@
         var dateList = [];
         var pricesList = [];
         var lastRefreshed = "";
-        async function getDailyData() {
-            const response = await fetch(uDaily);
+    async function getDailyData() {
+        const response = await fetch(uDaily);
 
-            // Storing data in JSON
-            var data = await response.json();
-            //console.log(data);
+        // Storing data in JSON
+        var data = await response.json();
+        //console.log(data);
 
-            //Javascript destructuring
-            //Collect dates from JSON
-            var jsonDataDates = data['Time Series (Daily)'];
-            for (var date in jsonDataDates) {
-                dateList.push(date);
-            }
+        //Javascript destructuring
+        //Collect dates from JSON
+        var jsonDataDates = data['Time Series (Daily)'];
+        for (var date in jsonDataDates) {
+            dateList.push(date);
+        }
         //console.log(dateList);
 
         //Collect closing prices JSON
@@ -296,8 +332,8 @@
                 type: 'line',
                 data: {
                     datasets: [{
-                        //label: 'Closing price',
                         data: xsWeek,
+                        pointRadius: 0,
                         fill: false,
                         borderColor: [
                             'rgba(0,0,225, 1)'
@@ -327,7 +363,7 @@
         createChartWeek();
 
         //<-- CREATE CHART FOR 1 MONTH -->
-        //Using uDailyCompact
+        //Using uDaily
 
         //Offset date by one month (30 days)
         var dMth = new Date();
@@ -366,10 +402,9 @@
                 type: 'line',
                 data: {
                     datasets: [{
-                        //label: 'Closing price',
                         data: xsMonth,
+                        pointRadius: 0,
                         fill: false,
-
                         borderColor: [
                             'rgba(0,0,225, 1)'
                         ],
@@ -400,137 +435,434 @@
         //<-- CREATE CHART FOR 6 MONTHS-->
 
         //Construct url (full JSON)
-        var aFull = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=';
-        var bFull = '@Html.DisplayFor(model => model.Yritys)';
+        @*var aFull = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=';
+        var b = '@Html.DisplayFor(model => model.Yritys)';
         var cFull = '&outputsize=full&apikey=P3FY8FMGNJ4C88D6';
-            function urlAVDailyFull() {
-                uDailyFull = aFull + bFull + cFull
-                return uDailyFull
-            }
-            urlAVDailyFull();
-
-            //Get full data from url - compact data used for one week and one month
-            async function getFullDailyDataUrl() {
-                // Storing response
-                const response6mth = await fetch(uDailyFull);
-                // Storing data in JSON
-                var data = await response6mth.json();
-                //console.log(data);
-            }
-            getFullDailyDataUrl();
-            //console.log(uDailyFull);
-
-            var dateList6mth = [];
-            var pricesList6mth = [];
-            var lastRefreshed6mth = "";
-            //async function getDailyData6mth() {
-            //    const response6mth = await fetch(uDailyFull);
-            //}
-
-            // Storing data in JSON (compact)
-            //var dataFull = await response6mth.json();
-            //console.log(data);
-
-            //Javascript destructuring
-            //Collect dates from JSON
-            var jsonDataDates6mth = data['Time Series (Daily)'];
-            for (var date in jsonDataDates6mth) {
-                dateList6mth.push(date);
-            }
-            console.log(dateList6mth);
-
-            //Collect closing prices JSON
-            var jsonDataPrices6mth = data['Time Series (Daily)'];
-            for (var price in jsonDataPrices6mth) {
-                pricesList6mth.push(jsonDataPrices6mth[price]['4. close'])
-                //pricesList.reverse();
-            }
-            console.log(pricesList6mth);
-
-            //Get latest date from JSON (last refreshed)
-            lastRefreshed6mth = data['Meta Data']['3. Last Refreshed'];
-            //console.log(lastRefreshed6mth);
-
-            //<-- CREATE CHART FOR 6 MONTHS -->
-
-            //Offset date by six months (180 days)
-            var d6mth = new Date();
-            d6mth.setDate(d6mth.getDate() - 180);
-            //console.log(d);
-
-            //Convert date format to yyyy-MM-dd
-            var dateFormatted6mth = new Date(d6mth);
-            dateFormatted6mth = [
-                d6mth.getFullYear(),
-                ('0' + (d6mth.getMonth() + 1)).slice(-2),
-                ('0' + d6mth.getDate()).slice(-2)
-            ].join('-');
-            //console.log(dateFormatted6mth);
-
-            //Get only last 180 days of data
-            var startDate6mth = dateFormatted6mth;
-            var endDate6mth = lastRefreshed;
-            var sixMonths = dateList.filter(function (obj) {
-                return obj >= startDate6mth && obj <= endDate6mth;
-            });
-            //console.log(sixMonths);
-
-            //Get last items from prices corresponding to days
-            var numberOfDays6mth = 0;
-            numberOfDays6mth = sixMonths.length;
-            //console.log(numberOfDays6mth);
-
-            //Get appropriate number of prices and reverse order of prices for chart (xsWeek)
-            let pricesList6mth2 = [];
-            pricesList6mth2 = pricesList6mth.reverse();
-            var xs6mth = pricesList6mth2.slice(Math.max(pricesList6mth.length - numberOfDays6mth, 0));
-            console.log(xs6mth);
-            //Reverse dates to correspond with prices on chart (ysWeek)
-            var ys6mth = [];
-            ys6mth = sixMonths.reverse();
-
-            //Draw chart 6 MONTHS with prices (xs6mth) and dates (ys6mth)
-            function createChart6Months() {
-                var ctx = document.getElementById('chart6month').getContext('2d');
-                var myChart = new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        datasets: [{
-                            //label: 'Closing price',
-                            data: xs6mth,
-                            fill: false,
-                            borderColor: [
-                                'rgba(0,0,225, 1)'
-                            ],
-                            borderWidth: 1,
-                            order: 1,
-                        }],
-                        labels: ys6mth,
-                    },
-                    options: {
-                        legend: {
-                            display:false
-                        },
-                        scales: {
-                            yAxes: [{
-                                ticks: {
-                                    // Include a dollar sign with the ticks
-                                    callback: function (value) {
-                                        return '$' + value;
-                                    }
-                                }
-                            }]
-                        }
-                    }
-                });
-            }
-            createChart6Months();
+        function urlAVDailyFull() {
+            uDailyFull = aFull + b + cFull
+            return uDailyFull
         }
-        
-        
-    
+        urlAVDailyFull();*@
 
-    
+        //Get full data from url - compact data used for one week and one month
+        async function getFullDailyDataUrl() {
+            // Storing response
+            const response6mth = await fetch(uDaily);
+            // Storing data in JSON
+            var data = await response6mth.json();
+            //console.log(data);
+        }
+        getFullDailyDataUrl();
+        //console.log(uDailyFull);
+
+        var dateList6mth = [];
+        var pricesList6mth = [];
+        var lastRefreshed6mth = "";
+        //async function getDailyData6mth() {
+        //    const response6mth = await fetch(uDailyFull);
+        //}
+
+        // Storing data in JSON (compact)
+        //var dataFull = await response6mth.json();
+        //console.log(data);
+
+        //Javascript destructuring
+        //Collect dates from JSON
+        var jsonDataDates6mth = data['Time Series (Daily)'];
+        for (var date in jsonDataDates6mth) {
+            dateList6mth.push(date);
+        }
+        //console.log(dateList6mth);
+
+        //Collect closing prices JSON
+        var jsonDataPrices6mth = data['Time Series (Daily)'];
+        for (var price in jsonDataPrices6mth) {
+            pricesList6mth.push(jsonDataPrices6mth[price]['4. close'])
+            //pricesList.reverse();
+        }
+        //console.log(pricesList6mth);
+
+        //Get latest date from JSON (last refreshed)
+        lastRefreshed6mth = data['Meta Data']['3. Last Refreshed'];
+        //console.log(lastRefreshed6mth);
+
+        //<-- CREATE CHART FOR 6 MONTHS -->
+
+        //Offset date by six months (180 days)
+        var d6mth = new Date();
+        d6mth.setDate(d6mth.getDate() - 180);
+        //console.log(d);
+
+        //Convert date format to yyyy-MM-dd
+        var dateFormatted6mth = new Date(d6mth);
+        dateFormatted6mth = [
+            d6mth.getFullYear(),
+            ('0' + (d6mth.getMonth() + 1)).slice(-2),
+            ('0' + d6mth.getDate()).slice(-2)
+        ].join('-');
+        //console.log(dateFormatted6mth);
+
+        //Get only last 180 days of data
+        var startDate6mth = dateFormatted6mth;
+        var endDate6mth = lastRefreshed;
+        var sixMonths = dateList.filter(function (obj) {
+            return obj >= startDate6mth && obj <= endDate6mth;
+        });
+        //console.log(sixMonths);
+
+        //Get last items from prices corresponding to days
+        var numberOfDays6mth = 0;
+        numberOfDays6mth = sixMonths.length;
+        //console.log(numberOfDays6mth);
+
+        //Get appropriate number of prices and reverse order of prices for chart (xsWeek)
+        let pricesList6mth2 = [];
+        pricesList6mth2 = pricesList6mth.reverse();
+        var xs6mth = pricesList6mth2.slice(Math.max(pricesList6mth.length - numberOfDays6mth, 0));
+        //console.log(xs6mth);
+        //Reverse dates to correspond with prices on chart (ysWeek)
+        var ys6mth = [];
+        ys6mth = sixMonths.reverse();
+
+        //Draw chart 6 MONTHS with prices (xs6mth) and dates (ys6mth)
+        function createChart6Months() {
+            var ctx = document.getElementById('chart6month').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    datasets: [{
+                        data: xs6mth,
+                        pointRadius: 0,
+                        fill: false,
+                        borderColor: [
+                            'rgba(0,0,225, 1)'
+                        ],
+                        borderWidth: 1,
+                        order: 1,
+                    }],
+                    labels: ys6mth,
+                },
+                options: {
+                    legend: {
+                        display: false
+                    },
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                // Include a dollar sign with the ticks
+                                callback: function (value) {
+                                    return '$' + value;
+                                }
+                            }
+                        }]
+                    }
+                }
+            });
+        }
+        createChart6Months();
+
+
+        //<-- CREATE CHART FOR 1 YEAR-->
+        var dateList1yr = [];
+        var pricesList1yr = [];
+        var lastRefreshed1yr = "";
+
+        //Javascript destructuring
+        //Collect dates from JSON
+        var jsonDataDates1yr = data['Time Series (Daily)'];
+        for (var date in jsonDataDates1yr) {
+            dateList1yr.push(date);
+        }
+        //console.log(dateList1yr);
+
+        //Collect closing prices JSON
+        var jsonDataPrices1yr = data['Time Series (Daily)'];
+        for (var price in jsonDataPrices1yr) {
+            pricesList1yr.push(jsonDataPrices1yr[price]['4. close'])
+        }
+        //console.log(pricesList1yr);
+
+        //Get latest date from JSON (last refreshed)
+        lastRefreshed1yr = data['Meta Data']['3. Last Refreshed'];
+        //console.log(lastRefreshed1yr);
+
+        //Offset date by one year (365 days)
+        var d1yr = new Date();
+        d1yr.setDate(d1yr.getDate() - 365);
+        //console.log(d1yr);
+
+        //Convert date format to yyyy-MM-dd
+        var dateFormatted1yr = new Date(d1yr);
+        dateFormatted1yr = [
+            d1yr.getFullYear(),
+            ('0' + (d1yr.getMonth() + 1)).slice(-2),
+            ('0' + d1yr.getDate()).slice(-2)
+        ].join('-');
+        //console.log(dateFormatted1yr);
+
+        //Get last 365 days of data
+        var startDate1yr = dateFormatted1yr;
+        var endDate1yr = lastRefreshed1yr;
+        var oneYear = dateList.filter(function (obj) {
+            return obj >= startDate1yr && obj <= endDate1yr;
+        });
+        //console.log(oneYear);
+
+        //Get datapoints from prices corresponding to days
+        var numberOfDays1yr = 0;
+        numberOfDays1yr = oneYear.length;
+        //console.log(numberOfDays1yr);
+
+        //Get appropriate number of prices and reverse order of prices for chart (xsYear)
+        let pricesList1yr2 = [];
+        pricesList1yr2 = pricesList1yr.reverse();
+        var xsYear = pricesList1yr2.slice(Math.max(pricesList1yr.length - numberOfDays1yr, 0));
+        //console.log(xsYear);
+
+        //Reverse dates to correspond with prices on chart (ysYear)
+        var ysYear = [];
+        ysYear = oneYear.reverse();
+
+        //Draw chart 1 YEAR with prices (xsYear) and dates (ysYear)
+        function createChart1year() {
+            var ctx = document.getElementById('chart1year').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    datasets: [{
+                        data: xsYear,
+                        pointRadius: 0,
+                        fill: false,
+                        borderColor: [
+                            'rgba(0,0,225, 1)'
+                        ],
+                        borderWidth: 1,
+                        order: 1,
+                    }],
+                    labels: ysYear,
+                },
+                options: {
+                    legend: {
+                        display: false
+                    },
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                // Include a dollar sign with the ticks
+                                callback: function (value) {
+                                    return '$' + value;
+                                }
+                            }
+                        }]
+                    }
+                }
+            });
+        }
+        createChart1year();
+
+        //<-- CREATE CHART FOR 5 YEARS-->
+        var dateList5yr = [];
+        var pricesList5yr = [];
+        var lastRefreshed5yr = "";
+
+        //Javascript destructuring
+        //Collect dates from JSON
+        var jsonDataDates5yr = data['Time Series (Daily)'];
+        for (var date in jsonDataDates5yr) {
+            dateList5yr.push(date);
+        }
+        //console.log(dateList5yr);
+
+        //Collect closing prices JSON
+        var jsonDataPrices5yr = data['Time Series (Daily)'];
+        for (var price in jsonDataPrices5yr) {
+            pricesList5yr.push(jsonDataPrices5yr[price]['4. close'])
+        }
+        //console.log(pricesList5yr);
+
+        //Get latest date from JSON (last refreshed)
+        lastRefreshed5yr = data['Meta Data']['3. Last Refreshed'];
+        //console.log(lastRefreshed5yr);
+
+        //Offset date by five years (1825 days)
+        var d5yr = new Date();
+        d5yr.setDate(d5yr.getDate() - 1825);
+        //console.log(d5yr);
+
+        //Convert date format to yyyy-MM-dd
+        var dateFormatted5yr = new Date(d5yr);
+        dateFormatted5yr = [
+            d5yr.getFullYear(),
+            ('0' + (d5yr.getMonth() + 1)).slice(-2),
+            ('0' + d5yr.getDate()).slice(-2)
+        ].join('-');
+        //console.log(dateFormatted5yr);
+
+        //Get last 1825 days of data
+        var startDate5yr = dateFormatted5yr;
+        var endDate5yr = lastRefreshed5yr;
+        var fiveYear = dateList5yr.filter(function (obj) {
+            return obj >= startDate5yr && obj <= endDate5yr;
+        });
+        //console.log(fiveYear);
+
+        //Get datapoints from prices corresponding to days
+        var numberOfDays5yr = 0;
+        numberOfDays5yr = fiveYear.length;
+        //console.log(numberOfDays1yr);
+
+        //Get appropriate number of prices and reverse order of prices for chart (xsYear)
+        let pricesList5yr2 = [];
+        pricesList5yr2 = pricesList5yr.reverse();
+        var xs5Year = pricesList5yr2.slice(Math.max(pricesList5yr.length - numberOfDays5yr, 0));
+        //console.log(xs5Year);
+
+        //Reverse dates to correspond with prices on chart (ysYear)
+        var ys5Year = [];
+        ys5Year = fiveYear.reverse();
+
+        //Draw chart 5 YEARS with prices (xsYear) and dates (ysYear)
+        function createChart5year() {
+            var ctx = document.getElementById('chart5year').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    datasets: [{
+                        //label: 'Closing price',
+                        data: xs5Year,
+                        pointRadius: 0,
+                        fill: false,
+                        borderColor: [
+                            'rgba(0,0,225, 1)'
+                        ],
+                        borderWidth: 1,
+                        order: 1,
+                    }],
+                    labels: ys5Year,
+                },
+                options: {
+                    legend: {
+                        display: false
+                    },
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                // Include a dollar sign with the ticks
+                                callback: function (value) {
+                                    return '$' + value;
+                                }
+                            }
+                        }]
+                    }
+                }
+            });
+        }
+        createChart5year();
+
+        //<-- CREATE CHART FOR 10 YEARS-->
+        var dateList10yr = [];
+        var pricesList10yr = [];
+        var lastRefreshed10yr = "";
+
+        //Javascript destructuring
+        //Collect dates from JSON
+        var jsonDataDates10yr = data['Time Series (Daily)'];
+        for (var date in jsonDataDates10yr) {
+            dateList10yr.push(date);
+        }
+        //console.log(dateList10yr);
+
+        //Collect closing prices JSON
+        var jsonDataPrices10yr = data['Time Series (Daily)'];
+        for (var price in jsonDataPrices10yr) {
+            pricesList10yr.push(jsonDataPrices10yr[price]['4. close'])
+        }
+        //console.log(pricesList10yr);
+
+        //Get latest date from JSON (last refreshed)
+        lastRefreshed10yr = data['Meta Data']['3. Last Refreshed'];
+        //console.log(lastRefreshed10yr);
+
+        //Offset date by ten years (3650 days)
+        var d10yr = new Date();
+        d10yr.setDate(d10yr.getDate() - 3650);
+        //console.log(d10yr);
+
+        //Convert date format to yyyy-MM-dd
+        var dateFormatted10yr = new Date(d10yr);
+        dateFormatted10yr = [
+            d10yr.getFullYear(),
+            ('0' + (d10yr.getMonth() + 1)).slice(-2),
+            ('0' + d10yr.getDate()).slice(-2)
+        ].join('-');
+        //console.log(dateFormatted10yr);
+
+        //Get last 3650 days of data
+        var startDate10yr = dateFormatted10yr;
+        var endDate10yr = lastRefreshed5yr;
+        var tenYear = dateList10yr.filter(function (obj) {
+            return obj >= startDate10yr && obj <= endDate10yr;
+        });
+        //console.log(tenYear);
+
+        //Get datapoints from prices corresponding to days
+        var numberOfDays10yr = 0;
+        numberOfDays10yr = tenYear.length;
+        //console.log(numberOfDays10yr);
+
+        //Get appropriate number of prices and reverse order of prices for chart (xsYear)
+        let pricesList10yr2 = [];
+        pricesList10yr2 = pricesList10yr.reverse();
+        var xs10Year = pricesList10yr2.slice(Math.max(pricesList10yr.length - numberOfDays10yr, 0));
+        //console.log(xs5Year);
+
+        //Reverse dates to correspond with prices on chart (ysYear)
+        var ys10Year = [];
+        ys10Year = tenYear.reverse();
+
+        //Draw chart 10 YEARS with prices (xs10Year) and dates (ys10Year)
+        function createChart10year() {
+            var ctx = document.getElementById('chart10year').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    datasets: [{
+                        //label: 'Closing price',
+                        data: xs10Year,
+                        pointRadius: 0,
+                        fill: false,
+                        borderColor: [
+                            'rgba(0,0,225, 1)'
+                        ],
+                        borderWidth: 1,
+                        order: 1,
+                    }],
+                    labels: ys10Year,
+                },
+                options: {
+                    legend: {
+                        display: false
+                    },
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                // Include a dollar sign with the ticks
+                                callback: function (value) {
+                                    return '$' + value;
+                                }
+                            }
+                        }]
+                    }
+                }
+            });
+        }
+        createChart10year();
+    }
+
+
+
+
+
 
 
     ////Create chart - ALL
