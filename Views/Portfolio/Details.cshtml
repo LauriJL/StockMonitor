@@ -255,6 +255,11 @@
     var data = [];
     var dateList = [];
     var pricesList = [];
+    var pricesList2 = [];
+    var pricesList3 = [];
+    var pricesList4 = [];
+    var pricesList5 = [];
+    var pricesList6 = [];
     var lastRefreshed = "";
 
     //Vars - 1 week
@@ -297,6 +302,26 @@
     var xs1Year = [];
     var ys1Year = [];
 
+    //Vars - 5 YEARS
+    var d5yr = '';
+    var dateFormatted5yr = '';
+    var startDate5yr = '';
+    var endDate5yr = '';
+    var fiveYears = [];
+    var numberOfDays5yr = 0;
+    var xs5Year = [];
+    var ys5Year = [];
+
+    //Vars - 10 YEARS
+    var d10yr = '';
+    var dateFormatted10yr = '';
+    var startDate10yr = '';
+    var endDate10yr = '';
+    var tenYears = [];
+    var numberOfDays10yr = 0;
+    var xs10Year = [];
+    var ys10Year = [];
+
     //Get timeseries daily data from url
     async function createCharts() {
         // Storing response
@@ -316,6 +341,11 @@
         var jsonDataPrices = data['Time Series (Daily)'];
         for (var price in jsonDataPrices) {
             pricesList.push(jsonDataPrices[price]['4. close'])
+            pricesList2.push(jsonDataPrices[price]['4. close'])
+            pricesList3.push(jsonDataPrices[price]['4. close'])
+            pricesList4.push(jsonDataPrices[price]['4. close'])
+            pricesList5.push(jsonDataPrices[price]['4. close'])
+            pricesList6.push(jsonDataPrices[price]['4. close'])
         }
         //console.log(pricesList);
         //Get latest date from JSON (last refreshed)
@@ -401,7 +431,7 @@
         //Offset date by one MONTH (30 days)
         d1mo = new Date();
         d1mo.setDate(d1mo.getDate() - 30);
-        console.log(d1mo);
+        //console.log(d1mo);
 
         //Convert date format to yyyy-MM-dd
         dateFormatted1mo = new Date(d1mo);
@@ -426,8 +456,8 @@
 
         //Get appropriate number of prices and reverse order of prices for chart (xs1Month)
         let pricesListReverse1mo = [];
-        pricesListReverse1mo = pricesList.reverse();
-        xs1Month = pricesListReverse1mo.slice(Math.max(pricesList.length - numberOfDays1mo, 0));
+        pricesListReverse1mo = pricesList2.reverse();
+        xs1Month = pricesListReverse1mo.slice(Math.max(pricesList2.length - numberOfDays1mo, 0));
         //console.log(xs6Months);
 
         //Reverse dates to correspond with prices on chart (ys1Month)
@@ -501,8 +531,8 @@
 
         //Get appropriate number of prices and reverse order of prices for chart (xs6Months)
         let pricesListReverse6mo = [];
-        pricesListReverse6mo = pricesList.reverse();
-        xs6Months = pricesListReverse6mo.slice(Math.max(pricesList.length - numberOfDays6mo, 0));
+        pricesListReverse6mo = pricesList3.reverse();
+        xs6Months = pricesListReverse6mo.slice(Math.max(pricesList3.length - numberOfDays6mo, 0));
         //console.log(xs6Months);
 
         //Reverse dates to correspond with prices on chart (ys6Months)
@@ -563,7 +593,7 @@
         //console.log(dateFormatted1yr);
 
         //Retrieve last 365 days of data
-        startDate1yr = dateFormatted6mo;
+        startDate1yr = dateFormatted1yr;
         endDate1yr = lastRefreshed;
         oneYear = dateList.filter(function (obj) {
             return obj >= startDate1yr && obj <= endDate1yr;
@@ -576,8 +606,8 @@
 
         //Get appropriate number of prices and reverse order of prices for chart (xs1Year)
         let pricesListReverse1yr = [];
-        pricesListReverse1yr = pricesList.reverse();
-        xs1Year = pricesListReverse1yr.slice(Math.max(pricesList.length - numberOfDays1yr, 0));
+        pricesListReverse1yr = pricesList4.reverse();
+        xs1Year = pricesListReverse1yr.slice(Math.max(pricesList4.length - numberOfDays1yr, 0));
         //console.log(xs1Year);
 
         //Reverse dates to correspond with prices on chart (ys6Months)
@@ -621,6 +651,156 @@
         }
         createChart1Year();
         //<-- END: CHART 1 YEAR -->
+
+        //<-- START: CHART 5 YEARS -->
+        //Offset date by five YEARS (1825 days)
+        d5yr = new Date();
+        d5yr.setDate(d5yr.getDate() - 1825);
+        //console.log(d5yr);
+
+        //Convert date format to yyyy-MM-dd
+        dateFormatted5yr = new Date(d5yr);
+        dateFormatted5yr = [
+            d5yr.getFullYear(),
+            ('0' + (d5yr.getMonth() + 1)).slice(-2),
+            ('0' + d5yr.getDate()).slice(-2)
+        ].join('-');
+        //console.log(dateFormatted5yr);
+
+        //Retrieve last 1825 days of data
+        startDate5yr = dateFormatted5yr;
+        endDate5yr = lastRefreshed;
+        fiveYears = dateList.filter(function (obj) {
+            return obj >= startDate5yr && obj <= endDate5yr;
+        });
+        //console.log(fiveYears);
+
+        //Get last items from prices corresponding to days   
+        numberOfDays5yr = fiveYears.length;
+        //console.log(numberOfDays5yr);
+
+        //Get appropriate number of prices and reverse order of prices for chart (xs5Year)
+        let pricesListReverse5yr = [];
+        pricesListReverse5yr = pricesList5.reverse();
+        xs5Year = pricesListReverse5yr.slice(Math.max(pricesList5.length - numberOfDays5yr, 0));
+        //console.log(xs5Year);
+
+        //Reverse dates to correspond with prices on chart (ys6Months)
+        ys5Year = fiveYears.reverse();
+        //console.log(ys5Year);
+
+        //Draw chart 5 YEARS
+        function createChart5Years() {
+            var ctx = document.getElementById('chart5year').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    datasets: [{
+                        data: xs5Year,
+                        pointRadius: 0,
+                        fill: false,
+                        borderColor: [
+                            'rgba(0,0,225, 1)'
+                        ],
+                        borderWidth: 1,
+                        order: 1,
+                    }],
+                    labels: ys5Year,
+                },
+                options: {
+                    legend: {
+                        display: false
+                    },
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                // Include a dollar sign with the ticks
+                                callback: function (value) {
+                                    return '$' + value;
+                                }
+                            }
+                        }]
+                    }
+                }
+            });
+        }
+        createChart5Years();
+        //<-- END: CHART 5 YEARS -->
+
+        //<-- START: CHART 10 YEARS -->
+        //Offset date by ten YEARS (3650 days)
+        d10yr = new Date();
+        d10yr.setDate(d10yr.getDate() - 3650);
+        //console.log(d10yr);
+
+        //Convert date format to yyyy-MM-dd
+        dateFormatted10yr = new Date(d10yr);
+        dateFormatted10yr = [
+            d10yr.getFullYear(),
+            ('0' + (d10yr.getMonth() + 1)).slice(-2),
+            ('0' + d10yr.getDate()).slice(-2)
+        ].join('-');
+        //console.log(dateFormatted10yr);
+
+        //Retrieve last 3650 days of data
+        startDate10yr = dateFormatted10yr;
+        endDate10yr = lastRefreshed;
+        tenYears = dateList.filter(function (obj) {
+            return obj >= startDate10yr && obj <= endDate10yr;
+        });
+        //console.log(tenYears);
+
+        //Get last items from prices corresponding to days   
+        numberOfDays10yr = tenYears.length;
+        //console.log(numberOfDays10yr);
+
+        //Get appropriate number of prices and reverse order of prices for chart (xs5Year)
+        let pricesListReverse10yr = [];
+        pricesListReverse10yr = pricesList6.reverse();
+        xs10Year = pricesListReverse10yr.slice(Math.max(pricesList6.length - numberOfDays10yr, 0));
+        //console.log(xs10Year);
+
+        //Reverse dates to correspond with prices on chart (ys6Months)
+        ys10Year = tenYears.reverse();
+        //console.log(ys10Year);
+
+        //Draw chart 10 YEARS
+        function createChart10Years() {
+            var ctx = document.getElementById('chart10year').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    datasets: [{
+                        data: xs10Year,
+                        pointRadius: 0,
+                        fill: false,
+                        borderColor: [
+                            'rgba(0,0,225, 1)'
+                        ],
+                        borderWidth: 1,
+                        order: 1,
+                    }],
+                    labels: ys10Year,
+                },
+                options: {
+                    legend: {
+                        display: false
+                    },
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                // Include a dollar sign with the ticks
+                                callback: function (value) {
+                                    return '$' + value;
+                                }
+                            }
+                        }]
+                    }
+                }
+            });
+        }
+        createChart10Years();
+        //<-- END: CHART 10 YEARS -->
     }
     createCharts();
 
