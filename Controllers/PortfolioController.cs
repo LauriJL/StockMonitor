@@ -147,8 +147,154 @@ namespace StockMonitor_2.Controllers
             //return View(portfolio);
         }
 
-        // GET: Portfolio/Details/5
+        // GET: Portfolio
+        public ActionResult IndexYahoo(string searchString2, string sortOrder, string currentFilter1, int? page, int? pagesize)
+        {
+            ViewBag.YritysSortParam = sortOrder == "OstoMyynti" ? "om_desc" : "OstoMyynti";
+            ViewBag.OsakkeetYhtSortParam = sortOrder == "Osakkeiden määrä yhteensä" ? "osakkeetyht_desc" : "Osakkeiden määrä yhteensä";
+            ViewBag.HankintaYhtSortParam = sortOrder == "Hankinta-arvo yhteensä" ? "hankintayht_desc" : "Hankinta-arvo yhteensä";
+            ViewBag.OsakeNytSortParam = sortOrder == "Osakkeen hinta nyt" ? "osakenyt_desc" : "Osakkeen hinta nyt";
+            ViewBag.OmistusNytSortParam = sortOrder == "Omistuksen arvo nyt" ? "omistusnyt_desc" : "Omistuksen arvo nyt";
+            ViewBag.VoittoTappioSortParam = sortOrder == "Voitto/Tappio" ? "voittotappio_desc" : "Voitto/Tappio";
+            ViewBag.VoittoTappioProsSortParam = sortOrder == "Voitto/Tappio%" ? "voittotappiopros_desc" : "Voitto/Tappio%";
+
+            if (searchString2 != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString2 = currentFilter1;
+            }
+            ViewBag.currentFilter1 = searchString2;
+
+            StockMonitorEntities11 db = new StockMonitorEntities11();
+
+            var portfolio = from p in db.Portfolio
+                            select p;
+
+            if (!String.IsNullOrEmpty(searchString2))
+            {
+                switch (sortOrder)
+                {
+                    case "yritys_desc":
+                        portfolio = portfolio.Where(p => p.Yritys.Contains(searchString2)).OrderByDescending(p => p.Yritys);
+                        break;
+                    case "Osakkeiden määrä yhteensä":
+                        portfolio = portfolio.Where(p => p.Yritys.Contains(searchString2)).OrderBy(p => p.MaaraYht);
+                        break;
+                    case "osakkeetyht_desc":
+                        portfolio = portfolio.Where(p => p.Yritys.Contains(searchString2)).OrderByDescending(p => p.MaaraYht);
+                        break;
+                    case "Hankinta-arvo yhteensä":
+                        portfolio = portfolio.Where(p => p.Yritys.Contains(searchString2)).OrderBy(p => p.HankintaArvo);
+                        break;
+                    case "hankintayht_desc":
+                        portfolio = portfolio.Where(p => p.Yritys.Contains(searchString2)).OrderByDescending(p => p.HankintaArvo);
+                        break;
+                    case "Osakkeen hinta nyt":
+                        portfolio = portfolio.Where(p => p.Yritys.Contains(searchString2)).OrderBy(p => p.aHintaNyt);
+                        break;
+                    case "osakenyt_desc":
+                        portfolio = portfolio.Where(p => p.Yritys.Contains(searchString2)).OrderByDescending(p => p.aHintaNyt);
+                        break;
+                    case "Omistuksen arvo nyt":
+                        portfolio = portfolio.Where(p => p.Yritys.Contains(searchString2)).OrderBy(p => p.ArvoNytAll);
+                        break;
+                    case "omistusnyt_desc":
+                        portfolio = portfolio.Where(p => p.Yritys.Contains(searchString2)).OrderByDescending(p => p.ArvoNytAll);
+                        break;
+                    case "Voitto/Tappio":
+                        portfolio = portfolio.Where(p => p.Yritys.Contains(searchString2)).OrderBy(p => p.VoittoTappioE);
+                        break;
+                    case "voittotappio_desc":
+                        portfolio = portfolio.Where(p => p.Yritys.Contains(searchString2)).OrderByDescending(p => p.VoittoTappioE);
+                        break;
+                    case "Voitto/Tappio%":
+                        portfolio = portfolio.Where(p => p.Yritys.Contains(searchString2)).OrderBy(p => p.VoittoTappio_);
+                        break;
+                    case "voittotappiopros_desc":
+                        portfolio = portfolio.Where(p => p.Yritys.Contains(searchString2)).OrderByDescending(p => p.VoittoTappio_);
+                        break;
+                    default:
+                        portfolio = portfolio.Where(p => p.Yritys.Contains(searchString2)).OrderBy(p => p.Yritys);
+                        break;
+                }
+            }
+            else
+            {
+                switch (sortOrder)
+                {
+                    case "yritys_desc":
+                        portfolio = portfolio.OrderByDescending(p => p.Yritys);
+                        break;
+                    case "Osakkeiden määrä yhteensä":
+                        portfolio = portfolio.OrderBy(p => p.MaaraYht);
+                        break;
+                    case "osakkeetyht_desc":
+                        portfolio = portfolio.OrderByDescending(p => p.MaaraYht);
+                        break;
+                    case "Hankinta-arvo yhteensä":
+                        portfolio = portfolio.OrderBy(p => p.HankintaArvo);
+                        break;
+                    case "hankintayht_desc":
+                        portfolio = portfolio.OrderByDescending(p => p.HankintaArvo);
+                        break;
+                    case "Osakkeen hinta nyt":
+                        portfolio = portfolio.OrderBy(p => p.aHintaNyt);
+                        break;
+                    case "osakenyt_desc":
+                        portfolio = portfolio.OrderByDescending(p => p.aHintaNyt);
+                        break;
+                    case "Omistuksen arvo nyt":
+                        portfolio = portfolio.OrderBy(p => p.ArvoNytAll);
+                        break;
+                    case "omistusnyt_desc":
+                        portfolio = portfolio.OrderByDescending(p => p.ArvoNytAll);
+                        break;
+                    case "Voitto/Tappio":
+                        portfolio = portfolio.OrderBy(p => p.VoittoTappioE);
+                        break;
+                    case "voittotappio_desc":
+                        portfolio = portfolio.OrderByDescending(p => p.VoittoTappioE);
+                        break;
+                    case "Voitto/Tappio%":
+                        portfolio = portfolio.OrderBy(p => p.VoittoTappio_);
+                        break;
+                    case "voittotappiopros_desc":
+                        portfolio = portfolio.OrderByDescending(p => p.VoittoTappio_);
+                        break;
+                    default:
+                        portfolio = portfolio.OrderBy(p => p.Yritys);
+                        break;
+                }
+            }
+
+            int pageSize = (pagesize ?? 10);
+            int pageNumber = (page ?? 1);
+
+            return View(portfolio.ToPagedList(pageNumber, pageSize));
+
+            //return View(portfolio);
+        }
+
+        // GET: Portfolio/Details/
         public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Portfolio portfolio = db.Portfolio.Find(id);
+            if (portfolio == null)
+            {
+                return HttpNotFound();
+            }
+            return View(portfolio);
+        }
+
+        // GET: Portfolio/DetailsYahoo/
+        public ActionResult DetailsYahoo(int? id)
         {
             if (id == null)
             {

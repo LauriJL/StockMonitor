@@ -1,0 +1,155 @@
+﻿@model PagedList.IPagedList<StockMonitor_2.Models.Portfolio>
+@using PagedList.Mvc;
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Salkku";
+}
+
+<h2>Salkku</h2>
+<p>Data retrieved from Yahoo Finance API.</p>
+
+<br />
+
+@using (Html.BeginForm("Index", "Portfolio", FormMethod.Get, new { @class = "form-inline" }))
+{
+    <div class="input-group">
+        <p>
+            <input type="submit" value="Hae" class="form-control" style="background-color:lightgray;font-weight:bold" />
+            @Html.TextBox("SearchString2", ViewBag.currentFilter1 as string, new { @class = "form-control" })
+        </p>
+    </div>
+}
+
+<br />
+<table class="table" id="portfolio">
+    <tr>
+        @*<th>Omistaja</th>*@
+        <th>@Html.ActionLink("Yritys", "Index", new { sortOrder = ViewBag.YritysSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
+        <th>@Html.ActionLink("Osakkeiden määrä yhteensä", "Index", new { sortOrder = ViewBag.OsakkeetYhtSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
+        <th>@Html.ActionLink("Hankinta-arvo yhteensä", "Index", new { sortOrder = ViewBag.HankintaYhtSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
+        <th>@Html.ActionLink("Osakkeen hinta nyt", "Index", new { sortOrder = ViewBag.OsakeNytSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
+        <th>@Html.ActionLink("Omistuksen arvo nyt", "Index", new { sortOrder = ViewBag.OmistusNytSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
+        <th>@Html.ActionLink("Voitto/tappio (€)", "Index", new { sortOrder = ViewBag.VoittoTappioSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
+        <th>@Html.ActionLink("Voitto/tappio %", "Index", new { sortOrder = ViewBag.VoittoTappioProsSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr class="showCompanyClass" data-companyid="@item.Yritys">
+            @*<td>@Html.DisplayFor(modelItem => item.Kayttaja)</td>*@
+            <td id="yritys">@Html.DisplayFor(modelItem => item.Yritys)</td>
+            <td>@Html.DisplayFor(modelItem => item.MaaraYht)</td>
+            <td>@Html.DisplayFor(modelItem => item.HankintaArvo)</td>
+            @*<td input type="text" id="hintaNyt"></td>*@
+            <td>@Html.DisplayFor(modelItem => item.aHintaNyt)</td>
+            <td>@Html.DisplayFor(modelItem => item.ArvoNytAll)</td>
+            <td>@Html.DisplayFor(modelItem => item.VoittoTappioE)</td>
+            <td>@Html.DisplayFor(modelItem => item.VoittoTappio_)</td>
+            <td><a class="btn btn-success" @Html.ActionLink("Tiedot", "DetailsYahoo", new { id = item.ID })</td>
+        </tr>
+
+    }
+    <tr>
+        <td></td>
+        <td style="font-weight:bold">@Model.Sum(m => m.MaaraYht)</td>
+        <td style="font-weight:bold">@Model.Sum(h => h.HankintaArvo)</td>
+        <td></td>
+        <td style="font-weight:bold">@Model.Sum(a => a.ArvoNytAll)</td>
+        <td id="voittoTappio" style="font-weight:bold">@Model.Sum(v => v.VoittoTappioE)</td>
+        <td></td>
+    </tr>
+    @{
+        string num = @Model.Sum(v => v.VoittoTappioE).ToString().Replace(',', '.');
+    }
+
+</table>
+
+
+
+<br />
+Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter1 = ViewBag.currentFilter1 }))
+
+<script type="text/javascript">
+    //Get stock data from API(finnhub.io)
+    //Get company symbols from table
+    var table = document.getElementById('portfolio');
+    var companyList = [];
+    function getCompanies() {
+        var targetTDs = table.querySelectorAll('tr > td:first-child');
+        for (var i = 0; i < targetTDs.length; i++) {
+            var td = targetTDs[i];
+            companyList.push(td.innerHTML).toString();
+        }
+    }
+    getCompanies();
+
+    //Construct urls for fetching data from API (finnhub.io)
+    var a = 'https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/v2/get-quotes?symbols=';
+    var b = "";
+    var c = '&region=US';
+    var urls = "";
+    var urllist = [];
+    function createUrls() {
+        for (var i = 0; i < companyList.length-1; i++) {
+            //List of company symbols n table
+            b = companyList[i];
+            //Construct urls with company symbols
+            urls = a + b;
+            //Create array of urls by pushing urls to 'urllist' array
+            urllist.push(urls);
+        }
+    }
+    createUrls();
+    //console.log(urllist);
+
+    //Get stock quotes from API and insert these into the 'Osakkeen hinta nyt' column
+    let quotelist = [];
+    //Fetch data from url
+    var jsonData = "";
+    async function getPrices() {
+        for (let l = 0; l < companyList.length; l++) {
+            //Store response
+            const response = await fetch(urllist[l], {
+                "method": "GET",
+                "headers": {
+                    "x-rapidapi-host": "apidojo-yahoo-finance-v1.p.rapidapi.com",
+                    "x-rapidapi-key": "f7ee3d84ddmsh445490645db82aep166082jsnd9792b57303c"
+                }
+            });
+            //Store data in JSON
+            const data = await response.json();
+
+            //Add desctructured JSON data to quotelist array
+            quotelist.push(data["quoteResponse"]["result"][0]["regularMarketPrice"]);
+            console.log(quotelist);
+            // Insert company-specific quotes to 'Osakkeen hinta nyt' column
+            let cells = document.querySelectorAll('table tr td:nth-child(4)');
+            for (let i = 0; i < cells.length-1; ++i) {
+                cells[i].innerHTML = quotelist[i];
+            }
+        }
+    }
+    getPrices();
+
+    //Optional: Set interval for automatically retrieving quotes
+    //setInterval(getPrices, 6000);
+
+
+    //Sum row styles column
+    var arvoNytAllString = @Model.Sum(v => v.VoittoTappioE).ToString().Replace(',', '.');
+    function changeColor() {
+        var sum = arvoNytAllString;
+        //console.log(arvoNytAllString);
+        //console.log(sum);
+        if (sum < 0)
+            document.getElementById('voittoTappio').style.color = 'red'
+        else
+            document.getElementById('voittoTappio').style.color = 'green'
+    }
+    changeColor();
+</script>
+
