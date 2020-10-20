@@ -140,7 +140,7 @@
     <div class="col-sm-12">
         <br />
         <p>
-            <a class="btn btn-info" @Html.ActionLink("Takaisin", "Index")
+            <a class="btn btn-info" @Html.ActionLink("Takaisin", "IndexYahoo")
         </p>
     </div>
 </body>
@@ -229,7 +229,7 @@
     var timeStamps10yDates = [];
     var timeStamps10yString = [];
 
-    //Chart 5 days
+    //<--GET DATA ANDCREATE CHARTS-->
     async function createCharts() {
         // Storing response
         const response = await fetch("https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/get-charts?region=US&comparisons=%255EGDAXI%252C%255EFCHI&symbol=" + '@Html.DisplayFor(model => model.Yritys)' + "&interval=1d&range=10y", {
@@ -257,15 +257,6 @@
         d1wk = new Date();
         d1wk.setDate(d1wk.getDate() - 7);
         //console.log(d1wk);
-
-        //Convert date format to yyyy-MM-dd
-        //dateFormatted1wk = new Date(d1wk);
-        //dateFormatted1wk = [
-        //    d1wk.getFullYear(),
-        //    ('0' + (d1wk.getMonth() + 1)).slice(-2),
-        //    ('0' + d1wk.getDate()).slice(-2)
-        //].join('-');
-        //console.log(dateFormatted1wk);
 
         //Retrieve last 7 days of data
         startDate1wk = d1wk;
@@ -595,6 +586,47 @@
         }
         createChart5Year();
         //<--END CHART FOR 5 YEARS -->
+
+        //<--START CHART FOR 10 YEARS -->
+
+        //Draw chart 10 YEARS
+
+       function createChart10Year() {
+            var ctx = document.getElementById('chart10year').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    datasets: [{
+                        data: adjustedClose10y,
+                        pointRadius: 0,
+                        fill: false,
+                        borderColor: [
+                            'rgba(0,0,225, 1)'
+                        ],
+                        borderWidth: 1,
+                        order: 1,
+                    }],
+                    labels: timeStamps10yDates,
+                },
+                options: {
+                    legend: {
+                        display: false
+                    },
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                // Include a dollar sign with the ticks
+                                callback: function (value) {
+                                    return '$' + value;
+                                }
+                            }
+                        }]
+                    },
+                }
+            });
+        }
+        createChart10Year();
+        //<--END CHART FOR 10 YEARS -->
     }
     createCharts();
 

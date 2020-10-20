@@ -150,59 +150,5 @@ Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageC
     }
     changeColor();
 
-
-    //Testing timestamps
-    var timeStamps = [1287408600, 1287495000, 1287581400, 1287667800, 1287754200, 1288013400, 1288099800, 1288186200, 1288272600, 1288359000, 1288618200, 1288704600, 1288791000, 1288877400, 1288963800, 1289226600, 1289313000, 1289399400, 1289485800, 1289572200, 1289831400, 1289917800, 1290004200, 1290090600, 1290177000, 1290436200, 1290522600, 1290609000, 1290695400, 1290781800, 1291041000, 1291127400, 1291213800, 1291300200, 1291386600, 1291645800, 1291732200, 1291818600, 1291905000, 1291991400, 1292250600, 1292337000, 1292423400, 1292509800, 1292596200, 1292855400, 1292941800, 1293028200, 1293114600, 1293460200, 1293546600, 1293633000, 1293719400, 1293805800, 1294065000, 1294151400, 1294237800, 1294324200, 1294410600, 1294669800, 1294756200, 1294842600, 1294929000, 1295015400, 1295274600, 1295361000, 1295447400, 1295533800, 1295620200, 1295879400, 1295965800, 1296052200, 1296138600, 1296225000, 1296484200, 1296570600, 1296657000, 1296743400, 1296829800, 1297089000, 1297175400, 1297261800, 1297348200, 1297434600, 1297693800, 1297780200, 1297866600, 1297953000, 1298039400, 1298298600, 1298385000, 1298471400, 1298557800, 1298644200, 1298903400, 1298989800, 1299076200, 1299162600, 1299249000, 1299508200]
-    var timeStamps2 = [];
-    timeStamps2 = timeStamps.map(String);
-
-    //console.log(timeStamps2);
-
-    var timeStampsDates = timeStamps2.map(function (d) { return new Date(d * 1000) });
-    //console.log(timeStampsDates);
-
-    timeStampsDates2 = [];
-    timeStampsDates2 = timeStampsDates.map(String);
-    console.log(timeStampsDates2);
-
-    var timeStampsDates3 = [];
-    var timeStampsDates4 = [];
-    for (var i = 0; i < timeStampsDates2.length; i++) {
-        timeStampsDates3 = timeStampsDates2[i].replace(/16:30:00/g, '');
-    };
-    console.log(timeStampsDates3);
-
-    //for (var i = 0; i < timeStampsDates3.length; i++) {
-    //    var timeStampsDates4 = timeStampsDates3[i].replace(/15:30:00/g, '');
-    //};
-    //console.log(timeStampsDates4);
-
-    //var date = "Mon Oct 18 2010 16: 30: 00 GMT + 0300(Eastern European Summer Time)";
-    //function getFormattedDate(date) {
-    //    let year = date.getFullYear();
-    //    let month = (1 + date.getMonth()).toString().padStart(2, '0');
-    //    let day = date.getDate().toString().padStart(2, '0');
-
-    //    return month + '-' + day + '-' + year;
-    //    console.log(date);
-    //}
-    //getFormattedDate();
-
-
-    //Convert date format to yyyy-MM-dd
-    //var timeStamps10yFormatted = new Date(timeStampsDates2);
-    //timeStamps10yFormatted = [
-    //    timeStampsDates2.getFullYear(),
-    //    ('0' + (timeStampsDates2.getMonth() + 1)).slice(-2),
-    //    ('0' + timeStampsDates2.getDate()).slice(-2)
-    //].join('-');
-    //console.log(timeStamps10yFormatted);
-
-    //Testing date conversion
-    //var datesRaw = [Mon Oct 18 2010 16: 30: 00 GMT + 0300(Eastern European Summer Time), Tue Oct 19 2010 16: 30: 00 GMT + 0300(Eastern European Summer Time), Wed Oct 20 2010 16: 30: 00 GMT + 0300(Eastern European Summer Time), Thu Oct 21 2010 16: 30: 00 GMT + 0300(Eastern European Summer Time), Fri Oct 22 2010 16: 30: 00 GMT + 0300(Eastern European Summer Time), Mon Oct 25 2010 16: 30: 00 GMT + 0300(Eastern European Summer Time), Tue Oct 26 2010 16: 30: 00 GMT + 0300(Eastern European Summer Time), Wed Oct 27 2010 16: 30: 00 GMT + 0300(Eastern European Summer Time), Thu Oct 28 2010 16: 30: 00 GMT + 0300(Eastern European Summer Time), Fri Oct 29 2010 16: 30: 00 GMT + 0300(Eastern European Summer Time), Mon Nov 01 2010 15: 30: 00 GMT + 0200(Eastern European Standard Time), Tue Nov 02 2010 15: 30: 00 GMT + 0200(Eastern European Standard Time), Wed Nov 03 2010 15: 30: 00 GMT + 0200(Eastern European Standard Time), Thu Nov 04 2010 15: 30: 00 GMT + 0200(Eastern European Standard Time), Fri Nov 05 2010 15: 30: 00 GMT + 0200(Eastern European Standard Time), Mon Nov 08 2010 16: 30: 00 GMT + 0200(Eastern European Standard Time), Tue Nov 09 2010 16: 30: 00 GMT + 0200(Eastern European Standard Time), Wed Nov 10 2010 16: 30: 00 GMT + 0200(Eastern European Standard Time), Thu Nov 11 2010 16: 30: 00 GMT + 0200(Eastern European Standard Time), Fri Nov 12 2010 16: 30: 00 GMT + 0200(Eastern European Standard Time), Mon Nov 15 2010 16: 30: 00 GMT + 0200(Eastern European Standard Time), Tue Nov 16 2010 16: 30: 00 GMT + 0200(Eastern European Standard Time), Wed Nov 17 2010 16: 30: 00 GMT + 0200(Eastern European Standard Time), Thu Nov 18 2010 16: 30: 00 GMT + 0200(Eastern European Standard Time), Fri Nov 19 2010 16: 30: 00 GMT + 0200(Eastern European Standard Time), Mon Nov 22 2010 16: 30: 00 GMT + 0200(Eastern European Standard Time), Tue Nov 23 2010 16: 30: 00 GMT + 0200(Eastern European Standard Time), Wed Nov 24 2010 16: 30: 00 GMT + 0200(Eastern European Standard Time), Thu Nov 25 2010 16: 30: 00 GMT + 0200(Eastern European Standard Time), Fri Nov 26 2010 16: 30: 00 GMT + 0200(Eastern European Standard Time)]
-    //var dates = [];
-    //dates.push(datesRaw);
-    //console.log(dates);
-
 </script>
 
