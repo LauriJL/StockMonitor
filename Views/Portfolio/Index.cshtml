@@ -30,37 +30,39 @@
         <th>@Html.ActionLink("Osakkeen hinta nyt", "Index", new { sortOrder = ViewBag.OsakeNytSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
         <th>@Html.ActionLink("Omistuksen arvo nyt", "Index", new { sortOrder = ViewBag.OmistusNytSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
         <th>@Html.ActionLink("Voitto/tappio (€)", "Index", new { sortOrder = ViewBag.VoittoTappioSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
-        <th>@Html.ActionLink("Voitto/tappio %", "Index", new { sortOrder = ViewBag.VoittoTappioProsSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
+        <th>@Html.ActionLink("Voitto/tappio (%)", "Index", new { sortOrder = ViewBag.VoittoTappioProsSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
         <th></th>
     </tr>
 
     @foreach (var item in Model)
     {
-        <tr>
-            @*<td>@Html.DisplayFor(modelItem => item.Kayttaja)</td>*@
-            <td id="yritys">@Html.DisplayFor(modelItem => item.Yritys)</td>
-            <td id="totalShares">@Html.DisplayFor(modelItem => item.MaaraYht)</td>
-            <td>@Html.DisplayFor(modelItem => item.HankintaArvo)</td>
-            @*<td input type="text" id="hintaNyt"></td>*@
-            <td id="priceNow" type="number">@Html.DisplayFor(modelItem => item.aHintaNyt)</td>
-            <td id="totalValue">@Html.DisplayFor(modelItem => item.ArvoNytAll)</td>
-            <td>@Html.DisplayFor(modelItem => item.VoittoTappioE)</td>
-            <td>@Html.DisplayFor(modelItem => item.VoittoTappio_)</td>
-            <td><a class="btn btn-success" @Html.ActionLink("Tiedot", "Details", new { id = item.ID })</td>
-        </tr>
+    <tr id="valuesrow">
+        @*<td>@Html.DisplayFor(modelItem => item.Kayttaja)</td>*@
+        <td id="yritys">@Html.DisplayFor(modelItem => item.Yritys)</td>
+        <td id="totalShares">@Html.DisplayFor(modelItem => item.MaaraYht)</td>
+        <td>@Html.DisplayFor(modelItem => item.HankintaArvo)</td>
+        <td id="priceNow"></td>
+        <td id="totalValue"></td>
+        <td id="differenceE"></td>
+        <td id="differenceP"></td>
+        <td><a class="btn btn-success" @Html.ActionLink("Tiedot", "Details", new { id = item.ID })</td>
+    </tr>
+
     }
     <tr>
         <td></td>
         <td style="font-weight:bold">@Model.Sum(m => m.MaaraYht)</td>
         <td style="font-weight:bold">@Model.Sum(h => h.HankintaArvo)</td>
-        <td id="priceNowB"></td>
-        <td style="font-weight:bold">@Model.Sum(a => a.ArvoNytAll)</td>
-        <td id="voittoTappio" style="font-weight:bold">@Model.Sum(v => v.VoittoTappioE)</td>
+        <td></td>
+        <td id="currentTotalValueSumOutput" style="font-weight:bold"></td>
+        <td id="diffESumOutput" style="font-weight:bold"></td>
+        <td id="diffPSumOutput" style="font-weight:bold"></td>
         <td></td>
     </tr>
     @{
-        string num = @Model.Sum(v => v.VoittoTappioE).ToString().Replace(',', '.');
+        //string num = @Model.Sum(v => v.HankintaArvo).ToString().Replace(',', '.');
     }
+
 
 </table>
 Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
@@ -100,7 +102,6 @@ Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageC
     createUrls();
 
     //Get stock quotes from API and insert these into the 'Osakkeen hinta nyt' column
-    //TESTING: calculate values for ArvoNytAll - incomplete (27.9.2020)
     let quotelist = [];
     //Fetch data from url
     async function getPrices() {
@@ -110,69 +111,115 @@ Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageC
             //Store data in JSON
             const data = await response.json();
             //Add desctructured JSON data to quotelist array
-            quotelist.push(data.c);
-            // Insert company-specific quotes to 'Osakkeen hinta nyt' column
+            quotelist.push(data.c.toFixed(2));
+            //console.log(quotelist);
+            // Insert compnay-specific quotes to 'Osakkeen hinta nyt' column
             let cells = document.querySelectorAll('table tr td:nth-child(4)');
-            for (let i = 0; i < cells.length; ++i) {
+            for (let i = 0; i < cells.length - 1; ++i) {
                 cells[i].innerHTML = quotelist[i];
             }
         }
+        getAll();
+        currentTotalSum();
+        currentDiffESum();
+        currentDiffPSum();
     }
     getPrices();
 
-    //TEST: calculate values for ArvoNytAll - incomplete (27.9.2020)
-    //function calculate() {
-    //    //var table = document.getElementById("portfolio");
-    //    var sTableName = document.getElementById("portfolio");
-
-    //    for (var i = 0; i < sTableName.rows.length; i++) {
-    //        var quantity = sTableName.rows[i].cells[1].innerText;
-    //        //var quantity = parseInt(document.getElementById('totalShares').innerHTML)
-
-    //        console.log(quantity);
-    //    }
-
-        //for (var i = 0, row; row = table.rows[i]; i++) {
-        //    for (var j = 0, col; col = row.cells[j]; j++) {
-        //        var quantity = parseInt(document.getElementById('totalShares').innerHTML);
-        //        console.log(quantity);
-        //        var price = parseFloat(document.getElementById('priceNow').innerHTML);
-        //        console.log(price);
-        //        var total = parseFloat(quantity * price);
-        //        document.getElementById('totalValue').textContent = total.toFixed(2);
-        //    }
-        //}
-    //}
-
-    //calculate();
+    //Set Omistuksen Arvo Nyt, Voitto/Tappio(€) and Voitto/Tappio(%)
+    function getAll() {
+        for (var i = 1; i < table.rows.length-1; i++) {
+            var targetRows = table.querySelectorAll('tr');
+            for (var i = 0; i < targetRows.length-1; i++) {
+                // Current Total
+                var numberOfShares = table.querySelectorAll('tr > td:nth-child(2)')[+i];
+                var currentPricePerShare = table.querySelectorAll('tr > td:nth-child(4)')[+i];
+                let currentTotalValue = 0;
+                currentTotalValue = parseInt(numberOfShares.innerHTML) * parseFloat(currentPricePerShare.innerText);
+                let currentTotalValueOutput = table.querySelectorAll('tr > td:nth-child(5)')[+i];
+                currentTotalValueOutput.innerHTML = currentTotalValue.toFixed(2);
+                let currentTotalValueSum = 0;
+                currentTotalValueSum = currentTotalValueSum + parseFloat(table.rows[i].cells[4].innerText);;
+                // Difference €
+                var purchaseTotalValue = table.querySelectorAll('tr > td:nth-child(3)')[+i];
+                let diffE = 0;
+                diffE = parseFloat(currentTotalValueOutput.innerText).toFixed(2) - parseFloat(purchaseTotalValue.innerText).toFixed(2);
+                let diffEOutput = table.querySelectorAll('tr > td:nth-child(6)')[+i];
+                diffEOutput.innerHTML = diffE.toFixed(2);
+                // Difference %
+                let diffP = 0;
+                if (parseFloat(purchaseTotalValue.innerText) > parseFloat(currentTotalValueOutput.innerText)) {
+                    diffP = (((parseFloat(purchaseTotalValue.innerText).toFixed(2) * 100 / parseFloat(currentTotalValueOutput.innerText).toFixed(2)) - 100) * -1)
+                } else {
+                    diffP = 100 * (parseFloat(currentTotalValueOutput.innerText).toFixed(2) - parseFloat(purchaseTotalValue.innerText).toFixed(2)) / parseFloat(currentTotalValueOutput.innerText)
+                }
+                let diffPOutput = table.querySelectorAll('tr > td:nth-child(7)')[+i];
+                diffPOutput.innerHTML = diffP.toFixed(2) + '%';
+            }
+        }
+    }
 
     //Optional: Set interval for automatically retrieving quotes
     //setInterval(getPrices, 6000);
 
-    //Sum row styles column
-    var arvoNytAllString = @Model.Sum(v => v.VoittoTappioE).ToString().Replace(',', '.');
-    function changeColor() {
-        var sum = arvoNytAllString;
-        if (sum < 0)
-            document.getElementById('voittoTappio').style.color = 'red'
-        else
-            document.getElementById('voittoTappio').style.color = 'green'
-    }
-    changeColor();
-
-    //Clear column
-    //var arvoNytAllString = @Model.Sum(v => v.VoittoTappioE).ToString().Replace(',', '.');
-    function clearCell() {
-        var table = document.getElementById('portfolio');
-        var targetTDs = table.querySelectorAll('table tr td:nth-child(4)');
-        for (var i = 0; i < targetTDs.length; i++) {
-            if (value == undefined) {
-                $(this).val('');
-            }
+    //Sum - Omistuksen arvo nyt
+    var currentTotalValueSum = 0;
+    function currentTotalSum() {
+        for (var i = 1; i < table.rows.length-1; i++) {
+            currentTotalValueSum += Number(parseFloat(table.rows[i].cells[4].innerHTML));
+            document.getElementById('currentTotalValueSumOutput').innerHTML = currentTotalValueSum.toFixed(2);
+            //console.log(currentTotalValueSum.toFixed(2));
         }
-        
     }
-    clearCell();
+
+    //Sum - Voitto/Tappio(€)
+    var currentTotalDiffESum = 0;
+    function currentDiffESum() {
+        for (var i = 1; i < table.rows.length-1; i++) {
+            currentTotalDiffESum += Number(parseFloat(table.rows[i].cells[5].innerHTML));
+            document.getElementById('diffESumOutput').innerHTML = currentTotalDiffESum.toFixed(2);
+            //console.log(currentTotalDiffESum.toFixed(2));
+        }
+    }
+
+    //Sum - Voitto/Tappio(%)
+    var currentTotalDiffPSum = 0;
+    @*var purchasePriceTotal = (@Model.Sum(h => h.HankintaArvo));
+    console.log(purchasePriceTotal);*@
+    function currentDiffPSum() {
+        @*if (@Model.Sum(h => h.HankintaArvo) > parseFloat(currentTotalValueSumOutput.innerText)) {
+            currentTotalDiffPSum = ((@Model.Sum(h => h.HankintaArvo) * 100 / parseFloat(currentTotalValueSumOutput.innerText).toFixed(2)) - 100) * -1
+        } else {
+            currentTotalDiffPSum = 100 * (parseFloat(currentTotalValueSumOutput.innerText).toFixed(2) - @Model.Sum(h => h.HankintaArvo)) / parseFloat(currentTotalValueSumOutput.innerText)
+        }
+        console.log(@Model.Sum(h => h.HankintaArvo));
+        console.log(currentTotalValueSumOutput.innerHTML);*@
+        for (var i = 1; i < table.rows.length-1; i++) {
+            currentTotalDiffPSum += Number(parseFloat(table.rows[i].cells[6].innerHTML));
+            document.getElementById('diffPSumOutput').innerHTML = currentTotalDiffPSum.toFixed(2) + '%';
+            //console.log(currentTotalDiffPSum.toFixed(2));
+        }
+    }
+
+    //Sum row styles
+    var diffESumString = currentTotalDiffESum;
+    var diffPSumString = currentTotalDiffPSum;
+    function changeColorDiffE() {
+        var sum = diffESumString;
+        if (sum < 0)
+            document.getElementById('diffESumOutput').style.color = 'red'
+        else
+            document.getElementById('diffESumOutput').style.color = 'green'
+    }
+    changeColorDiffE();
+    function changeColorDiffP() {
+        var sum = diffPSumString;
+        if (sum < 0)
+            document.getElementById('diffPSumOutput').style.color = 'red'
+        else
+            document.getElementById('diffPSumOutput').style.color = 'green'
+    }
+    changeColorDiffP();
 
 </script>
 
