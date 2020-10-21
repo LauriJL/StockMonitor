@@ -7,6 +7,7 @@
 }
 
 <h2>Salkku</h2>
+<p>Data retrieved from finnhub.io API.</p>
 
 <br />
 
@@ -59,10 +60,9 @@
         <td id="diffPSumOutput" style="font-weight:bold"></td>
         <td></td>
     </tr>
-    @{
+    @*@{
         string num = @Model.Sum(v => v.HankintaArvo).ToString().Replace(',', '.');
-    }
-
+    }*@
 
 </table>
 Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
@@ -91,7 +91,7 @@ Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageC
     var urllist = [];
     function createUrls() {
         for (var i = 0; i < companyList.length; i++) {
-            //List of company symbols n table
+            //List of company symbols in table
             b = companyList[i];
             //Construct urls with company symbols
             urls = a + b + c;
@@ -119,12 +119,16 @@ Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageC
                 cells[i].innerHTML = quotelist[i];
             }
         }
+        //Input values into Arvo Nyt, Voitto/Tappio(€) and Voitto/Tappio(%) cells
         getAll();
         currentTotalSum();
         currentDiffESum();
         currentDiffPSum();
     }
     getPrices();
+
+    //Optional: Set interval for automatically retrieving quotes
+    //setInterval(getPrices, 6000);
 
     //Set Omistuksen Arvo Nyt, Voitto/Tappio(€) and Voitto/Tappio(%)
     function getAll() {
@@ -134,19 +138,19 @@ Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageC
                 // Current Total
                 var numberOfShares = table.querySelectorAll('tr > td:nth-child(2)')[+i];
                 var currentPricePerShare = table.querySelectorAll('tr > td:nth-child(4)')[+i];
-                let currentTotalValue = 0;
-                currentTotalValue = parseInt(numberOfShares.innerHTML) * parseFloat(currentPricePerShare.innerText);
+                //let currentTotalValue = 0;
+                let currentTotalValue = parseInt(numberOfShares.innerHTML) * parseFloat(currentPricePerShare.innerText);
                 let currentTotalValueOutput = table.querySelectorAll('tr > td:nth-child(5)')[+i];
                 currentTotalValueOutput.innerHTML = currentTotalValue.toFixed(2);
                 let currentTotalValueSum = 0;
                 currentTotalValueSum = currentTotalValueSum + parseFloat(table.rows[i].cells[4].innerText);;
                 // Difference €
                 var purchaseTotalValue = table.querySelectorAll('tr > td:nth-child(3)')[+i];
-                let diffE = 0;
-                diffE = parseFloat(currentTotalValueOutput.innerText).toFixed(2) - parseFloat(purchaseTotalValue.innerText).toFixed(2);
+                //let diffE = 0;
+                let diffE = parseFloat(currentTotalValueOutput.innerText).toFixed(2) - parseFloat(purchaseTotalValue.innerText).toFixed(2);
                 let diffEOutput = table.querySelectorAll('tr > td:nth-child(6)')[+i];
                 diffEOutput.innerHTML = diffE.toFixed(2);
-                // Difference %
+                 // Difference %
                 let diffP = 0;
                 if (parseFloat(purchaseTotalValue.innerText) > parseFloat(currentTotalValueOutput.innerText)) {
                     diffP = (((parseFloat(purchaseTotalValue.innerText).toFixed(2) * 100 / parseFloat(currentTotalValueOutput.innerText).toFixed(2)) - 100) * -1)
@@ -158,9 +162,6 @@ Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageC
             }
         }
     }
-
-    //Optional: Set interval for automatically retrieving quotes
-    //setInterval(getPrices, 6000);
 
     //Sum - Omistuksen arvo nyt
     var currentTotalValueSum = 0;
