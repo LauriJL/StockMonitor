@@ -173,7 +173,7 @@
 
         // Storing data in JSON
         var data = await response.json();
-        console.log(data);
+        //console.log(data);
 
         //Javascript destructuring
         var pvm = data["Global Quote"]["07. latest trading day"];
@@ -198,7 +198,6 @@
     }
     getStockData();
     //console.log(price);
-
 
     //<-- COMPANY OVERVIEW DATA -->
     //Alphavantage
@@ -332,12 +331,14 @@
         //Javascript destructuring
         //Collect dates from JSON
         var jsonDataDates = data['Time Series (Daily)'];
+        console.log(jsonDataDates);
         for (var date in jsonDataDates) {
             dateList.push(date);
         }
         //console.log(dateList);
         //Collect closing prices JSON
         var jsonDataPrices = data['Time Series (Daily)'];
+        //console.log(jsonDataPrices);
         for (var price in jsonDataPrices) {
             pricesList.push(jsonDataPrices[price]['4. close'])
             pricesList2.push(jsonDataPrices[price]['4. close'])

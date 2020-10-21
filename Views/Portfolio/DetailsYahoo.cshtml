@@ -37,7 +37,7 @@
             <div class="row">
                 <div class="col-sm-3">
                     <dt style="font-size:medium;">Kurssi nyt</dt>
-                    <dd style="font-size:medium;"><span id='currentPrice' style="font-weight:bold;color:green"></span></dd>
+                    <dd style="font-size:medium;font-weight:bold"><span id='currentPrice'></span></dd>
                     <dt style="font-size:medium;">Avaus</dt>
                     <dd style="font-size:medium;"><span id='openingPrice'></span></dd>
                     <dt style="font-size:medium;">Ylin</dt>
@@ -162,6 +162,7 @@
     var volume = "";
     var previousClose = "";
     var change = "";
+    var changeFloat = 0;
     var changepercent = "";
     var pe = "";
     var peg = "";
@@ -188,43 +189,71 @@
         exchange = data["quoteResponse"]["result"][0]["fullExchangeName"];
         //sector = data["quoteResponse"]["result"][0]["fullExchangeName"];
         currentPrice = data["quoteResponse"]["result"][0]["regularMarketPrice"];
+        let currentPriceFloat = parseFloat(currentPrice).toFixed(2);
         openingPrice = data["quoteResponse"]["result"][0]["regularMarketOpen"];
+        let openingPriceFloat = parseFloat(openingPrice).toFixed(2);
         highPrice = data["quoteResponse"]["result"][0]["regularMarketDayHigh"];
+        let highPriceFloat = parseFloat(highPrice).toFixed(2);
         lowPrice = data["quoteResponse"]["result"][0]["regularMarketDayLow"];
+        let lowPriceFloat = parseFloat(lowPrice).toFixed(2);
         volume = data["quoteResponse"]["result"][0]["regularMarketVolume"];
         previousClose = data["quoteResponse"]["result"][0]["regularMarketPreviousClose"];
+        let previousCloseFloat = parseFloat(previousClose).toFixed(2);
         change = data["quoteResponse"]["result"][0]["regularMarketChange"];
+        changeFloat = parseFloat(change).toFixed(2);
         changepercent = data["quoteResponse"]["result"][0]["regularMarketChangePercent"];
+        let changepercentFloat = parseFloat(changepercent).toFixed(2);
         pe = data["quoteResponse"]["result"][0]["trailingPE"];
+        let peFloat = parseFloat(pe).toFixed(2);
         peg = data["quoteResponse"]["result"][0]["pegRatio"];
+        let pegFloat = parseFloat(peg).toFixed(2);
         ps = data["quoteResponse"]["result"][0]["priceToSales"];
+        let psFloat = parseFloat(ps).toFixed(2);
         pb = data["quoteResponse"]["result"][0]["priceToBook"];
+        let pbFloat = parseFloat(pb).toFixed(2);
         dividend = data["quoteResponse"]["result"][0]["dividendsPerShare"];
+        let dividendFloat = parseFloat(dividend).toFixed(2);
         eps = data["quoteResponse"]["result"][0]["epsCurrentYear"];
 
         document.getElementById('companyName').textContent = companyName;
         //document.getElementById('country').textContent = country;
         document.getElementById('currency').textContent = currency;
         document.getElementById('exchange').textContent = exchange;
-        document.getElementById('currentPrice').textContent = currentPrice;
-        document.getElementById('openingPrice').textContent = openingPrice;
-        document.getElementById('highPrice').textContent = highPrice;
-        document.getElementById('lowPrice').textContent = lowPrice;
+        document.getElementById('currentPrice').textContent = currentPriceFloat;
+        document.getElementById('openingPrice').textContent = openingPriceFloat;
+        document.getElementById('highPrice').textContent = highPriceFloat;
+        document.getElementById('lowPrice').textContent = lowPriceFloat;
         document.getElementById('volume').textContent = volume;
-        document.getElementById('previousClose').textContent = previousClose;
-        document.getElementById('change').textContent = change;
-        document.getElementById('changepercent').textContent = changepercent;
-        document.getElementById('pe').textContent = pe;
-        document.getElementById('peg').textContent = peg;
-        document.getElementById('ps').textContent = ps;
-        document.getElementById('pb').textContent = pb;
-        document.getElementById('dividend').textContent = dividend;
+        document.getElementById('previousClose').textContent = previousCloseFloat;
+        document.getElementById('change').textContent = changeFloat;
+        document.getElementById('changepercent').textContent = changepercentFloat;
+        document.getElementById('pe').textContent = peFloat;
+        document.getElementById('peg').textContent = pegFloat;
+        document.getElementById('ps').textContent = psFloat;
+        document.getElementById('pb').textContent = pbFloat;
+        document.getElementById('dividend').textContent = dividendFloat;
         //document.getElementById('eps').textContent = eps;
+        changeColor();
     }
     getDailyData();
 
+    //Styles
+    function changeColor() {
+        if (changeFloat < 0) {
+            document.getElementById('currentPrice').style.color = 'red';
+            document.getElementById('change').style.color = 'red';
+            document.getElementById('changepercent').style.color = 'red';
+        }
+        else {
+            document.getElementById('currentPrice').style.color = 'green';
+            document.getElementById('change').style.color = 'green';
+            document.getElementById('changepercent').style.color = 'green';
+        }
+    }
+
     //<--CHARTS -->
     var adjustedClose10y = [];
+    var adjustedClose10yFiltered = [];
     var timeStamps10y = [];
     var timeStamps10yDates = [];
     var timeStamps10yString = [];
@@ -241,9 +270,13 @@
         });
         // Storing data in JSON
         var data = await response.json();
-        console.log(data);
+        //console.log(data);
         adjustedClose10y = data["chart"]["result"][0]["indicators"]["quote"][0]["close"];
-        console.log(adjustedClose10y);
+        //console.log(adjustedClose10y);
+        adjustedClose10yFiltered = adjustedClose10y.filter(function (el) {
+            return el != null;
+        });
+        console.log(adjustedClose10yFiltered);
         timeStamps10y = data["chart"]["result"][0]["timestamp"];
         //console.log(timeStamps10y);
 
@@ -289,6 +322,7 @@
                 data: {
                     datasets: [{
                         data: xs1Week,
+                        spanGaps: true,
                         pointRadius: 0,
                         fill: false,
                         borderColor: [
@@ -356,6 +390,7 @@
                 data: {
                     datasets: [{
                         data: xs1Month,
+                        spanGaps: true,
                         pointRadius: 0,
                         fill: false,
                         borderColor: [
@@ -406,16 +441,17 @@
 
         //Get appropriate number of prices (xs6Month)
         let pricesList6Mo = [];
+        //pricesList6Mo = adjustedClose10y;
         pricesList6Mo = adjustedClose10y;
         xs6Month = pricesList6Mo.slice(Math.max(adjustedClose10y.length - numberOfDays6mo, 0));
-        //console.log(xs6Month);
+        console.log(xs6Month);
 
         //Dates with prices on chart (ys6Month)
         ys6Month = sixMonths;
         //--> NEED TO CONVERT DATES TO SHORTER FORMAT!
         //console.log(ys6Month);
 
-        //Draw chart 1 MONTH
+        //Draw chart 6 MONTHS
         function createChart6Month() {
             var ctx = document.getElementById('chart6months').getContext('2d');
             var myChart = new Chart(ctx, {
@@ -423,6 +459,7 @@
                 data: {
                     datasets: [{
                         data: xs6Month,
+                        spanGaps: true,
                         pointRadius: 0,
                         fill: false,
                         borderColor: [
@@ -490,6 +527,7 @@
                 data: {
                     datasets: [{
                         data: xs1Year,
+                        spanGaps: true,
                         pointRadius: 0,
                         fill: false,
                         borderColor: [
@@ -557,6 +595,7 @@
                 data: {
                     datasets: [{
                         data: xs5Year,
+                        spanGaps: true,
                         pointRadius: 0,
                         fill: false,
                         borderColor: [
@@ -598,6 +637,7 @@
                 data: {
                     datasets: [{
                         data: adjustedClose10y,
+                        spanGaps: true,
                         pointRadius: 0,
                         fill: false,
                         borderColor: [
