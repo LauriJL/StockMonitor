@@ -139,7 +139,7 @@ namespace StockMonitor_2.Controllers
                 }
             }
 
-            int pageSize = (pagesize ?? 10);
+            int pageSize = (pagesize ?? 15);
             int pageNumber = (page ?? 1);
 
             return View(portfolio.ToPagedList(pageNumber, pageSize));
@@ -270,7 +270,7 @@ namespace StockMonitor_2.Controllers
                 }
             }
 
-            int pageSize = (pagesize ?? 10);
+            int pageSize = (pagesize ?? 15);
             int pageNumber = (page ?? 1);
 
             return View(portfolio.ToPagedList(pageNumber, pageSize));
