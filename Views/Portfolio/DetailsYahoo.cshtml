@@ -35,9 +35,14 @@
         <hr />
         <dl class="dl-horizontal">
             <div class="row">
-                <div class="col-sm-3">
-                    <dt style="font-size:medium;">Kurssi nyt</dt>
-                    <dd style="font-size:medium;font-weight:bold"><span id='currentPrice'></span></dd>
+                <div class="col-sm-4">
+                    <h2 style="font-weight:bold"><span id='currentPrice'></span></h2>
+                    <p>
+                        <button id='changestyle' style="cursor:none;width: 70px; border: solid 1px; border-radius: 5px; font-weight: bold "><span id='change'></span></button>
+                        <button id='changepercentstyle' style="cursor:none;width:70px;border:solid 1px;border-radius:5px;font-weight:bold"><span id='changepercent'></span>%</button>
+                       </p>                   
+                </div>
+                <div class="col-sm-3" style="border-left:solid 1px">
                     <dt style="font-size:medium;">Avaus</dt>
                     <dd style="font-size:medium;"><span id='openingPrice'></span></dd>
                     <dt style="font-size:medium;">Ylin</dt>
@@ -46,15 +51,8 @@
                     <dd style="font-size:medium;"><span id='lowPrice'></span></dd>
                     <dt style="font-size:medium;">Vaihto (määrä)</dt>
                     <dd style="font-size:medium;"><span id='volume'></span></dd>
-                </div>
-                <div class="col-sm-3">
                     <dt style="font-size:medium;">Edellinen päätös</dt>
                     <dd style="font-size:medium;"><span id='previousClose'></span></dd>
-                    <dt style="font-size:medium;">Muutos</dt>
-                    <dd style="font-size:medium;"><span id='change'></span></dd>
-                    <dt style="font-size:medium;">Muutos %</dt>
-                    <dd style="font-size:medium;"><span id='changepercent'></span></dd>
-
                 </div>
                 <div class="col-sm-3">
                     <dt style="font-size:medium;font-weight:bold">P/E</dt>
@@ -240,14 +238,16 @@
     //Styles
     function changeColor() {
         if (changeFloat < 0) {
-            document.getElementById('currentPrice').style.color = 'red';
-            document.getElementById('change').style.color = 'red';
-            document.getElementById('changepercent').style.color = 'red';
+            document.getElementById('changepercentstyle').style.backgroundColor = 'rgba(255,192,203,1)';
+            document.getElementById('changepercentstyle').style.borderColor = 'rgba(255,192,203,1)';
+            document.getElementById('changestyle').style.backgroundColor = 'rgba(255,192,203,1)';
+            document.getElementById('changestyle').style.borderColor = 'rgba(255,192,203,1)';
         }
         else {
-            document.getElementById('currentPrice').style.color = 'green';
-            document.getElementById('change').style.color = 'green';
-            document.getElementById('changepercent').style.color = 'green';
+            document.getElementById('changepercentstyle').style.backgroundColor = 'rgba(123, 239, 178, 1)';
+            document.getElementById('changepercentstyle').style.borderColor = 'rgba(123, 239, 178, 1)';
+            document.getElementById('changestyle').style.backgroundColor = 'rgba(123, 239, 178, 1)';
+            document.getElementById('changestyle').style.borderColor = 'rgba(123, 239, 178, 1)';
         }
     }
 
@@ -273,6 +273,11 @@
         var data = await response.json();
         console.log(data);
         adjustedClose1mo = data["chart"]["result"][0]["indicators"]["quote"][0]["close"];
+        //console.log(adjustedClose1moRaw)
+        //Prices to two-decimal format
+        //adjustedClose1mo = adjustedClose1moRaw.map(function (element) {
+        //    return Number(element.toFixed(2));
+        //});
         //console.log(adjustedClose1mo);
 
         timeStamps1mo = data["chart"]["result"][0]["timestamp"];
@@ -480,7 +485,12 @@
         var data = await response.json();
         //console.log(data);
         adjustedClose10y = data["chart"]["result"][0]["indicators"]["quote"][0]["close"];
-        //console.log(adjustedClose1y);
+        //console.log(adjustedClose10yRaw);
+        ////Prices to two-decimal format
+        //adjustedClose10y = adjustedClose10yRaw.map(function (elements) {
+        //    return Number(elements.toFixed(2));
+        //});
+        //console.log(adjustedClose10y);
 
         timeStamps10y = data["chart"]["result"][0]["timestamp"];
         console.log(timeStamps10y);
@@ -580,7 +590,12 @@
                         }],
                         xAxes: [{
                             display: false
-                        }]
+                        }],
+                        tooltips: {
+                            mode: 'nearest',
+                            titleFontSize: 18,
+                            bodyFontSize: 18
+                        }
                     }
                 }
             });
@@ -677,7 +692,12 @@
                         }],
                         xAxes: [{
                             display: false
-                        }]
+                        }],
+                        tooltips: {
+                            mode: 'nearest',
+                            titleFontSize: 18,
+                            bodyFontSize: 18
+                        }
                     }
                 }
             });
@@ -774,7 +794,12 @@
                         }],
                         xAxes: [{
                             display: false
-                        }]
+                        }],
+                        tooltips: {
+                            mode: 'nearest',
+                            titleFontSize: 18,
+                            bodyFontSize: 18
+                        }
                     }
                 }
             });
