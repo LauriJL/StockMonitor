@@ -43,7 +43,8 @@ namespace StockMonitor_2.Controllers
             ViewBag.currentFilter = searchString1;
 
             StockMonitorEntities11 db = new StockMonitorEntities11();
-
+            
+            var userId = Session["UserName"];
             var transactions = from t in db.Transactions.Include(t => t.Currency).Include(t => t.Users).Include(t => t.TransactionTypes)
                                select t;
 
@@ -194,8 +195,8 @@ namespace StockMonitor_2.Controllers
 
             int pageSize = (pagesize ?? 10);
             int pageNumber = (page ?? 1);
-
-            return View(transactions.ToPagedList(pageNumber, pageSize));
+            
+            return View(transactions.Where(t => t.Kayttaja == userId).ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Transactions/Details/5
@@ -216,15 +217,24 @@ namespace StockMonitor_2.Controllers
         // GET: Transactions/Create
         public ActionResult Create()
         {
+            List<SelectListItem> kayttajalista = new List<SelectListItem>();
+            {
+                kayttajalista.Add(new SelectListItem
+                {
+                    Value = Session["UserName"].ToString(),
+                    Text = Session["UserName"].ToString()
+                });
+            }
+
+            ViewBag.Kayttaja = new SelectList(kayttajalista, "Value", "Text", null);
             ViewBag.Valuutta = new SelectList(db.Currency, "Currency1", "Currency1");
-            ViewBag.Kayttaja = new SelectList(db.Users, "KayttajaNimi", "KayttajaNimi");
+            //ViewBag.Kayttaja = new SelectList(db.Users, "KayttajaNimi", "KayttajaNimi");
             ViewBag.OstoMyynti = new SelectList(db.TransactionTypes, "Type", "Type");
             return View();
         }
 
         // POST: Transactions/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Kayttaja,OstoMyynti,Pvm,Yritys,Maara,MaaraForPortfolio,aHinta,Total,TotalForPortfolio,Valuutta,Kurssi,TotalEuros,Kulut,Grandtotal")] Transactions transactions)
@@ -236,8 +246,10 @@ namespace StockMonitor_2.Controllers
                 return RedirectToAction("Index");
             }
 
+            //var userId = Session["UserName"];
+            //return View(transactions.Where(t => t.Kayttaja == userId).ToPagedList(pageNumber, pageSize));
             ViewBag.Valuutta = new SelectList(db.Currency, "Currency1", "Currency1", transactions.Valuutta);
-            ViewBag.Kayttaja = new SelectList(db.Users, "KayttajaNimi", "Rooli", transactions.Kayttaja);
+            //ViewBag.Kayttaja = new SelectList(db.Users, "KayttajaNimi", "Rooli", transactions.Kayttaja == userId);
             ViewBag.OstoMyynti = new SelectList(db.TransactionTypes, "Type", "Type", transactions.OstoMyynti);
             return View(transactions);
         }

@@ -1,0 +1,26 @@
+﻿<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @Html.ActionLink("StockMonitor", "Index", "Portfolio", new { area = "" }, new { @class = "navbar-brand" })
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="btn">@Html.ActionLink("Kaupat", "Index", "Transactions")</li>
+                <li class="btn">@Html.ActionLink("Salkku", "Index", "Portfolio")</li>
+                <li class="btn">
+                    @using System.Globalization
+                    @{
+                        string loggausInfo = "Olet kirjatunut käyttäjänä " + Session["UserName"];
+                    }
+                    <a class="nav-link" style="color:darkorange">@loggausInfo<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="btn"><a class="nav-link" href="/Home/Logout">Kirjaudu ulos</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
