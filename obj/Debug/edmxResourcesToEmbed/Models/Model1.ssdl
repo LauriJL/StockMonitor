@@ -47,11 +47,11 @@
     <Property Name="Kayttaja" Type="nvarchar" MaxLength="20" />
     <Property Name="Yritys" Type="nvarchar" MaxLength="20" />
     <Property Name="MaaraYht" Type="int" />
-    <Property Name="HankintaArvo" Type="money" />
-    <Property Name="aHintaNyt" Type="money" />
-    <Property Name="ArvoNytAll" Type="money" StoreGeneratedPattern="Computed" />
-    <Property Name="VoittoTappioE" Type="money" StoreGeneratedPattern="Computed" />
-    <Property Name="VoittoTappio%" Type="money" StoreGeneratedPattern="Computed" />
+    <Property Name="HankintaArvo" Type="decimal" Precision="19" Scale="2" />
+    <Property Name="aHintaNyt" Type="decimal" Precision="19" Scale="2" />
+    <Property Name="ArvoNytAll" Type="decimal" Precision="30" Scale="2" StoreGeneratedPattern="Computed" />
+    <Property Name="VoittoTappioE" Type="decimal" Precision="31" Scale="2" StoreGeneratedPattern="Computed" />
+    <Property Name="VoittoTappio%" Type="decimal" Precision="38" Scale="6" StoreGeneratedPattern="Computed" />
   </EntityType>
   <EntityType Name="Transactions">
     <Key>
@@ -64,14 +64,14 @@
     <Property Name="Yritys" Type="nvarchar" MaxLength="20" Nullable="false" />
     <Property Name="Maara" Type="int" Nullable="false" />
     <Property Name="MaaraForPortfolio" Type="int" StoreGeneratedPattern="Computed" />
-    <Property Name="aHinta" Type="money" Nullable="false" />
-    <Property Name="Total" Type="money" StoreGeneratedPattern="Computed" />
-    <Property Name="TotalForPortfolio" Type="money" StoreGeneratedPattern="Computed" />
+    <Property Name="aHinta" Type="decimal" Precision="25" Scale="2" Nullable="false" />
+    <Property Name="Total" Type="decimal" Precision="36" Scale="2" StoreGeneratedPattern="Computed" />
+    <Property Name="TotalForPortfolio" Type="decimal" Precision="38" Scale="2" StoreGeneratedPattern="Computed" />
     <Property Name="Valuutta" Type="nvarchar" MaxLength="3" Nullable="false" />
-    <Property Name="Kurssi" Type="money" />
-    <Property Name="TotalEuros" Type="money" StoreGeneratedPattern="Computed" />
-    <Property Name="Kulut" Type="money" Nullable="false" />
-    <Property Name="Grandtotal" Type="money" StoreGeneratedPattern="Computed" />
+    <Property Name="Kurssi" Type="decimal" Precision="19" Scale="4" />
+    <Property Name="TotalEuros" Type="decimal" Precision="38" Scale="2" StoreGeneratedPattern="Computed" />
+    <Property Name="Kulut" Type="decimal" Precision="19" Scale="2" Nullable="false" />
+    <Property Name="Grandtotal" Type="decimal" Precision="38" Scale="2" StoreGeneratedPattern="Computed" />
   </EntityType>
   <EntityType Name="TransactionTypes">
     <Key>

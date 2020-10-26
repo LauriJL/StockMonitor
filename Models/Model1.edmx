@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="StockMonitorModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="StockMonitorModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Company">
           <Key>
             <PropertyRef Name="ID" />
@@ -52,11 +52,11 @@
           <Property Name="Kayttaja" Type="nvarchar" MaxLength="20" />
           <Property Name="Yritys" Type="nvarchar" MaxLength="20" />
           <Property Name="MaaraYht" Type="int" />
-          <Property Name="HankintaArvo" Type="money" />
-          <Property Name="aHintaNyt" Type="money" />
-          <Property Name="ArvoNytAll" Type="money" StoreGeneratedPattern="Computed" />
-          <Property Name="VoittoTappioE" Type="money" StoreGeneratedPattern="Computed" />
-          <Property Name="VoittoTappio%" Type="money" StoreGeneratedPattern="Computed" />
+          <Property Name="HankintaArvo" Type="decimal" Precision="19" Scale="2" />
+          <Property Name="aHintaNyt" Type="decimal" Precision="19" Scale="2" />
+          <Property Name="ArvoNytAll" Type="decimal" Precision="30" Scale="2" StoreGeneratedPattern="Computed" />
+          <Property Name="VoittoTappioE" Type="decimal" Precision="31" Scale="2" StoreGeneratedPattern="Computed" />
+          <Property Name="VoittoTappio%" Type="decimal" Precision="38" Scale="6" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="Transactions">
           <Key>
@@ -69,14 +69,14 @@
           <Property Name="Yritys" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="Maara" Type="int" Nullable="false" />
           <Property Name="MaaraForPortfolio" Type="int" StoreGeneratedPattern="Computed" />
-          <Property Name="aHinta" Type="money" Nullable="false" />
-          <Property Name="Total" Type="money" StoreGeneratedPattern="Computed" />
-          <Property Name="TotalForPortfolio" Type="money" StoreGeneratedPattern="Computed" />
+          <Property Name="aHinta" Type="decimal" Precision="25" Scale="2" Nullable="false" />
+          <Property Name="Total" Type="decimal" Precision="36" Scale="2" StoreGeneratedPattern="Computed" />
+          <Property Name="TotalForPortfolio" Type="decimal" Precision="38" Scale="2" StoreGeneratedPattern="Computed" />
           <Property Name="Valuutta" Type="nvarchar" MaxLength="3" Nullable="false" />
-          <Property Name="Kurssi" Type="money" />
-          <Property Name="TotalEuros" Type="money" StoreGeneratedPattern="Computed" />
-          <Property Name="Kulut" Type="money" Nullable="false" />
-          <Property Name="Grandtotal" Type="money" StoreGeneratedPattern="Computed" />
+          <Property Name="Kurssi" Type="decimal" Precision="19" Scale="4" />
+          <Property Name="TotalEuros" Type="decimal" Precision="38" Scale="2" StoreGeneratedPattern="Computed" />
+          <Property Name="Kulut" Type="decimal" Precision="19" Scale="2" Nullable="false" />
+          <Property Name="Grandtotal" Type="decimal" Precision="38" Scale="2" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="TransactionTypes">
           <Key>
@@ -177,8 +177,7 @@
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="StockMonitorModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -230,11 +229,11 @@
           <Property Name="Kayttaja" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="Yritys" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="MaaraYht" Type="Int32" />
-          <Property Name="HankintaArvo" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="aHintaNyt" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="ArvoNytAll" Type="Decimal" Precision="19" Scale="4" annotation:StoreGeneratedPattern="Computed" />
-          <Property Name="VoittoTappioE" Type="Decimal" Precision="19" Scale="4" annotation:StoreGeneratedPattern="Computed" />
-          <Property Name="VoittoTappio_" Type="Decimal" Precision="19" Scale="4" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="HankintaArvo" Type="Decimal" Precision="19" Scale="2" />
+          <Property Name="aHintaNyt" Type="Decimal" Precision="19" Scale="2" />
+          <Property Name="ArvoNytAll" Type="Decimal" Precision="30" Scale="2" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="VoittoTappioE" Type="Decimal" Precision="31" Scale="2" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="VoittoTappio_" Type="Decimal" Precision="38" Scale="6" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="Transactions">
           <Key>
@@ -247,14 +246,14 @@
           <Property Name="Yritys" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Maara" Type="Int32" Nullable="false" />
           <Property Name="MaaraForPortfolio" Type="Int32" annotation:StoreGeneratedPattern="Computed" />
-          <Property Name="aHinta" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="Total" Type="Decimal" Precision="19" Scale="4" annotation:StoreGeneratedPattern="Computed" />
-          <Property Name="TotalForPortfolio" Type="Decimal" Precision="19" Scale="4" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="aHinta" Type="Decimal" Precision="25" Scale="2" Nullable="false" />
+          <Property Name="Total" Type="Decimal" Precision="36" Scale="2" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="TotalForPortfolio" Type="Decimal" Precision="38" Scale="2" annotation:StoreGeneratedPattern="Computed" />
           <Property Name="Valuutta" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Kurssi" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="TotalEuros" Type="Decimal" Precision="19" Scale="4" annotation:StoreGeneratedPattern="Computed" />
-          <Property Name="Kulut" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="Grandtotal" Type="Decimal" Precision="19" Scale="4" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="TotalEuros" Type="Decimal" Precision="38" Scale="2" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="Kulut" Type="Decimal" Precision="19" Scale="2" Nullable="false" />
+          <Property Name="Grandtotal" Type="Decimal" Precision="38" Scale="2" annotation:StoreGeneratedPattern="Computed" />
           <NavigationProperty Name="Currency" Relationship="Self.FK__Transacti__Valuu__4CA06362" FromRole="Transactions" ToRole="Currency" />
           <NavigationProperty Name="Users" Relationship="Self.FK__Transacti__Kaytt__6477ECF3" FromRole="Transactions" ToRole="Users" />
           <NavigationProperty Name="TransactionTypes" Relationship="Self.FK__Transacti__OstoM__44FF419A" FromRole="Transactions" ToRole="TransactionTypes" />
