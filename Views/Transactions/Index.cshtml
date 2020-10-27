@@ -44,7 +44,7 @@
         });
     </script>
 }
-
+<br />
 <h2>Kaupat</h2>
 
 <div id="transactionEdit"></div>
@@ -100,8 +100,6 @@
             <td>
                 <a class="btn btn-primary" @Html.ActionLink("Muokkaa", "Edit", new { id = item.ID })
                 <a class="btn btn-danger" @Html.ActionLink("Poista", "Delete", new { id = item.ID })
-                @*@Html.ActionLink("Muokkaa", "Edit", new { id = item.ID }) |
-                @Html.ActionLink("Poista", "Delete", new { id = item.ID })*@
             </td>
         </tr>
     }

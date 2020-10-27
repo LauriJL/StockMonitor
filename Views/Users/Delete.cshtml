@@ -1,0 +1,43 @@
+﻿@model StockMonitor_2.Models.Users
+
+@{
+    ViewBag.Title = "Poista";
+}
+
+<h2>Poistakäyttäjän tiedot</h2>
+
+<h4 style="color:red">Oletko varma että haluat poistaa tämän käyttäjän tiedot järjestelmästä?</h4>
+<div>
+
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>Etunimi</dt>
+        <dd>@Html.DisplayFor(model => model.Etunimi)</dd>
+
+        <dt>Sukunimi</dt>
+        <dd>@Html.DisplayFor(model => model.Sukunimi)</dd>
+
+        <dt>Sähköposti</dt>
+        <dd>@Html.DisplayFor(model => model.Sahkoposti)</dd>
+
+        <dt>Käyttäjätunnus</dt>
+        <dd>@Html.DisplayFor(model => model.KayttajaNimi)</dd>
+
+        <dt>Salasana</dt>
+        <dd>@Html.DisplayFor(model => model.Salasana)</dd>
+
+        <dt>Rooli</dt>
+        <dd>@Html.DisplayFor(model => model.UserRoles.Role)</dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Poista" class="btn btn-danger" />
+            <a class="btn btn-info" @Html.ActionLink("Takaisin", "Index")
+        </div>
+    }
+</div>

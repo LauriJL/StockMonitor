@@ -23,12 +23,26 @@ namespace StockMonitor_2.Controllers
             var LoggedUser = db.Users.SingleOrDefault(x => x.KayttajaNimi == LoginModel.KayttajaNimi && x.Salasana == LoginModel.Salasana);
             if (LoggedUser != null)
             {
-                ViewBag.LoginMessage = "Successful login";
-                ViewBag.LoggedStatus = "In";
-                ViewBag.LoginError = 0;
-                Session["UserName"] = LoggedUser.KayttajaNimi;
-                Session["LoginID"] = LoggedUser.Salasana;
-                return RedirectToAction("Index", "Portfolio");
+                if (LoggedUser.Rooli.Equals("SuperUser"))
+                {
+                    ViewBag.LoginMessage = "Successful login";
+                    ViewBag.LoggedStatus = "In";
+                    ViewBag.LoginError = 0;
+                    Session["UserName"] = LoggedUser.KayttajaNimi;
+                    Session["LoginID"] = LoggedUser.Salasana;
+                    Session["Role"] = LoggedUser.Rooli;
+                    return RedirectToAction("Index", "Users");
+                }
+                else
+                {
+                    ViewBag.LoginMessage = "Successful login";
+                    ViewBag.LoggedStatus = "In";
+                    ViewBag.LoginError = 0;
+                    Session["UserName"] = LoggedUser.KayttajaNimi;
+                    Session["LoginID"] = LoggedUser.Salasana;
+                    Session["Role"] = LoggedUser.Rooli;
+                    return RedirectToAction("Index", "Portfolio");
+                }              
             }
             else
             {
