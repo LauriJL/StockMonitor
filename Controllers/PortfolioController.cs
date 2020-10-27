@@ -19,6 +19,10 @@ namespace StockMonitor_2.Controllers
         // GET: Portfolio
         public ActionResult Index(string searchString2, string sortOrder, string currentFilter1, int? page, int? pagesize)
         {
+            if (Session["UserName"] == null)
+            {
+                return RedirectToAction("login", "home");
+            } else { 
             ViewBag.YritysSortParam = sortOrder == "OstoMyynti" ? "om_desc" : "OstoMyynti";
             ViewBag.OsakkeetYhtSortParam = sortOrder == "Osakkeiden määrä yhteensä" ? "osakkeetyht_desc" : "Osakkeiden määrä yhteensä";
             ViewBag.HankintaYhtSortParam = sortOrder == "Hankinta-arvo yhteensä" ? "hankintayht_desc" : "Hankinta-arvo yhteensä";
@@ -143,27 +147,42 @@ namespace StockMonitor_2.Controllers
             int pageNumber = (page ?? 1);
 
             return View(portfolio.Where(t => t.Kayttaja == userId).ToPagedList(pageNumber, pageSize));
+            }
         }
 
         // GET: Portfolio/Details/
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            if (Session["UserName"] == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("login", "home");
             }
-            Portfolio portfolio = db.Portfolio.Find(id);
-            if (portfolio == null)
+            else
             {
-                return HttpNotFound();
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Portfolio portfolio = db.Portfolio.Find(id);
+                if (portfolio == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(portfolio);
             }
-            return View(portfolio);
         }
 
         // GET: Portfolio/Create
         public ActionResult Create()
         {
-            return View();
+            if (Session["UserName"] == null)
+            {
+                return RedirectToAction("login", "home");
+            }
+            else
+            {
+                return View();
+            }
         }
 
         // POST: Portfolio/Create
@@ -185,16 +204,23 @@ namespace StockMonitor_2.Controllers
         // GET: Portfolio/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            if (Session["UserName"] == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("login", "home");
             }
-            Portfolio portfolio = db.Portfolio.Find(id);
-            if (portfolio == null)
+            else
             {
-                return HttpNotFound();
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Portfolio portfolio = db.Portfolio.Find(id);
+                if (portfolio == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(portfolio);
             }
-            return View(portfolio);
         }
 
         // POST: Portfolio/Edit/5
@@ -216,16 +242,23 @@ namespace StockMonitor_2.Controllers
         // GET: Portfolio/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            if (Session["UserName"] == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("login", "home");
             }
-            Portfolio portfolio = db.Portfolio.Find(id);
-            if (portfolio == null)
+            else
             {
-                return HttpNotFound();
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Portfolio portfolio = db.Portfolio.Find(id);
+                if (portfolio == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(portfolio);
             }
-            return View(portfolio);
         }
 
         // POST: Portfolio/Delete/5
@@ -262,8 +295,6 @@ namespace StockMonitor_2.Controllers
 
             return PartialView(PortTrans);
         }
-
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)
