@@ -25,22 +25,19 @@ namespace StockMonitor_2.Models
         public string Yritys { get; set; }
         public int Maara { get; set; }
         public Nullable<int> MaaraForPortfolio { get; set; }
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:N}")]
-        //[DataType(DataType.Currency)]
-        [StringLength(Int32.MaxValue)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:0.00}")]
+        //[DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = true)]
         public decimal aHinta { get; set; }
         public Nullable<decimal> Total { get; set; }
         public Nullable<decimal> TotalForPortfolio { get; set; }
         public string Valuutta { get; set; }
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:N}")]
-        //[DataType(DataType.Currency)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:0.00}")]
         public Nullable<decimal> Kurssi { get; set; }
         public Nullable<decimal> TotalEuros { get; set; }
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:N}")]
-        //[DataType(DataType.Currency)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:0.00}")]
         public decimal Kulut { get; set; }
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:N}")]
-        //[DataType(DataType.Currency)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:0.00}")]
+
         public Nullable<decimal> Grandtotal { get; set; }
 
         public virtual Currency Currency { get; set; }
