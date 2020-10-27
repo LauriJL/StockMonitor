@@ -12,7 +12,6 @@
                 <div class="col-sm-4">
                     <h2><span id='companyName'></span></h2>
                     <h4>(@Html.DisplayFor(model => model.Yritys))</h4>
-                    <p>Data retrieved from Yahoo Finance API.</p>
                 </div>
                 <div class="col-sm-4" style="border-left:solid 1px">
                     <br />
@@ -36,7 +35,9 @@
                     <p>
                         <button id='changestyle' style="cursor:none;width: 70px; border: solid 1px; border-radius: 5px; font-weight: bold "><span id='change'></span></button>
                         <button id='changepercentstyle' style="cursor:none;width:70px;border:solid 1px;border-radius:5px;font-weight:bold"><span id='changepercent'></span>%</button>
-                       </p>                   
+                    </p>
+                    @using System.Globalization
+                    <p style="font-size:small">Tiedot haettu Yahoo Finance APIsta <b>@DateTime.Now.ToString("", CultureInfo.CreateSpecificCulture("fi-FI"))</b>.</p>
                 </div>
                 <div class="col-sm-3" style="border-left:solid 1px">
                     <dt style="font-size:medium;">Avaus</dt>
