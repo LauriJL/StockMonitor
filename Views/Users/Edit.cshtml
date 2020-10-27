@@ -51,8 +51,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Salasana, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Salasana, new { htmlAttributes = new { @class = "form-control", @Value = Model.Salasana, @maxlength = "20" } })
-                <input type="checkbox" id="showPassword" /><label for="password">  Näytä salasana</label><br>
+                @Html.EditorFor(model => model.Salasana, new { htmlAttributes = new { @class = "form-control" } })
+                <input type="checkbox" id="showPassword" />  <label for="password" style="font-weight:normal">Näytä salasana</label><br>
                 @Html.ValidationMessageFor(model => model.Salasana, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -83,9 +83,9 @@
             $("#showPassword").change(function () {
                 var checked = $(this).is(":checked");
                 if (checked) {
-                    $("#Hash").attr("type", "text");
+                    $("#Salasana").attr("type", "text");
                 } else {
-                    $("#Hash").attr("type", "Password");
+                    $("#Salasana").attr("type", "Password");
                 }
             });
         });
