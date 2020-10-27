@@ -1,5 +1,6 @@
 ﻿@model PagedList.IPagedList<StockMonitor_2.Models.Portfolio>
 @using PagedList.Mvc;
+
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
@@ -7,7 +8,7 @@
 }
 
 <h2>Salkku</h2>
-<p>Data retrieved from finnhub.io API.</p>
+<p>Data retrieved from Yahoo Finance API.</p>
 
 <br />
 
@@ -24,23 +25,21 @@
 <br />
 <table class="table" id="portfolio">
     <tr>
-        @*<th>Omistaja</th>*@
         <th>@Html.ActionLink("Yritys", "Index", new { sortOrder = ViewBag.YritysSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
         <th>@Html.ActionLink("Osakkeiden määrä yhteensä", "Index", new { sortOrder = ViewBag.OsakkeetYhtSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
         <th>@Html.ActionLink("Hankinta-arvo yhteensä", "Index", new { sortOrder = ViewBag.HankintaYhtSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
         <th>@Html.ActionLink("Osakkeen hinta nyt", "Index", new { sortOrder = ViewBag.OsakeNytSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
         <th>@Html.ActionLink("Omistuksen arvo nyt", "Index", new { sortOrder = ViewBag.OmistusNytSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
         <th>@Html.ActionLink("Voitto/tappio (€)", "Index", new { sortOrder = ViewBag.VoittoTappioSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
-        <th>@Html.ActionLink("Voitto/tappio (%)", "Index", new { sortOrder = ViewBag.VoittoTappioProsSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
+        <th>@Html.ActionLink("Voitto/tappio %", "Index", new { sortOrder = ViewBag.VoittoTappioProsSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
         <th></th>
     </tr>
 
     @foreach (var item in Model)
     {
     <tr id="valuesrow">
-        @*<td>@Html.DisplayFor(modelItem => item.Kayttaja)</td>*@
         <td id="yritys">@Html.DisplayFor(modelItem => item.Yritys)</td>
-        <td id="totalShares">@Html.DisplayFor(modelItem => item.MaaraYht)</td>
+        <td>@Html.DisplayFor(modelItem => item.MaaraYht)</td>
         <td>@Html.DisplayFor(modelItem => item.HankintaArvo)</td>
         <td id="priceNow"></td>
         <td id="totalValue"></td>
@@ -61,16 +60,17 @@
         <td></td>
     </tr>
     @*@{
-        string num = @Model.Sum(v => v.HankintaArvo).ToString().Replace(',', '.');
+        string num = @Model.Sum(v => v.VoittoTappioE).ToString().Replace(',', '.');
     }*@
 
 </table>
+
+<br />
 Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
 @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter1 = ViewBag.currentFilter1 }))
 
 <script type="text/javascript">
-
-    //Get stock data from API(finnhub.io)
+    //Get stock data from API(Yahoo Finance)
     //Get company symbols from table
     var table = document.getElementById('portfolio');
     var companyList = [];
@@ -83,10 +83,10 @@ Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageC
     }
     getCompanies();
 
-    //Construct urls for fetching data from API (finnhub.io)
-    var a = 'https://finnhub.io/api/v1/quote?symbol=';
+    //Construct urls for fetching data from API (Yahoo Finance)
+    var a = 'https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/v2/get-quotes?symbols=';
     var b = "";
-    var c = '&token=btdnsi748v6p1d4q5pcg';
+    var c = '&region=US';
     var urls = "";
     var urllist = [];
     function createUrls() {
@@ -94,7 +94,7 @@ Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageC
             //List of company symbols in table
             b = companyList[i];
             //Construct urls with company symbols
-            urls = a + b + c;
+            urls = a + b;
             //Create array of urls by pushing urls to 'urllist' array
             urllist.push(urls);
         }
@@ -104,20 +104,28 @@ Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageC
     //Get stock quotes from API and insert these into the 'Osakkeen hinta nyt' column
     let quotelist = [];
     //Fetch data from url
+    var jsonData = "";
     async function getPrices() {
-        for (let l = 0; l < urllist.length; l++) {
+        for (let l = 0; l < companyList.length-1; l++) {
             //Store response
-            const response = await fetch(urllist[l]);
+            const response = await fetch(urllist[l], {
+                "method": "GET",
+                "headers": {
+                    "x-rapidapi-host": "apidojo-yahoo-finance-v1.p.rapidapi.com",
+                    "x-rapidapi-key": "f7ee3d84ddmsh445490645db82aep166082jsnd9792b57303c"
+                }
+            });
             //Store data in JSON
             const data = await response.json();
+
             //Add desctructured JSON data to quotelist array
-            quotelist.push(data.c.toFixed(2));
-            //console.log(quotelist);
-            // Insert compnay-specific quotes to 'Osakkeen hinta nyt' column
+            quotelist.push(data["quoteResponse"]["result"][0]["regularMarketPrice"].toFixed(2));
+            // Insert company-specific quotes to 'Osakkeen hinta nyt' column
             let cells = document.querySelectorAll('table tr td:nth-child(4)');
-            for (let i = 0; i < cells.length - 1; ++i) {
-                cells[i].innerHTML = quotelist[i];
+            for (let i = 0; i < cells.length-1; ++i) {
+                cells[i].innerHTML = quotelist[i];          
             }
+            console.log(quotelist);
         }
         //Input values into Arvo Nyt, Voitto/Tappio(€) and Voitto/Tappio(%) cells
         getAll();
@@ -131,6 +139,7 @@ Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageC
     //setInterval(getPrices, 6000);
 
     //Set Omistuksen Arvo Nyt, Voitto/Tappio(€) and Voitto/Tappio(%)
+    //var diffE = 0;
     function getAll() {
         for (var i = 1; i < table.rows.length-1; i++) {
             var targetRows = table.querySelectorAll('tr');
@@ -138,7 +147,6 @@ Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageC
                 // Current Total
                 var numberOfShares = table.querySelectorAll('tr > td:nth-child(2)')[+i];
                 var currentPricePerShare = table.querySelectorAll('tr > td:nth-child(4)')[+i];
-                //let currentTotalValue = 0;
                 let currentTotalValue = parseInt(numberOfShares.innerHTML) * parseFloat(currentPricePerShare.innerText);
                 let currentTotalValueOutput = table.querySelectorAll('tr > td:nth-child(5)')[+i];
                 currentTotalValueOutput.innerHTML = currentTotalValue.toFixed(2);
@@ -146,11 +154,10 @@ Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageC
                 currentTotalValueSum = currentTotalValueSum + parseFloat(table.rows[i].cells[4].innerText);;
                 // Difference €
                 var purchaseTotalValue = table.querySelectorAll('tr > td:nth-child(3)')[+i];
-                //let diffE = 0;
                 let diffE = parseFloat(currentTotalValueOutput.innerText).toFixed(2) - parseFloat(purchaseTotalValue.innerText).toFixed(2);
                 let diffEOutput = table.querySelectorAll('tr > td:nth-child(6)')[+i];
                 diffEOutput.innerHTML = diffE.toFixed(2);
-                 // Difference %
+                // Difference %
                 let diffP = 0;
                 if (parseFloat(purchaseTotalValue.innerText) > parseFloat(currentTotalValueOutput.innerText)) {
                     diffP = (((parseFloat(purchaseTotalValue.innerText).toFixed(2) * 100 / parseFloat(currentTotalValueOutput.innerText).toFixed(2)) - 100) * -1)
@@ -199,22 +206,23 @@ Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageC
     //Sum row styles
     var diffESumString = currentTotalDiffESum;
     var diffPSumString = currentTotalDiffPSum;
-    function changeColorDiffE() {
+
+    function changeColorDiffETotal() {
         var sum = diffESumString;
         if (sum < 0)
             document.getElementById('diffESumOutput').style.color = 'red'
         else
             document.getElementById('diffESumOutput').style.color = 'green'
     }
-    changeColorDiffE();
-    function changeColorDiffP() {
+    changeColorDiffETotal();
+
+    function changeColorDiffPTotal() {
         var sum = diffPSumString;
         if (sum < 0)
             document.getElementById('diffPSumOutput').style.color = 'red'
         else
             document.getElementById('diffPSumOutput').style.color = 'green'
     }
-    changeColorDiffP();
-
+    changeColorDiffPTotal();
 </script>
 
