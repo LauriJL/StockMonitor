@@ -27,6 +27,7 @@ namespace StockMonitor_2.Models
         public Nullable<int> MaaraForPortfolio { get; set; }
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:N}")]
         //[DataType(DataType.Currency)]
+        [StringLength(Int32.MaxValue)]
         public decimal aHinta { get; set; }
         public Nullable<decimal> Total { get; set; }
         public Nullable<decimal> TotalForPortfolio { get; set; }
