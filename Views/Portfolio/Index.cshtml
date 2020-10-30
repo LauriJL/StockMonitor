@@ -48,7 +48,13 @@
     <td id="totalValue"></td>
     <td id="differenceE"></td>
     <td id="differenceP"></td>
-    <td><a class="btn btn-success" @Html.ActionLink("Tiedot", "Details", new { id = item.ID })</td>
+    @*<td><a class="btn btn-success" @Html.ActionLink("Tiedot", "Details", new { id = item.ID })</td>*@
+    <td><a class="btn btn-default" style="border:none" title="Tiedot" href='~/Portfolio/Details/@item.ID'>
+            <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-info-circle" fill="green" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                <path d="M8.93 6.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588z" />
+                <circle cx="8" cy="4.5" r="1" />
+            </svg></a></td>
 </tr>
 
     }
@@ -68,7 +74,14 @@
 
 </table>
 @using System.Globalization
-<p style="font-size:small">Tiedot haettu Yahoo Finance APIsta <b>@DateTime.Now.ToString("", CultureInfo.CreateSpecificCulture("fi-FI"))</b>.</p>
+<p style="font-size:medium">Osakkeiden hintatiedot haettu Yahoo Finance palvelusta kello <b>@DateTime.Now.ToString("h:mm:ss", CultureInfo.CreateSpecificCulture("fi-FI"))</b> (@DateTime.Today.ToString("D", CultureInfo.CreateSpecificCulture("fi-FI"))). 
+    <button class="btn btn-default" style="border:none" title="Päivitä tiedot" onClick="window.location.reload();">
+        <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-arrow-repeat" fill="green" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z" />
+            <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z" />
+        </svg>
+    </button>
+</p>
 <br />
 Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
 @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter1 = ViewBag.currentFilter1 }))
@@ -129,7 +142,7 @@ Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageC
             for (let i = 0; i < cells.length-1; ++i) {
                 cells[i].innerHTML = quotelist[i];
             }
-            console.log(quotelist);
+            //console.log(quotelist);
         }
         //Input values into Arvo Nyt, Voitto/Tappio(€) and Voitto/Tappio(%) cells
         getAll();
@@ -138,6 +151,10 @@ Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageC
         currentDiffPSum();
     }
     getPrices();
+
+    function refresh() {
+        getPrices();
+    }
 
     //Optional: Set interval for automatically retrieving quotes
     //setInterval(getPrices, 6000);
@@ -164,9 +181,9 @@ Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageC
                 // Difference %
                 let diffP = 0;
                 if (parseFloat(purchaseTotalValue.innerText) > parseFloat(currentTotalValueOutput.innerText)) {
-                    diffP = (((parseFloat(purchaseTotalValue.innerText).toFixed(2) * 100 / parseFloat(currentTotalValueOutput.innerText).toFixed(2)) - 100) * -1)
+                    diffP = (parseFloat(currentTotalValueOutput.innerText).toFixed(2) * 100) / parseFloat(purchaseTotalValue.innerText).toFixed(2) - 100;
                 } else {
-                    diffP = 100 * (parseFloat(currentTotalValueOutput.innerText).toFixed(2) - parseFloat(purchaseTotalValue.innerText).toFixed(2)) / parseFloat(currentTotalValueOutput.innerText)
+                    diffP = (((parseFloat(purchaseTotalValue.innerText).toFixed(2) * 100 / parseFloat(currentTotalValueOutput.innerText).toFixed(2)) - 100) * -1)
                 }
                 let diffPOutput = table.querySelectorAll('tr > td:nth-child(7)')[+i];
                 diffPOutput.innerHTML = diffP.toFixed(2) + '%';
@@ -199,10 +216,11 @@ Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageC
     //Sum - Voitto/Tappio(%)
     function currentDiffPSum() {
         if (parseFloat(purchasePriceTotal) < parseFloat(currentTotalValueSumOutput.innerText)) {
-            currentTotalDiffPSum = (parseFloat(currentTotalValueSumOutput.innerText).toFixed(2) * 100 / parseFloat(purchasePriceTotal).toFixed(2) ) - 100
+            currentTotalDiffPSum = (parseFloat(currentTotalValueSumOutput.innerText).toFixed(2) * 100) / parseFloat(purchasePriceTotal).toFixed(2)  - 100
             document.getElementById('diffPSumOutput').innerHTML = currentTotalDiffPSum.toFixed(2) + '%';
         } else {
-            currentTotalDiffPSum = 100 * (parseFloat(currentTotalValueSumOutput.innerText).toFixed(2) - parseFloat(purchasePriceTotal).toFixed(2)) / parseFloat(currentTotalValueSumOutput.innerText).toFixed(2)
+            //currentTotalDiffPSum = 100 * (parseFloat(currentTotalValueSumOutput.innerText).toFixed(2) - parseFloat(purchasePriceTotal).toFixed(2)) / parseFloat(currentTotalValueSumOutput.innerText).toFixed(2)
+            currentTotalDiffPSum = (parseFloat(purchasePriceTotal).toFixed(2) * 100 / parseFloat(currentTotalValueSumOutput.innerText).toFixed(2) - 100) * -1;
             document.getElementById('diffPSumOutput').innerHTML = currentTotalDiffPSum.toFixed(2) + '%';
         }
     }
