@@ -2,9 +2,9 @@
 @model PagedList.IPagedList<StockMonitor_2.Models.Transactions>
 @using PagedList.Mvc;
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+@*<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
       integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
-      crossorigin="anonymous">
+      crossorigin="anonymous">*@
 
 @{
     ViewBag.Title = "Kaupat";
@@ -15,14 +15,15 @@
     @*Modal Edit*@
     <script type="text/javascript">
         $(function () {
-            $(".getTransactionId").click(function () {
-                let transactionID = $(this).data("transactionid");
-                var url = "/Transactions/_ModalTransactionEdit/?id=" + transactionID;
-
+            $(".getTransactionId1").click(function () {
+                let transactionID = $(this).data("transid1");
+                console.log("klikkasit kauppaa numero " + transactionID);
+                var url = "/Transactions/_TransactionModalEdit/?id=" + transactionID;
+                console.log(url);
                 var $detailDivEdit = $("#transactionEdit");
                 $.get(url, function (data) {
                     $detailDivEdit.replaceWith(data);
-                    $('#ModalTransactionEdit').modal('show');
+                    $('#TransactionModalEdit').modal('show');
                 });
             });
         });
@@ -32,13 +33,12 @@
     <script type="text/javascript">
         $(function () {
             $(".getTransactionId2").click(function () {
-                let transactionID = $(this).data("transactionid2");
-                var url = "/Transactions/_ModalTransactionDelete/?id=" + transactionID;
-
-                var $detailDivEdit = $("#transactionDelete");
+                let transactionID2 = $(this).data("transid2");               
+                var url = "/Transactions/_TransactionModalDelete/?id=" + transactionID2;
+                var $detailDivDelete = $("#transactionDelete");
                 $.get(url, function (data) {
-                    $detailDivEdit.replaceWith(data);
-                    $('#ModalTransactionDelete').modal('show');
+                    $detailDivDelete.replaceWith(data);
+                    $('#TransactionModalDelete').modal('show');
                 });
             });
         });
@@ -47,17 +47,11 @@
 <br />
 <h2>Kaupat</h2>
 
-@*<div id="transactionEdit"></div>
-<div id="transactionDelete"></div>*@
-<br/>
-<p><a class="btn btn-success" @Html.ActionLink("Lisää uusi", "Create")</p>
-@*<p><a class="btn btn-default" style="border:none" title="Lisää uusi" href='~/Transactions/Create/'>
-       <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-plus-circle" fill="blue" xmlns="http://www.w3.org/2000/svg">
-           <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-           <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
-       </svg>
-    </a></p>*@
 
+<div id="transactionEdit"></div>
+<div id="transactionDelete"></div>
+<br />
+<p><a class="btn btn-success" @Html.ActionLink("Lisää uusi", "Create")</p>
 
 @using (Html.BeginForm("Index", "Transactions", FormMethod.Get, new { @class = "form-inline" }))
 {
@@ -104,13 +98,13 @@
             <td style="display:none;">@Html.DisplayFor(modelItem => item.TotalForPortfolio)</td>
             <td style="display:none;">@Html.DisplayFor(modelItem => item.MaaraForPortfolio)</td>
             <td>
-                <a class="btn btn-default" style="border:none" title="Muokkaa" href='~/Transactions/Edit/@item.ID'>
+                <a class="getTransactionId1 btn btn-default" data-toggle="modal" data-transid1="@item.ID" style="border:none" title="Muokkaa">
                     <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="green" xmlns="http://www.w3.org/2000/svg">
                         <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
                         <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
                     </svg>
                 </a>
-                <a class="btn btn-default" style="border:none" title="Poista" href='~/Transactions/Delete/@item.ID'>
+                <a class="getTransactionId2 btn btn-default" data-toggle="modal" data-transid2="@item.ID" style="border:none" title="Poista">
                     <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-trash" fill="red" xmlns="http://www.w3.org/2000/svg">
                         <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
                         <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />

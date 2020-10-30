@@ -289,6 +289,9 @@
     <Content Include="Views\Users\Edit.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Users\AccessDenied.cshtml" />
+    <Content Include="Views\Transactions\_TransactionModalDelete.cshtml" />
+    <Content Include="Views\Transactions\_TransactionModalEditB.cshtml" />
+    <Content Include="Views\Transactions\_TransactionModalEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -276,6 +276,49 @@ namespace StockMonitor_2.Controllers
             return View(transactions);
         }
 
+        public ActionResult _TransactionModalEdit(int? id)
+        {
+            //Session control
+            if (Session["UserName"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Transactions transactions = db.Transactions.Find(id);
+                if (transactions == null)
+                {
+                    return HttpNotFound();
+                }
+                ViewBag.Valuutta = new SelectList(db.Currency, "Currency1", "Currency1", transactions.Valuutta);
+                ViewBag.Kayttaja = new SelectList(db.Users, "KayttajaNimi", "Rooli", transactions.Kayttaja);
+                ViewBag.OstoMyynti = new SelectList(db.TransactionTypes, "Type", "Type", transactions.OstoMyynti);
+                return View(transactions);
+            }
+        }
+
+        // POST: Transactions/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult _TransactionModalEdit([Bind(Include = "ID,Kayttaja,OstoMyynti,Pvm,Yritys,Maara,MaaraForPortfolio,aHinta,Total,TotalForPortfolio,Valuutta,Kurssi,TotalEuros,Kulut,Grandtotal")] Transactions transactions)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(transactions).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            ViewBag.Valuutta = new SelectList(db.Currency, "Currency1", "Currency1", transactions.Valuutta);
+            ViewBag.Kayttaja = new SelectList(db.Users, "KayttajaNimi", "Rooli", transactions.Kayttaja);
+            ViewBag.OstoMyynti = new SelectList(db.TransactionTypes, "Type", "Type", transactions.OstoMyynti);
+            //return View(transactions);
+            return PartialView("_TransactionModalEdit", transactions);
+        }
+
         // GET: Transactions/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -284,7 +327,8 @@ namespace StockMonitor_2.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            else { 
+            else
+            {
                 if (id == null)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -315,7 +359,8 @@ namespace StockMonitor_2.Controllers
             ViewBag.Valuutta = new SelectList(db.Currency, "Currency1", "Currency1", transactions.Valuutta);
             ViewBag.Kayttaja = new SelectList(db.Users, "KayttajaNimi", "Rooli", transactions.Kayttaja);
             ViewBag.OstoMyynti = new SelectList(db.TransactionTypes, "Type", "Type", transactions.OstoMyynti);
-            return View(transactions);
+            //return View(transactions);
+            return PartialView("_TransactionModalEdit", transactions);
         }
 
         // GET: Transactions/Delete/5
@@ -341,8 +386,30 @@ namespace StockMonitor_2.Controllers
             }
         }
 
+        public ActionResult _TransactionModalDelete(int? id)
+        {
+            //Session control
+            if (Session["UserName"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Transactions transactions = db.Transactions.Find(id);
+                if (transactions == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(transactions);
+            }
+        }
+
         // POST: Transactions/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("_TransactionModalDelete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {

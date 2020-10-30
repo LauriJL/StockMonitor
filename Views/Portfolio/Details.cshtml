@@ -33,8 +33,8 @@
                 <div class="col-sm-4">
                     <h2 style="font-weight:bold"><span id='currentPrice'></span></h2>
                     <p>
-                        <button id='changestyle' style="cursor:none;width: 70px; border: solid 1px; border-radius: 5px; font-weight: bold "><span id='change'></span></button>
-                        <button id='changepercentstyle' style="cursor:none;width:70px;border:solid 1px;border-radius:5px;font-weight:bold"><span id='changepercent'></span></button>
+                        <button id='changestyle' style="cursor:none;width: 70px; border: solid 1px; border-radius: 5px;border-color:white; background-color:white;font-weight: bold"><span id='change'></span></button>
+                        <button id='changepercentstyle' style="cursor:none;width:70px;border:solid 1px;border-radius:5px;border-color:white; background-color:white;font-weight:bold"><span id='changepercent'></span></button>
                     </p>
                     @using System.Globalization
                 <p style="font-size:small">Tiedot haettu Yahoo Finance palvelusta kello <b>@DateTime.Now.ToString("h:mm:ss", CultureInfo.CreateSpecificCulture("fi-FI"))</b> (@DateTime.Today.ToString("D", CultureInfo.CreateSpecificCulture("fi-FI"))).
