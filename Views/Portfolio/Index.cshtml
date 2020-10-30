@@ -6,6 +6,10 @@
 @{
     ViewBag.Title = "Salkku";
 }
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+      integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
+      crossorigin="anonymous">
 <br />
 <h2>Salkku</h2>
 
@@ -36,16 +40,16 @@
 
     @foreach (var item in Model)
     {
-        <tr id="valuesrow">
-            <td id="yritys">@Html.DisplayFor(modelItem => item.Yritys)</td>
-            <td>@Html.DisplayFor(modelItem => item.MaaraYht)</td>
-            <td>@Html.DisplayFor(modelItem => item.HankintaArvo)</td>
-            <td id="priceNow"></td>
-            <td id="totalValue"></td>
-            <td id="differenceE"></td>
-            <td id="differenceP"></td>
-            <td><a class="btn btn-success" @Html.ActionLink("Tiedot", "Details", new { id = item.ID })</td>
-        </tr>
+<tr id="valuesrow">
+    <td id="yritys">@Html.DisplayFor(modelItem => item.Yritys)</td>
+    <td>@Html.DisplayFor(modelItem => item.MaaraYht)</td>
+    <td>@Html.DisplayFor(modelItem => item.HankintaArvo)</td>
+    <td id="priceNow"></td>
+    <td id="totalValue"></td>
+    <td id="differenceE"></td>
+    <td id="differenceP"></td>
+    <td><a class="btn btn-success" @Html.ActionLink("Tiedot", "Details", new { id = item.ID })</td>
+</tr>
 
     }
     <tr>
