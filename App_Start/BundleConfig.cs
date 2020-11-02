@@ -26,8 +26,8 @@ namespace StockMonitor_2
                       "~/Scripts/bootstrap.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                       "~/Content/Site.css",
-                      "~/Content/bootstrap.css"));
+                      "~/Content/bootstrap.css",
+                      "~/Content/Site.css"));
                 ;
         }
     }

@@ -74,7 +74,7 @@
 
 </table>
 @using System.Globalization
-<p style="font-size:medium">Osakkeiden hintatiedot haettu Yahoo Finance palvelusta kello <b>@DateTime.Now.ToString("h:mm:ss", CultureInfo.CreateSpecificCulture("fi-FI"))</b> (@DateTime.Today.ToString("D", CultureInfo.CreateSpecificCulture("fi-FI"))). 
+<p style="font-size:medium">Osakkeiden hintatiedot haettu Yahoo Finance palvelusta kello <b>@DateTime.Now.ToString("HH:mm:ss", CultureInfo.CreateSpecificCulture("fi-FI"))</b> (@DateTime.Today.ToString("D", CultureInfo.CreateSpecificCulture("fi-FI"))). 
     <button class="btn btn-default" style="border:none" title="Päivitä tiedot" onClick="window.location.reload();">
         <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-arrow-repeat" fill="green" xmlns="http://www.w3.org/2000/svg">
             <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z" />
@@ -197,7 +197,6 @@ Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageC
         for (var i = 1; i < table.rows.length-1; i++) {
             currentTotalValueSum += Number(parseFloat(table.rows[i].cells[4].innerHTML));
             document.getElementById('currentTotalValueSumOutput').innerHTML = currentTotalValueSum.toFixed(2);
-            //console.log(currentTotalValueSum.toFixed(2));
         }
     }
 
@@ -206,10 +205,18 @@ Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageC
     var num = @Model.Sum(v => v.HankintaArvo).ToString().Replace(',', '.');
     var purchasePriceTotal = num;
     var currentTotalDiffESum = 0;
+    var currentTotalDiffPSum = 0;
+    var diffESum = 0;
+    var diffPSum = 0;
     function currentDiffESum() {
         for (var i = 1; i < table.rows.length-1; i++) {
             currentTotalDiffESum =parseFloat(currentTotalValueSumOutput.innerText).toFixed(2) - purchasePriceTotal
             document.getElementById('diffESumOutput').innerHTML = currentTotalDiffESum.toFixed(2);
+            diffESum = currentTotalDiffESum.toFixed(2);
+            if (diffESum < 0)
+                document.getElementById('diffESumOutput').style.color = 'red'
+            else
+                document.getElementById('diffESumOutput').style.color = 'green'
         }
     }
 
@@ -218,33 +225,21 @@ Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageC
         if (parseFloat(purchasePriceTotal) < parseFloat(currentTotalValueSumOutput.innerText)) {
             currentTotalDiffPSum = (parseFloat(currentTotalValueSumOutput.innerText).toFixed(2) * 100) / parseFloat(purchasePriceTotal).toFixed(2)  - 100
             document.getElementById('diffPSumOutput').innerHTML = currentTotalDiffPSum.toFixed(2) + '%';
+            //document.getElementById('diffESumOutput').style.color = 'red'
+            diffPSum = currentTotalDiffPSum.toFixed(2);
         } else {
-            //currentTotalDiffPSum = 100 * (parseFloat(currentTotalValueSumOutput.innerText).toFixed(2) - parseFloat(purchasePriceTotal).toFixed(2)) / parseFloat(currentTotalValueSumOutput.innerText).toFixed(2)
             currentTotalDiffPSum = (parseFloat(purchasePriceTotal).toFixed(2) * 100 / parseFloat(currentTotalValueSumOutput.innerText).toFixed(2) - 100) * -1;
             document.getElementById('diffPSumOutput').innerHTML = currentTotalDiffPSum.toFixed(2) + '%';
+            //document.getElementById('diffPSumOutput').style.color = 'green'
+            diffPSum = currentTotalDiffPSum.toFixed(2);
         }
-    }
-
-    //Sum row styles
-    var diffESumString = currentTotalDiffESum;
-    var diffPSumString = currentTotalDiffPSum;
-
-    function changeColorDiffETotal() {
-        var sum = diffESumString;
-        if (sum < 0)
-            document.getElementById('diffESumOutput').style.color = 'red'
-        else
-            document.getElementById('diffESumOutput').style.color = 'green'
-    }
-    changeColorDiffETotal();
-
-    function changeColorDiffPTotal() {
-        var sum = diffPSumString;
-        if (sum < 0)
+        if (diffPSum < 0) {
             document.getElementById('diffPSumOutput').style.color = 'red'
-        else
+        }
+        else {
             document.getElementById('diffPSumOutput').style.color = 'green'
+        }      
     }
-    changeColorDiffPTotal();
+
 </script>
 

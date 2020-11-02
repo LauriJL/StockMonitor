@@ -9,12 +9,14 @@
     <div>
         <dl class="dl-horizontal">
             <div class="row">
-                <div class="col-sm-4">
+                <div class="col-sm-5" style="border-right:solid 1px;margin-top:20px">
+
                     <h2><span id='companyName'></span></h2>
                     <h4>(@Html.DisplayFor(model => model.Yritys))</h4>
                 </div>
-                <div class="col-sm-4" style="border-left:solid 1px">
+                <div class="col-sm-4" >
                     <br />
+                    <br/>
                     <dt style="font-size:medium;font-weight:bold">Valuutta</dt>
                     <dd><span id='currency' style="font-size:medium"></span></dd>
                     <dt style="font-size:medium;font-weight:bold">Pörssi</dt>
@@ -30,14 +32,14 @@
         <hr />
         <dl class="dl-horizontal">
             <div class="row">
-                <div class="col-sm-4">
+                <div class="col-sm-5" style="border-right:solid 1px">
                     <h2 style="font-weight:bold"><span id='currentPrice'></span></h2>
                     <p>
-                        <button id='changestyle' style="cursor:none;width: 70px; border: solid 1px; border-radius: 5px;border-color:white; background-color:white;font-weight: bold"><span id='change'></span></button>
-                        <button id='changepercentstyle' style="cursor:none;width:70px;border:solid 1px;border-radius:5px;border-color:white; background-color:white;font-weight:bold"><span id='changepercent'></span></button>
+                        <button id='changestyle' style="cursor:none;width: 70px; border: solid 1px; border-radius: 5px;border-color:white; background-color:white;color:white;font-weight: bold"><span id='change'></span></button>
+                        <button id='changepercentstyle' style="cursor:none;width:70px;border:solid 1px;border-radius:5px;border-color:white; background-color:white;color:white;font-weight:bold"><span id='changepercent'></span></button>
                     </p>
                     @using System.Globalization
-                <p style="font-size:small">Tiedot haettu Yahoo Finance palvelusta kello <b>@DateTime.Now.ToString("h:mm:ss", CultureInfo.CreateSpecificCulture("fi-FI"))</b> (@DateTime.Today.ToString("D", CultureInfo.CreateSpecificCulture("fi-FI"))).
+                <p style="font-size:medium">Tiedot haettu Yahoo Finance palvelusta kello <b>@DateTime.Now.ToString("HH:mm:ss", CultureInfo.CreateSpecificCulture("fi-FI"))</b> (@DateTime.Today.ToString("D", CultureInfo.CreateSpecificCulture("fi-FI"))).
                     <button class="btn btn-default" style="border:none" title="Päivitä tiedot" onClick="window.location.reload();">
                         <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-arrow-repeat" fill="green" xmlns="http://www.w3.org/2000/svg">
                             <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z" />
@@ -46,7 +48,7 @@
                     </button>    
                 </p>
                 </div>
-                <div class="col-sm-3" style="border-left:solid 1px">
+                <div class="col-sm-3" >
                     <dt style="font-size:medium;">Avaus</dt>
                     <dd style="font-size:medium;"><span id='openingPrice'></span></dd>
                     <dt style="font-size:medium;">Ylin</dt>
@@ -191,6 +193,7 @@
         // Storing data in JSON
         var data = await response.json();
         //console.log(data);
+        //date = data["quoteResponse"]["result"][0]["postMarketTime"];
         companyName = data["quoteResponse"]["result"][0]["longName"];
         //country = data["quoteResponse"]["result"][0]["region"];
         currency = data["quoteResponse"]["result"][0]["currency"];
@@ -223,6 +226,13 @@
         let dividendFloat = parseFloat(dividend).toFixed(2);
         eps = data["quoteResponse"]["result"][0]["epsCurrentYear"];
 
+        //Convert timestamp to date
+        //var dateFormattedLong = new Date(date * 1000);
+        //console.log(dateFormattedLong);
+        //console.log(dateFormattedLong.getTimezoneOffset());
+        //var dateFormattedShort = dateFormattedLong.toLocaleDateString();
+
+        //document.getElementById('date').textContent = dateFormatted;
         document.getElementById('companyName').textContent = companyName;
         //document.getElementById('country').textContent = country;
         document.getElementById('currency').textContent = currency;
@@ -248,16 +258,16 @@
     //Styles
     function changeColor() {
         if (changeFloat < 0) {
-            document.getElementById('changepercentstyle').style.backgroundColor = 'rgba(255,192,203,1)';
-            document.getElementById('changepercentstyle').style.borderColor = 'rgba(255,192,203,1)';
-            document.getElementById('changestyle').style.backgroundColor = 'rgba(255,192,203,1)';
-            document.getElementById('changestyle').style.borderColor = 'rgba(255,192,203,1)';
+            document.getElementById('changepercentstyle').style.backgroundColor = 'rgba(183, 15, 15, 1)';
+            document.getElementById('changepercentstyle').style.borderColor = 'rgba(183, 15, 15, 1)';
+            document.getElementById('changestyle').style.backgroundColor = 'rgba(183, 15, 15, 1)';
+            document.getElementById('changestyle').style.borderColor = 'rgba(183, 15, 15, 1)';
         }
         else {
-            document.getElementById('changepercentstyle').style.backgroundColor = 'rgba(123, 239, 178, 1)';
-            document.getElementById('changepercentstyle').style.borderColor = 'rgba(123, 239, 178, 1)';
-            document.getElementById('changestyle').style.backgroundColor = 'rgba(123, 239, 178, 1)';
-            document.getElementById('changestyle').style.borderColor = 'rgba(123, 239, 178, 1)';
+            document.getElementById('changepercentstyle').style.backgroundColor = 'rgba(61, 142, 61, 1)';
+            document.getElementById('changepercentstyle').style.borderColor = 'rgba(61, 142, 61, 1)';
+            document.getElementById('changestyle').style.backgroundColor = 'rgba(61, 142, 61, 1)';
+            document.getElementById('changestyle').style.borderColor = 'rgba(61, 142, 61, 1)';
         }
     }
 
@@ -268,6 +278,7 @@
     var adjustedClose1mo = [];
     var timeStamps1mo = [];
     var timeStamps1moDates = [];
+    var timeStamps1moDatesLocal = [];
     var timeStamps1moString = [];
 
     async function createCharts1() {
@@ -283,11 +294,15 @@
         var data = await response.json();
         //console.log(data);
         let adjustedClose1moRaw = data["chart"]["result"][0]["indicators"]["quote"][0]["close"];
-        //adjustedClose1mo = data["chart"]["result"][0]["indicators"]["quote"][0]["close"];
         //console.log(adjustedClose1moRaw)
+
         //Prices to two-decimal format
         adjustedClose1mo = adjustedClose1moRaw.map(function (element) {
-            return Number(element.toFixed(2));
+            if (element === null) {
+                return element;
+            } else {
+                return Number(element.toFixed(2));
+            }        
         });
         //console.log(adjustedClose1mo);
 
@@ -296,7 +311,9 @@
 
         //Convert timestamps to dates
         timeStamps1moDates = timeStamps1mo.map(function (d) { return new Date(d * 1000) });
-        timeStamps1moString = timeStamps1moDates.map(String);
+        //timeStamps1moDates = timeStamps1mo.map(function (d) { return new Date(d * 1000).toLocaleTimeString() });
+
+        //timeStamps1moString = timeStamps1moDatesLocal.map(String);
         //console.log(timeStamps1moString);
 
         //<--START CHART FOR 1 WEEK -->
@@ -467,7 +484,9 @@
     var adjustedClose10y = []
     var timeStamps10y = [];
     var timeStamps10yDates = [];
+    var timeStamps10yDatesLocal = [];
     var timeStamps10yString = [];
+    var timeStamps10yLocalString = [];
 
     async function createCharts2() {
         // Storing response
@@ -489,15 +508,14 @@
                 return Number(elements.toFixed(2));
             }
             });
-        console.log(adjustedClose10y);
+        //console.log(adjustedClose10y);
 
         timeStamps10y = data["chart"]["result"][0]["timestamp"];
-        console.log(timeStamps10y);
+        //console.log(timeStamps10y);
 
         //Convert timestamps to dates
         timeStamps10yDates = timeStamps10y.map(function (d) { return new Date(d * 1000) });
-        timeStamps10yString = timeStamps10yDates.map(String);
-        //console.log(timeStamps1yDates);
+        //timeStamps10yDates = timeStamps10y.map(function (d) { return new Date(d * 1000).toLocaleString() });
 
         //<--START CHART FOR 6 MONTHS -->
         //Offset dat by six months (180 days)
