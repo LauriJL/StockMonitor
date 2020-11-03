@@ -20,7 +20,7 @@ namespace StockMonitor_2.Models
         public string Kayttaja { get; set; }
         public string OstoMyynti { get; set; }
         [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:d.M.yyyy}")]
+        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:d.M.yyyy}")]
         public System.DateTime Pvm { get; set; }
         public string Yritys { get; set; }
         public int Maara { get; set; }

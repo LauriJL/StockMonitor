@@ -23,5 +23,8 @@ namespace StockMonitor_2.Models
         public Nullable<decimal> ArvoNytAll { get; set; }
         public Nullable<decimal> VoittoTappioE { get; set; }
         public Nullable<decimal> VoittoTappio_ { get; set; }
+
+        public string PvmList { get; set; }
+        public string aHintaList { get; set; }
     }
 }

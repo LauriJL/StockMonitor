@@ -175,6 +175,34 @@ namespace StockMonitor_2.Controllers
                 {
                     return HttpNotFound();
                 }
+
+                //Own transactions
+                string PvmList;
+                string aHintaList;
+                //string ID;
+                //string OstoMyynti;
+                //string Maara;
+
+                List<Transactions> OwnTransactions = new List<Transactions>();
+
+                var ownTransactionsData = from tr in db.Transactions
+                                          select tr;
+
+                foreach (Transactions transactions in ownTransactionsData)
+                {
+                    Transactions oneRow = new Transactions();
+                    //oneRow.ID = transactions.ID;
+                    oneRow.aHinta = transactions.aHinta;
+                    oneRow.Pvm = transactions.Pvm;
+                    OwnTransactions.Add(oneRow);
+                }
+
+                PvmList = "'" + string.Join("','", OwnTransactions.Select(n => n.Pvm).ToList()) + "'";
+                aHintaList = "'" + string.Join("','", OwnTransactions.Select(n => n.aHinta).ToList()) + "'";
+
+                ViewBag.PvmList = PvmList;
+                ViewBag.aHintaList = aHintaList;
+
                 return View(portfolio);
             }
         }

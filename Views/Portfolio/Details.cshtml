@@ -79,6 +79,7 @@
             <li><a data-toggle="tab" href="#1year">1 vuosi</a></li>
             <li><a data-toggle="tab" href="#5years">5 vuotta</a></li>
             <li><a data-toggle="tab" href="#10years">10 vuotta</a></li>
+            <li><a data-toggle="tab" href="#ownTransactions">Omat kaupat</a></li>
         </ul>
     </div>
     <div class="tab-content">
@@ -128,6 +129,14 @@
             <h3>Viimeiset 10 vuotta</h3>
             <div class="col-sm-11">
                 <canvas id="chart10year" style="height:5vw;width:20vw"></canvas>
+            </div>
+        </div>
+        <div id="ownTransactions" class="tab-pane fade">
+            <br />
+            <br />
+            <h3>Kaupat</h3>
+            <div class="col-sm-11">
+                <canvas id="chartOwn" style="height:5vw;width:20vw"></canvas>
             </div>
         </div>
     </div>
@@ -268,7 +277,7 @@
         });
         // Storing data in JSON
         var data = await response.json();
-        console.log(data);
+        //console.log(data);
         adjustedClose1mo = data["chart"]["result"][0]["indicators"]["quote"][0]["close"];
         //console.log(adjustedClose1moRaw)
         //Prices to two-decimal format
@@ -490,7 +499,7 @@
         //console.log(adjustedClose10y);
 
         timeStamps10y = data["chart"]["result"][0]["timestamp"];
-        console.log(timeStamps10y);
+        //console.log(timeStamps10y);
 
         //Convert timestamps to dates
         timeStamps10yDates = timeStamps10y.map(function (d) { return new Date(d * 1000) });
@@ -614,7 +623,7 @@
         });
         //console.log(oneYear);
 
-        //Get last items from prices corresponding to days   
+        //Get last items from prices corresponding to days
         numberOfDays1yr = oneYear.length;
         //console.log(numberOfDays5yr);
 
@@ -716,7 +725,7 @@
         });
         //console.log(fiveYears);
 
-        //Get last items from prices corresponding to days   
+        //Get last items from prices corresponding to days
         numberOfDays5yr = fiveYears.length;
         //console.log(numberOfDays5yr);
 
@@ -872,6 +881,132 @@
         }
         createChart10Year();
         //<--END CHART FOR 10 YEARS -->
+
+        //<--START CHART FOR TRANSACTIONS -->
+        //Draw chart TRANSACTIONS
+        function createChartTransactions() {
+            //Vertical line
+            Chart.defaults.LineWithLine = Chart.defaults.line;
+            Chart.controllers.LineWithLine = Chart.controllers.line.extend({
+                draw: function (ease) {
+                    Chart.controllers.line.prototype.draw.call(this, ease);
+
+                    if (this.chart.tooltip._active && this.chart.tooltip._active.length) {
+                        var activePoint = this.chart.tooltip._active[0],
+                            ctx = this.chart.ctx,
+                            x = activePoint.tooltipPosition().x,
+                            topY = this.chart.legend.bottom,
+                            bottomY = this.chart.chartArea.bottom;
+
+                        // draw line
+                        ctx.save();
+                        ctx.beginPath();
+                        ctx.moveTo(x, topY);
+                        ctx.lineTo(x, bottomY);
+                        ctx.lineWidth = 2;
+                        ctx.strokeStyle = '#07C';
+                        ctx.stroke();
+                        ctx.restore();
+                    }
+                }
+            });
+
+            let transPriceRaw = [@Html.Raw(ViewBag.aHintaList)];
+            let transDateRaw = [@Html.Raw(ViewBag.PvmList)];
+            console.log(transDateRaw);
+            //console.log(transPriceRaw);
+
+            let transDateRaw2 = [];
+            transDateRaw2 = transDateRaw.map(function (x) {
+                for (var i = 0; i < transDateRaw.length; i++) {
+                    transDateRaw[i] = transDateRaw[i].replace(/ 0.00.00/g, ' klo 0.00.0');
+                }
+            });
+            console.log(transDateRaw2);
+
+            let transDateShort = [];
+            transDateShort = transDateRaw.toLocaleString();
+            console.log(transDateShort);
+
+            //console.log(timeStamps10yDates);
+            let timeStamps10yShort = [];
+            timeStamps10yShort = timeStamps10yDates.toLocaleString();
+            console.log(timeStamps10yShort);
+
+            let chartDataBubble = [];
+            transDateRaw.forEach(function (e, i) {
+                chartDataBubble.push({
+                    x: e,
+                    y: parseFloat(transPriceRaw[i]).toFixed(2),
+                });
+            });
+            console.log(chartDataBubble);
+
+
+            let chartLine = [];
+            timeStamps10yDates.forEach(function (e, i) {
+                chartLine.push({
+                    x: e,
+                    y: parseFloat(adjustedClose10y[i]),
+                });
+            });
+            //console.log(chartLine);
+ 
+            var mixedChart = {
+                labels: timeStamps10yDates,
+                datasets: [{
+                    type: 'LineWithLine',
+                    label: 'Kurssikehitys 10v',
+                    data: chartLine,
+                    spanGaps: true,
+                    pointRadius: 0,
+                    fill: false,
+                    borderColor: [
+                        'rgba(0,0,225, 1)'
+                    ],
+                    borderWidth: 1,
+                    order: 1,                   
+                },
+                    {
+                        labels: timeStamps10yDates,
+                        type: 'bubble',
+                        label: 'Omat kaupat',
+                        data: chartDataBubble,
+                        radius: 5,
+                        backgroundColor: "#FF6384",
+                        hoverBackgroundColor: "#FF6384"
+                },
+                ]
+            };
+
+            var ctx = document.getElementById('chartOwn').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: mixedChart,
+                    responsive: true,
+                title: {
+                    display: true,
+                    text: 'Transactions'
+                },
+                options: {
+                    scales: {
+                        //yAxes: [{
+                        //    ticks: {
+                        //        // Include a dollar sign with the ticks
+                        //        callback: function (value) {
+                        //            return '$' + value;
+                        //        }
+                        //    }
+                        //}],
+                        xAxes: [{
+                            display: false
+                        }]
+                    },
+                }
+            });
+        }
+        createChartTransactions();
+        //<--END CHART FOR TRANSACTIONS -->
 
     }
     createCharts2();
