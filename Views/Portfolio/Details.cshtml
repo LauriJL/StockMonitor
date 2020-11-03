@@ -39,16 +39,17 @@
                         <button id='changepercentstyle' style="cursor:none;width:70px;border:solid 1px;border-radius:5px;border-color:white; background-color:white;color:white;font-weight:bold"><span id='changepercent'></span></button>
                     </p>
                     @using System.Globalization
-                <p style="font-size:medium">Tiedot haettu Yahoo Finance palvelusta kello <b>@DateTime.Now.ToString("HH:mm:ss", CultureInfo.CreateSpecificCulture("fi-FI"))</b> (@DateTime.Today.ToString("D", CultureInfo.CreateSpecificCulture("fi-FI"))).
-                    <button class="btn btn-default" style="border:none" title="Päivitä tiedot" onClick="window.location.reload();">
-                        <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-arrow-repeat" fill="green" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z" />
-                            <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z" />
-                        </svg>
-                    </button>    
-                </p>
+                    <p style="font-size:medium">
+                        Tiedot haettu Yahoo Finance palvelusta kello <b>@DateTime.Now.ToString("HH:mm:ss", CultureInfo.CreateSpecificCulture("fi-FI"))</b> (@DateTime.Today.ToString("D", CultureInfo.CreateSpecificCulture("fi-FI"))).
+                        <button class="btn btn-default" style="border:none" title="Päivitä tiedot" onClick="window.location.reload();">
+                            <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-arrow-repeat" fill="green" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z" />
+                                <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z" />
+                            </svg>
+                        </button>
+                    </p>
                 </div>
-                <div class="col-sm-3" >
+                <div class="col-sm-3">
                     <dt style="font-size:medium;">Avaus</dt>
                     <dd style="font-size:medium;"><span id='openingPrice'></span></dd>
                     <dt style="font-size:medium;">Ylin</dt>
@@ -61,18 +62,16 @@
                     <dd style="font-size:medium;"><span id='previousClose'></span></dd>
                 </div>
                 <div class="col-sm-3">
-                    <dt style="font-size:medium;font-weight:bold">P/E</dt>
+                    <dt style="font-size:medium;font-weight:bold" href="#" data-toggle="tooltip" title="Price per Earnings: Osakkeen hinta jaettuna osakekohtaisella tuloksella.">P/E</dt>
                     <dd><span id='pe' style="font-size:medium"></span></dd>
-                    <dt style="font-size:medium;font-weight:bold">PEG</dt>
+                    <dt style="font-size:medium;font-weight:bold" href="#" data-toggle="tooltip" title="Price to Earnings to Growth: Osakkeen hinta suhteessa sen tuloskasvunopeuteen.">PEG</dt>
                     <dd><span id='peg' style="font-size:medium"></span></dd>
-                    <dt style="font-size:medium;font-weight:bold">P/S</dt>
+                    <dt style="font-size:medium;font-weight:bold" href="#" data-toggle="tooltip" title="Price to Sales: Osakekannan markkina-arvon ja pörssiyhtiön kerryttämän liikevaihdon välisnen suhde.">P/S</dt>
                     <dd><span id='ps' style="font-size:medium"></span></dd>
-                    <dt style="font-size:medium;font-weight:bold">P/B</dt>
+                    <dt style="font-size:medium;font-weight:bold" href="#" data-toggle="tooltip" title="Price to Book value: Yrityksen markkina-arvo suhteessa sen taseen omaan pääomaan.">P/B</dt>
                     <dd><span id='pb' style="font-size:medium"></span></dd>
                     <dt style="font-size:medium;font-weight:bold">Osinko per osake</dt>
                     <dd><span id='dividend' style="font-size:medium"></span></dd>
-                    @*<dt style="font-size:medium;font-weight:bold">EPS</dt>
-                        <dd><span id='eps' style="font-size:medium"></span></dd>*@
                 </div>
             </div>
         </dl>
@@ -273,7 +272,7 @@
 
     //<--CHARTS -->
 
-    //<--GET DATA ANDCREATE CHARTS-->
+    //<--GET DATA AND CREATE CHARTS-->
     //Charts for 1 week and 1 month
     var adjustedClose1mo = [];
     var timeStamps1mo = [];
