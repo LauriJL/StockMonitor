@@ -5,12 +5,8 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="3a6e941b16364252800f39eb0494ad26" Name="Diagram1">
-        <EntityTypeShape EntityType="StockMonitorModel.Company" Width="1.5" PointX="5.75" PointY="8" IsExpanded="true" />
-        <EntityTypeShape EntityType="StockMonitorModel.Country" Width="1.5" PointX="7.75" PointY="2" IsExpanded="true" />
         <EntityTypeShape EntityType="StockMonitorModel.Currency" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="StockMonitorModel.Exchange" Width="1.5" PointX="7.75" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="StockMonitorModel.IndustrySectors" Width="1.5" PointX="7.75" PointY="8" IsExpanded="true" />
-        <EntityTypeShape EntityType="StockMonitorModel.Portfolio" Width="1.5" PointX="0.75" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockMonitorModel.Portfolio" Width="1.5" PointX="7.5" PointY="5.25" IsExpanded="true" />
         <EntityTypeShape EntityType="StockMonitorModel.Transactions" Width="1.5" PointX="5.25" PointY="2.25" IsExpanded="true" />
         <EntityTypeShape EntityType="StockMonitorModel.TransactionTypes" Width="1.5" PointX="3" PointY="6.875" IsExpanded="true" />
         <EntityTypeShape EntityType="StockMonitorModel.UserRoles" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />

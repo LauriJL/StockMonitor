@@ -157,11 +157,10 @@ namespace StockMonitor_2.Controllers
         {
             var PortTrans = from t in db.Transactions
                             join p in db.Portfolio on t.Yritys equals p.Yritys
-                            join c in db.Company on t.Yritys equals c.Symbol
-                            //where p.Yritys.Contains("NVDA")
+                            //join c in db.Company on t.Yritys equals c.Symbol
                             select new TransactionsPortfolio
                             {
-                                ID = c.ID,
+                                ID = t.ID,
                                 Yritys = t.Yritys,
                                 Pvm = t.Pvm,
                                 OstoMyynti = t.OstoMyynti,

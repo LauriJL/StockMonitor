@@ -4,45 +4,13 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="StockMonitorModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Company">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Symbol" Type="nvarchar" MaxLength="20" Nullable="false" />
-          <Property Name="Nimi" Type="nvarchar" MaxLength="50" />
-          <Property Name="Pörssi" Type="nvarchar" MaxLength="10" />
-          <Property Name="Maa" Type="nvarchar" MaxLength="25" />
-          <Property Name="Toimiala" Type="nvarchar" MaxLength="30" />
-        </EntityType>
-        <EntityType Name="Country">
-          <Key>
-            <PropertyRef Name="Maa" />
-          </Key>
-          <Property Name="Maa" Type="nvarchar" MaxLength="25" Nullable="false" />
-          <Property Name="Alue" Type="nvarchar" MaxLength="25" />
-        </EntityType>
+    <Schema Namespace="StockMonitorModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Currency">
           <Key>
             <PropertyRef Name="Currency" />
           </Key>
-          <Property Name="Currency" Type="nvarchar" MaxLength="3" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Exchange">
-          <Key>
-            <PropertyRef Name="Symbol" />
-          </Key>
-          <Property Name="Symbol" Type="nvarchar" MaxLength="10" Nullable="false" />
-          <Property Name="Nimi" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Maa" Type="nvarchar" MaxLength="20" Nullable="false" />
-        </EntityType>
-        <EntityType Name="IndustrySectors">
-          <Key>
-            <PropertyRef Name="Sector" />
-          </Key>
-          <Property Name="Sector" Type="nvarchar" MaxLength="30" Nullable="false" />
-          <Property Name="Industry" Type="nvarchar" MaxLength="30" />
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Currency" Type="nvarchar" MaxLength="5" Nullable="false" />
         </EntityType>
         <EntityType Name="Portfolio">
           <Key>
@@ -52,11 +20,7 @@
           <Property Name="Kayttaja" Type="nvarchar" MaxLength="20" />
           <Property Name="Yritys" Type="nvarchar" MaxLength="20" />
           <Property Name="MaaraYht" Type="int" />
-          <Property Name="HankintaArvo" Type="money" />
-          <Property Name="aHintaNyt" Type="money" />
-          <Property Name="ArvoNytAll" Type="money" StoreGeneratedPattern="Computed" />
-          <Property Name="VoittoTappioE" Type="money" StoreGeneratedPattern="Computed" />
-          <Property Name="VoittoTappio%" Type="money" StoreGeneratedPattern="Computed" />
+          <Property Name="HankintaArvo" Type="decimal" Precision="19" Scale="2" />
         </EntityType>
         <EntityType Name="Transactions">
           <Key>
@@ -64,56 +28,45 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Kayttaja" Type="nvarchar" MaxLength="20" Nullable="false" />
-          <Property Name="OstoMyynti" Type="nvarchar" MaxLength="6" Nullable="false" />
+          <Property Name="OstoMyynti" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="Pvm" Type="date" Nullable="false" />
           <Property Name="Yritys" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="Maara" Type="int" Nullable="false" />
           <Property Name="MaaraForPortfolio" Type="int" StoreGeneratedPattern="Computed" />
-          <Property Name="aHinta" Type="money" Nullable="false" />
-          <Property Name="Total" Type="money" StoreGeneratedPattern="Computed" />
-          <Property Name="TotalForPortfolio" Type="money" StoreGeneratedPattern="Computed" />
-          <Property Name="Valuutta" Type="nvarchar" MaxLength="3" Nullable="false" />
-          <Property Name="Kurssi" Type="money" />
-          <Property Name="TotalEuros" Type="money" StoreGeneratedPattern="Computed" />
-          <Property Name="Kulut" Type="money" Nullable="false" />
-          <Property Name="Grandtotal" Type="money" StoreGeneratedPattern="Computed" />
+          <Property Name="aHinta" Type="decimal" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Total" Type="decimal" Precision="38" Scale="2" StoreGeneratedPattern="Computed" />
+          <Property Name="TotalForPortfolio" Type="decimal" Precision="38" Scale="2" StoreGeneratedPattern="Computed" />
+          <Property Name="Valuutta" Type="nvarchar" MaxLength="5" Nullable="false" />
+          <Property Name="Kurssi" Type="decimal" Precision="19" Scale="4" />
+          <Property Name="TotalEuros" Type="decimal" Precision="38" Scale="2" StoreGeneratedPattern="Computed" />
+          <Property Name="Kulut" Type="decimal" Precision="19" Scale="2" Nullable="false" />
+          <Property Name="Grandtotal" Type="decimal" Precision="38" Scale="2" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="TransactionTypes">
           <Key>
             <PropertyRef Name="Type" />
           </Key>
-          <Property Name="Type" Type="nvarchar" MaxLength="6" Nullable="false" />
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="10" Nullable="false" />
         </EntityType>
         <EntityType Name="UserRoles">
           <Key>
             <PropertyRef Name="Role" />
           </Key>
-          <Property Name="Role" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Role" Type="nvarchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
             <PropertyRef Name="KayttajaNimi" />
           </Key>
           <Property Name="KayttajaNimi" Type="nvarchar" MaxLength="20" Nullable="false" />
-          <Property Name="Rooli" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Rooli" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="Etunimi" Type="nvarchar" MaxLength="10" />
           <Property Name="Sukunimi" Type="nvarchar" MaxLength="30" />
           <Property Name="Salasana" Type="nvarchar" MaxLength="10" />
           <Property Name="Sahkoposti" Type="nvarchar" MaxLength="30" />
         </EntityType>
-        <Association Name="FK__Transacti__Kaytt__6477ECF3">
-          <End Role="Users" Type="Self.Users" Multiplicity="1" />
-          <End Role="Transactions" Type="Self.Transactions" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="KayttajaNimi" />
-            </Principal>
-            <Dependent Role="Transactions">
-              <PropertyRef Name="Kayttaja" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Transacti__OstoM__44FF419A">
+        <Association Name="FK__Transacti__OstoM__607251E5">
           <End Role="TransactionTypes" Type="Self.TransactionTypes" Multiplicity="1" />
           <End Role="Transactions" Type="Self.Transactions" Multiplicity="*" />
           <ReferentialConstraint>
@@ -125,7 +78,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Transacti__Valuu__4CA06362">
+        <Association Name="FK__Transacti__Valuu__531856C7">
           <End Role="Currency" Type="Self.Currency" Multiplicity="1" />
           <End Role="Transactions" Type="Self.Transactions" Multiplicity="*" />
           <ReferentialConstraint>
@@ -137,7 +90,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Users__Rooli__6754599E">
+        <Association Name="FK__Users__Rooli__6442E2C9">
           <End Role="UserRoles" Type="Self.UserRoles" Multiplicity="1" />
           <End Role="Users" Type="Self.Users" Multiplicity="*" />
           <ReferentialConstraint>
@@ -150,77 +103,36 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="StockMonitorModelStoreContainer">
-          <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Currency" EntityType="Self.Currency" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Exchange" EntityType="Self.Exchange" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="IndustrySectors" EntityType="Self.IndustrySectors" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Portfolio" EntityType="Self.Portfolio" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Transactions" EntityType="Self.Transactions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TransactionTypes" EntityType="Self.TransactionTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRoles" EntityType="Self.UserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Transacti__Kaytt__6477ECF3" Association="Self.FK__Transacti__Kaytt__6477ECF3">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="Transactions" EntitySet="Transactions" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Transacti__OstoM__44FF419A" Association="Self.FK__Transacti__OstoM__44FF419A">
+          <AssociationSet Name="FK__Transacti__OstoM__607251E5" Association="Self.FK__Transacti__OstoM__607251E5">
             <End Role="TransactionTypes" EntitySet="TransactionTypes" />
             <End Role="Transactions" EntitySet="Transactions" />
           </AssociationSet>
-          <AssociationSet Name="FK__Transacti__Valuu__4CA06362" Association="Self.FK__Transacti__Valuu__4CA06362">
+          <AssociationSet Name="FK__Transacti__Valuu__531856C7" Association="Self.FK__Transacti__Valuu__531856C7">
             <End Role="Currency" EntitySet="Currency" />
             <End Role="Transactions" EntitySet="Transactions" />
           </AssociationSet>
-          <AssociationSet Name="FK__Users__Rooli__6754599E" Association="Self.FK__Users__Rooli__6754599E">
+          <AssociationSet Name="FK__Users__Rooli__6442E2C9" Association="Self.FK__Users__Rooli__6442E2C9">
             <End Role="UserRoles" EntitySet="UserRoles" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="StockMonitorModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Company">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Symbol" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Nimi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Pörssi" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="Maa" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
-          <Property Name="Toimiala" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="Country">
-          <Key>
-            <PropertyRef Name="Maa" />
-          </Key>
-          <Property Name="Maa" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Alue" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="Currency">
           <Key>
             <PropertyRef Name="Currency1" />
           </Key>
-          <Property Name="Currency1" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Currency1" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Transactions" Relationship="Self.FK__Transacti__Valuu__4CA06362" FromRole="Currency" ToRole="Transactions" />
-        </EntityType>
-        <EntityType Name="Exchange">
-          <Key>
-            <PropertyRef Name="Symbol" />
-          </Key>
-          <Property Name="Symbol" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Nimi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Maa" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-        </EntityType>
-        <EntityType Name="IndustrySectors">
-          <Key>
-            <PropertyRef Name="Sector" />
-          </Key>
-          <Property Name="Sector" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Industry" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="ID" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Portfolio">
           <Key>
@@ -230,11 +142,7 @@
           <Property Name="Kayttaja" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="Yritys" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="MaaraYht" Type="Int32" />
-          <Property Name="HankintaArvo" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="aHintaNyt" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="ArvoNytAll" Type="Decimal" Precision="19" Scale="4" annotation:StoreGeneratedPattern="Computed" />
-          <Property Name="VoittoTappioE" Type="Decimal" Precision="19" Scale="4" annotation:StoreGeneratedPattern="Computed" />
-          <Property Name="VoittoTappio_" Type="Decimal" Precision="19" Scale="4" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="HankintaArvo" Type="Decimal" Precision="19" Scale="2" />
         </EntityType>
         <EntityType Name="Transactions">
           <Key>
@@ -242,19 +150,19 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Kayttaja" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="OstoMyynti" Type="String" MaxLength="6" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="OstoMyynti" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Pvm" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Yritys" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Maara" Type="Int32" Nullable="false" />
           <Property Name="MaaraForPortfolio" Type="Int32" annotation:StoreGeneratedPattern="Computed" />
-          <Property Name="aHinta" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="Total" Type="Decimal" Precision="19" Scale="4" annotation:StoreGeneratedPattern="Computed" />
-          <Property Name="TotalForPortfolio" Type="Decimal" Precision="19" Scale="4" annotation:StoreGeneratedPattern="Computed" />
-          <Property Name="Valuutta" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="aHinta" Type="Decimal" Precision="38" Scale="2" Nullable="false" />
+          <Property Name="Total" Type="Decimal" Precision="38" Scale="2" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="TotalForPortfolio" Type="Decimal" Precision="38" Scale="2" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="Valuutta" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Kurssi" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="TotalEuros" Type="Decimal" Precision="19" Scale="4" annotation:StoreGeneratedPattern="Computed" />
-          <Property Name="Kulut" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="Grandtotal" Type="Decimal" Precision="19" Scale="4" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="TotalEuros" Type="Decimal" Precision="38" Scale="2" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="Kulut" Type="Decimal" Precision="19" Scale="2" Nullable="false" />
+          <Property Name="Grandtotal" Type="Decimal" Precision="38" Scale="2" annotation:StoreGeneratedPattern="Computed" />
           <NavigationProperty Name="Currency" Relationship="Self.FK__Transacti__Valuu__4CA06362" FromRole="Transactions" ToRole="Currency" />
           <NavigationProperty Name="Users" Relationship="Self.FK__Transacti__Kaytt__6477ECF3" FromRole="Transactions" ToRole="Users" />
           <NavigationProperty Name="TransactionTypes" Relationship="Self.FK__Transacti__OstoM__44FF419A" FromRole="Transactions" ToRole="TransactionTypes" />
@@ -263,14 +171,15 @@
           <Key>
             <PropertyRef Name="Type" />
           </Key>
-          <Property Name="Type" Type="String" MaxLength="6" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Type" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Transactions" Relationship="Self.FK__Transacti__OstoM__44FF419A" FromRole="TransactionTypes" ToRole="Transactions" />
+          <Property Name="ID" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="UserRoles">
           <Key>
             <PropertyRef Name="Role" />
           </Key>
-          <Property Name="Role" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Role" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Users" Relationship="Self.FK__Users__Rooli__6754599E" FromRole="UserRoles" ToRole="Users" />
         </EntityType>
         <EntityType Name="Users">
@@ -278,7 +187,7 @@
             <PropertyRef Name="KayttajaNimi" />
           </Key>
           <Property Name="KayttajaNimi" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Rooli" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Rooli" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Etunimi" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="Sukunimi" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="Salasana" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
@@ -335,11 +244,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="StockMonitorEntities11" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Company" EntityType="Self.Company" />
-          <EntitySet Name="Country" EntityType="Self.Country" />
           <EntitySet Name="Currency" EntityType="Self.Currency" />
-          <EntitySet Name="Exchange" EntityType="Self.Exchange" />
-          <EntitySet Name="IndustrySectors" EntityType="Self.IndustrySectors" />
           <EntitySet Name="Portfolio" EntityType="Self.Portfolio" />
           <EntitySet Name="Transactions" EntityType="Self.Transactions" />
           <EntitySet Name="TransactionTypes" EntityType="Self.TransactionTypes" />
@@ -368,47 +273,11 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="StockMonitorModelStoreContainer" CdmEntityContainer="StockMonitorEntities11">
-          <EntitySetMapping Name="Company">
-            <EntityTypeMapping TypeName="StockMonitorModel.Company">
-              <MappingFragment StoreEntitySet="Company">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Symbol" ColumnName="Symbol" />
-                <ScalarProperty Name="Nimi" ColumnName="Nimi" />
-                <ScalarProperty Name="Pörssi" ColumnName="Pörssi" />
-                <ScalarProperty Name="Maa" ColumnName="Maa" />
-                <ScalarProperty Name="Toimiala" ColumnName="Toimiala" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Country">
-            <EntityTypeMapping TypeName="StockMonitorModel.Country">
-              <MappingFragment StoreEntitySet="Country">
-                <ScalarProperty Name="Maa" ColumnName="Maa" />
-                <ScalarProperty Name="Alue" ColumnName="Alue" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Currency">
             <EntityTypeMapping TypeName="StockMonitorModel.Currency">
               <MappingFragment StoreEntitySet="Currency">
+                <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Currency1" ColumnName="Currency" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Exchange">
-            <EntityTypeMapping TypeName="StockMonitorModel.Exchange">
-              <MappingFragment StoreEntitySet="Exchange">
-                <ScalarProperty Name="Symbol" ColumnName="Symbol" />
-                <ScalarProperty Name="Nimi" ColumnName="Nimi" />
-                <ScalarProperty Name="Maa" ColumnName="Maa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="IndustrySectors">
-            <EntityTypeMapping TypeName="StockMonitorModel.IndustrySectors">
-              <MappingFragment StoreEntitySet="IndustrySectors">
-                <ScalarProperty Name="Sector" ColumnName="Sector" />
-                <ScalarProperty Name="Industry" ColumnName="Industry" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -420,11 +289,7 @@
                 <ScalarProperty Name="Yritys" ColumnName="Yritys" />
                 <ScalarProperty Name="MaaraYht" ColumnName="MaaraYht" />
                 <ScalarProperty Name="HankintaArvo" ColumnName="HankintaArvo" />
-                <ScalarProperty Name="aHintaNyt" ColumnName="aHintaNyt" />
-                <ScalarProperty Name="ArvoNytAll" ColumnName="ArvoNytAll" />
-                <ScalarProperty Name="VoittoTappioE" ColumnName="VoittoTappioE" />
-                <ScalarProperty Name="VoittoTappio_" ColumnName="VoittoTappio%" />
-              </MappingFragment>
+                </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Transactions">
@@ -451,6 +316,7 @@
           <EntitySetMapping Name="TransactionTypes">
             <EntityTypeMapping TypeName="StockMonitorModel.TransactionTypes">
               <MappingFragment StoreEntitySet="TransactionTypes">
+                <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
               </MappingFragment>
             </EntityTypeMapping>

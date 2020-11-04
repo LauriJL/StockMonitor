@@ -31,31 +31,31 @@
         <th>@Html.ActionLink("Yritys", "Index", new { sortOrder = ViewBag.YritysSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
         <th>@Html.ActionLink("Osakkeiden määrä yhteensä", "Index", new { sortOrder = ViewBag.OsakkeetYhtSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
         <th>@Html.ActionLink("Hankinta-arvo yhteensä", "Index", new { sortOrder = ViewBag.HankintaYhtSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
-        <th>@Html.ActionLink("Osakkeen hinta nyt", "Index", new { sortOrder = ViewBag.OsakeNytSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
-        <th>@Html.ActionLink("Omistuksen arvo nyt", "Index", new { sortOrder = ViewBag.OmistusNytSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
-        <th>@Html.ActionLink("Voitto/tappio", "Index", new { sortOrder = ViewBag.VoittoTappioSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
-        <th>@Html.ActionLink("Voitto/tappio %", "Index", new { sortOrder = ViewBag.VoittoTappioProsSortParam, currentFilter1 = ViewBag.currentFilter1 })</th>
+        <th>Osakkeen hinta nyt</th>
+        <th>Omistuksen arvo nyt</th>
+        <th>Voitto/tappio</th>
+        <th>Voitto/tappio %</th>
         <th></th>
     </tr>
 
     @foreach (var item in Model)
     {
-<tr id="valuesrow">
-    <td id="yritys">@Html.DisplayFor(modelItem => item.Yritys)</td>
-    <td>@Html.DisplayFor(modelItem => item.MaaraYht)</td>
-    <td>@Html.DisplayFor(modelItem => item.HankintaArvo)</td>
-    <td id="priceNow"></td>
-    <td id="totalValue"></td>
-    <td id="differenceE"></td>
-    <td id="differenceP"></td>
-    @*<td><a class="btn btn-success" @Html.ActionLink("Tiedot", "Details", new { id = item.ID })</td>*@
-    <td><a class="btn btn-default" style="border:none" title="Tiedot" href='~/Portfolio/Details/@item.ID'>
-            <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-info-circle" fill="green" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                <path d="M8.93 6.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588z" />
-                <circle cx="8" cy="4.5" r="1" />
-            </svg></a></td>
-</tr>
+    <tr id="valuesrow">
+        <td id="yritys">@Html.DisplayFor(modelItem => item.Yritys)</td>
+        <td>@Html.DisplayFor(modelItem => item.MaaraYht)</td>
+        <td>@Html.DisplayFor(modelItem => item.HankintaArvo)</td>
+        <td id="priceNow"></td>
+        <td id="totalValue"></td>
+        <td id="differenceE"></td>
+        <td id="differenceP"></td>
+        @*<td><a class="btn btn-success" @Html.ActionLink("Tiedot", "Details", new { id = item.ID })</td>*@
+        <td><a class="btn btn-default" style="border:none" title="Tiedot" href='~/Portfolio/Details/@item.ID'>
+                <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-info-circle" fill="green" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                    <path d="M8.93 6.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588z" />
+                    <circle cx="8" cy="4.5" r="1" />
+                </svg></a></td>
+    </tr>
 
     }
     <tr>

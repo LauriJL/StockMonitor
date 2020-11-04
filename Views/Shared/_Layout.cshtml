@@ -13,7 +13,7 @@
         {
             Html.RenderPartial("_Navbar_LoggedOut");
         }
-        else if (Session["UserName"] != null && Session["Role"].Equals("SuperUser"))
+        else if (Session["UserName"] != null && Session["Role"].Equals("Pääkäyttäjä"))
         {
             Html.RenderPartial("_Navbar_LoggedIn_SU");
         }

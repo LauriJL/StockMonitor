@@ -1,47 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="StockMonitorModelStoreContainer" CdmEntityContainer="StockMonitorEntities11">
-    <EntitySetMapping Name="Company">
-      <EntityTypeMapping TypeName="StockMonitorModel.Company">
-        <MappingFragment StoreEntitySet="Company">
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="Symbol" ColumnName="Symbol" />
-          <ScalarProperty Name="Nimi" ColumnName="Nimi" />
-          <ScalarProperty Name="Pörssi" ColumnName="Pörssi" />
-          <ScalarProperty Name="Maa" ColumnName="Maa" />
-          <ScalarProperty Name="Toimiala" ColumnName="Toimiala" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Country">
-      <EntityTypeMapping TypeName="StockMonitorModel.Country">
-        <MappingFragment StoreEntitySet="Country">
-          <ScalarProperty Name="Maa" ColumnName="Maa" />
-          <ScalarProperty Name="Alue" ColumnName="Alue" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Currency">
       <EntityTypeMapping TypeName="StockMonitorModel.Currency">
         <MappingFragment StoreEntitySet="Currency">
+          <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Currency1" ColumnName="Currency" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Exchange">
-      <EntityTypeMapping TypeName="StockMonitorModel.Exchange">
-        <MappingFragment StoreEntitySet="Exchange">
-          <ScalarProperty Name="Symbol" ColumnName="Symbol" />
-          <ScalarProperty Name="Nimi" ColumnName="Nimi" />
-          <ScalarProperty Name="Maa" ColumnName="Maa" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="IndustrySectors">
-      <EntityTypeMapping TypeName="StockMonitorModel.IndustrySectors">
-        <MappingFragment StoreEntitySet="IndustrySectors">
-          <ScalarProperty Name="Sector" ColumnName="Sector" />
-          <ScalarProperty Name="Industry" ColumnName="Industry" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -53,10 +17,6 @@
           <ScalarProperty Name="Yritys" ColumnName="Yritys" />
           <ScalarProperty Name="MaaraYht" ColumnName="MaaraYht" />
           <ScalarProperty Name="HankintaArvo" ColumnName="HankintaArvo" />
-          <ScalarProperty Name="aHintaNyt" ColumnName="aHintaNyt" />
-          <ScalarProperty Name="ArvoNytAll" ColumnName="ArvoNytAll" />
-          <ScalarProperty Name="VoittoTappioE" ColumnName="VoittoTappioE" />
-          <ScalarProperty Name="VoittoTappio_" ColumnName="VoittoTappio%" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -84,6 +44,7 @@
     <EntitySetMapping Name="TransactionTypes">
       <EntityTypeMapping TypeName="StockMonitorModel.TransactionTypes">
         <MappingFragment StoreEntitySet="TransactionTypes">
+          <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Type" ColumnName="Type" />
         </MappingFragment>
       </EntityTypeMapping>

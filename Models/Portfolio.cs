@@ -19,9 +19,5 @@ namespace StockMonitor_2.Models
         public string Yritys { get; set; }
         public Nullable<int> MaaraYht { get; set; }
         public Nullable<decimal> HankintaArvo { get; set; }
-        public Nullable<decimal> aHintaNyt { get; set; }
-        public Nullable<decimal> ArvoNytAll { get; set; }
-        public Nullable<decimal> VoittoTappioE { get; set; }
-        public Nullable<decimal> VoittoTappio_ { get; set; }
     }
 }

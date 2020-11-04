@@ -9,12 +9,30 @@
       crossorigin="anonymous">
 
 @section scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    @*Login check*@
     <script type="text/javascript">
         $(window).on('load', function () {
             if (@ViewBag.LoginError == 1) {
                 $('#LoginRuutu').modal('show'); }
         });
     </script>
+
+    @*Show password*@
+    <script type="text/javascript">
+        $(function () {
+            $("#showPassword").change(function () {
+                var checked = $(this).is(":checked");
+                if (checked) {
+                    $("#Salasana").attr("type", "text");
+                } else {
+                    $("#Salasana").attr("type", "Password");
+                }
+            });
+        });
+    </script>
+
 }
 
 <div class="jumbotron">

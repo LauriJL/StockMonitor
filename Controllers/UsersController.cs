@@ -18,7 +18,7 @@ namespace StockMonitor_2.Views
         public ActionResult Index()
         {
             //Session control
-            if (!Session["Role"].Equals("SuperUser"))
+            if (!Session["Role"].Equals("Pääkäyttäjä"))
             {
                 return RedirectToAction("AccessDenied", "Users");
             }
@@ -38,7 +38,7 @@ namespace StockMonitor_2.Views
         public ActionResult Details(string id)
         {
             //Session control
-            if (!Session["Role"].Equals("SuperUser"))
+            if (!Session["Role"].Equals("Pääkäyttäjä"))
             {
                 return RedirectToAction("AccessDenied", "Users");
             }
@@ -61,7 +61,7 @@ namespace StockMonitor_2.Views
         public ActionResult Create()
         {
             //Session control
-            if (!Session["Role"].Equals("SuperUser"))
+            if (!Session["Role"].Equals("Pääkäyttäjä"))
             {
                 return RedirectToAction("AccessDenied", "Users");
             }
@@ -92,7 +92,7 @@ namespace StockMonitor_2.Views
         public ActionResult Edit(string id)
         {
             //Session control
-            if (!Session["Role"].Equals("SuperUser"))
+            if (!Session["Role"].Equals("Pääkäyttäjä"))
             {
                 return RedirectToAction("AccessDenied", "Users");
             }
@@ -131,7 +131,7 @@ namespace StockMonitor_2.Views
         public ActionResult Delete(string id)
         {
             //Session control
-            if (!Session["Role"].Equals("SuperUser"))
+            if (!Session["Role"].Equals("Pääkäyttäjä"))
             {
                 return RedirectToAction("AccessDenied", "Users");
             }

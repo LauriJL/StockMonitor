@@ -25,11 +25,7 @@ namespace StockMonitor_2.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Company> Company { get; set; }
-        public virtual DbSet<Country> Country { get; set; }
         public virtual DbSet<Currency> Currency { get; set; }
-        public virtual DbSet<Exchange> Exchange { get; set; }
-        public virtual DbSet<IndustrySectors> IndustrySectors { get; set; }
         public virtual DbSet<Portfolio> Portfolio { get; set; }
         public virtual DbSet<Transactions> Transactions { get; set; }
         public virtual DbSet<TransactionTypes> TransactionTypes { get; set; }
