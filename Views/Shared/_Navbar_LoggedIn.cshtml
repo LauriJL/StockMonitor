@@ -1,4 +1,28 @@
-﻿<div class="navbar navbar-inverse navbar-fixed-top">
+﻿<nav class="navbar navbar-inverse navbar-fixed-top" style="margin-left:1vw;margin-right:1vw;height:80px;padding-top:0.5vw;padding-bottom:0.5vw;border-radius:8px">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" style="font-size:2vw;color:white" href="#">StockMonitor</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="btn" style="font-size:1vw;">@Html.ActionLink("Salkku", "Index", "Portfolio")</li>
+            <li class="btn" style="font-size:1vw;">@Html.ActionLink("Kaupat", "Index", "Transactions")</li>
+            <li class="btn">
+                @using System.Globalization
+                @{
+                    string loggausInfo = "Olet kirjatunut käyttäjänä " + Session["UserName"];
+                }
+                <a class="nav-link" style="font-size: 1vw; color: darkorange">@loggausInfo<span class="sr-only">(current)</span></a>
+
+            </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right" style="margin-right:1vw">
+            <li><a href="/Home/Logout" class="btn btn-danger" style="color:white; height:1vw;display: table-cell;vertical-align:middle;">Kirjaudu ulos</a></li>
+
+        </ul>
+    </div>
+</nav>
+
+@*<div class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -21,8 +45,8 @@
 
                 </li>
                 <li class="btn"><a class="nav-link" href="/Home/Logout">Kirjaudu ulos</a></li>
-                @*<li class="btn"><a class="btn btn-danger" style="color:white" href="/Home/Logout">Kirjaudu ulos</a></li>*@
+                <li class="btn"><a class="btn btn-danger" style="color:white" href="/Home/Logout">Kirjaudu ulos</a></li>
             </ul>
         </div>
     </div>
-</div>
+</div>*@

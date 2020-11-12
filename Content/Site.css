@@ -33,6 +33,13 @@ textarea {
     /*width:100vw;*/
 }
 
+/* Navbar */
+.login_btn {
+    background-color: lawngreen;
+    color: white;
+
+}
+
 .tooltip {
     position: relative;
     display: inline-block;
