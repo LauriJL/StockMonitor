@@ -27,7 +27,7 @@
         </div>*@
 
         <div class="form-group">
-            @Html.LabelFor(model => model.OstoMyynti, "OstoMyynti", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.OstoMyynti, "Osto vai Myynti", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("OstoMyynti", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.OstoMyynti, "", new { @class = "text-danger" })
@@ -35,7 +35,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Pvm, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Pvm, "Kaupan päivämäärä", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Pvm, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Pvm, "", new { @class = "text-danger" })
@@ -43,7 +43,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Yritys, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Yritys, "Yritys", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Yritys, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Yritys, "", new { @class = "text-danger" })
@@ -51,7 +51,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Maara, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Maara, "Osakkeiden lukumäärä", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Maara, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Maara, "", new { @class = "text-danger" })
@@ -61,8 +61,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.aHinta, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.aHinta, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.aHinta, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.aHinta, "Osakkeen hinta", new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.aHinta, "Syötä luku muodossa 123,000", new { @class = "text" })
             </div>
         </div>
 
@@ -75,18 +75,18 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Kurssi, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Kurssi, "Vaihtokurssi (jos valuutta muu kuin €)", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Kurssi, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Kurssi, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.Kurssi, "Syötä luku muodossa 1,000", new { @class = "text" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Kulut, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Kulut, "Kulut", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Kulut, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Kulut, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.Kulut, "Syötä luku muodossa 1,000", new { @class = "text" })
             </div>
         </div>
 
