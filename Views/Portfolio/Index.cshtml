@@ -40,22 +40,25 @@
 
     @foreach (var item in Model)
     {
-    <tr id="valuesrow">
-        <td id="yritys">@Html.DisplayFor(modelItem => item.Yritys)</td>
-        <td>@Html.DisplayFor(modelItem => item.MaaraYht)</td>
-        <td>@Html.DisplayFor(modelItem => item.HankintaArvo)</td>
-        <td id="priceNow"></td>
-        <td id="totalValue"></td>
-        <td id="differenceE"></td>
-        <td id="differenceP"></td>
-        @*<td><a class="btn btn-success" @Html.ActionLink("Tiedot", "Details", new { id = item.ID })</td>*@
-        <td><a class="btn btn-default" style="border:none" title="Tiedot" href='~/Portfolio/Details/@item.ID'>
-                <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-info-circle" fill="green" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                    <path d="M8.93 6.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588z" />
-                    <circle cx="8" cy="4.5" r="1" />
-                </svg></a></td>
-    </tr>
+        <tr id="valuesrow">
+            <td id="yritys">@Html.DisplayFor(modelItem => item.Yritys)</td>
+            <td>@Html.DisplayFor(modelItem => item.MaaraYht)</td>
+            <td>@Html.DisplayFor(modelItem => item.HankintaArvo)</td>
+            <td id="priceNow"></td>
+            <td id="totalValue"></td>
+            <td id="differenceE"></td>
+            <td id="differenceP"></td>
+            @*<td><a class="btn btn-success" @Html.ActionLink("Tiedot", "Details", new { id = item.ID })</td>*@
+            <td>
+                <a class="btn btn-default" style="border:none" title="Tiedot" href='~/Portfolio/Details/@item.ID'>
+                    <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-info-circle" fill="green" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                        <path d="M8.93 6.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588z" />
+                        <circle cx="8" cy="4.5" r="1" />
+                    </svg>
+                </a>
+            </td>
+        </tr>
 
     }
     <tr>
@@ -74,7 +77,10 @@
 
 </table>
 @using System.Globalization
-<p style="font-size:medium">Osakkeiden hintatiedot haettu Yahoo Finance palvelusta kello <b>@DateTime.Now.ToString("HH:mm:ss", CultureInfo.CreateSpecificCulture("fi-FI"))</b> (@DateTime.Today.ToString("D", CultureInfo.CreateSpecificCulture("fi-FI"))). 
+<p style="font-size:medium;font-weight:bold;border-style: solid;border-width:1px;border-radius:10px;background-color:lightblue;width:110px;padding-left:14px">€/$: <span id="fxEurUsd"></span></p>
+<p style="font-size:medium;font-weight:bold;border-style: solid;border-width:1px;border-radius:10px;background-color:lightblue;width:110px;padding-left:14px">$/€: <span id="fxUsdEur"></span></p>
+<p style="font-size:medium">
+    Osakkeiden hintatiedot haettu Yahoo Finance palvelusta kello <b>@DateTime.Now.ToString("HH:mm:ss", CultureInfo.CreateSpecificCulture("fi-FI"))</b> (@DateTime.Today.ToString("D", CultureInfo.CreateSpecificCulture("fi-FI"))).
     <button class="btn btn-default" style="border:none" title="Päivitä tiedot" onClick="window.location.reload();">
         <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-arrow-repeat" fill="green" xmlns="http://www.w3.org/2000/svg">
             <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z" />
@@ -152,10 +158,42 @@ Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageC
     }
     getPrices();
 
-    //Refresh prices and rates
-    function refresh() {
-        getPrices();
+    //Get FX EUR-USD
+    var eurUsdRaw = 0;
+    var eurUsd = 0;
+    var url = 'https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=EUR&to_currency=USD&apikey=P3FY8FMGNJ4C88D6';
+    async function getFXEURUSD() {
+        const response = await fetch(url);
+        const data = await response.json();
+        console.log(data);
+        eurUsdRaw = data['Realtime Currency Exchange Rate']['5. Exchange Rate'];
+        console.log(eurUsdRaw);
+        eurUsd = parseFloat(eurUsdRaw).toFixed(4);
+        document.getElementById('fxEurUsd').innerHTML = eurUsd;
     }
+    getFXEURUSD();
+
+    //Get FX USD-EUR
+    var usdEurRaw = 0;
+    var usdEur = 0;
+    var url = 'https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=USD&to_currency=EUR&apikey=P3FY8FMGNJ4C88D6';
+    async function getFXUSDEUR() {
+        const response = await fetch(url);
+        const data = await response.json();
+        console.log(data);
+        usdEurRaw = data['Realtime Currency Exchange Rate']['5. Exchange Rate'];
+        console.log(usdEurRaw);
+        usdEur = parseFloat(usdEurRaw).toFixed(4);
+        document.getElementById('fxUsdEur').innerHTML = usdEur;
+    }
+    getFXUSDEUR();
+
+
+    //Refresh prices and rates
+    //function refresh() {
+    //    getPrices();
+    //    getFX();
+    //}
 
     //Optional: Set interval for automatically retrieving quotes
     //setInterval(getPrices, 6000);
@@ -169,7 +207,23 @@ Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageC
                 // Current Total
                 var numberOfShares = table.querySelectorAll('tr > td:nth-child(2)')[+i];
                 var currentPricePerShare = table.querySelectorAll('tr > td:nth-child(4)')[+i];
-                let currentTotalValue = parseInt(numberOfShares.innerHTML) * parseFloat(currentPricePerShare.innerText);
+                var cmpname = table.querySelectorAll('tr > td:nth-child(1)')[+i].innerHTML;
+
+                //Calculate total value with current exchange rate
+                currentTotalValue = 0;
+                console.log(cmpname);
+                if (cmpname.length > 4) {
+                    currentTotalValue = (parseInt(numberOfShares.innerHTML) * parseFloat(currentPricePerShare.innerText));
+                    console.log(cmpname);
+                }
+                else if (cmpname.length <= 4) {
+                    currentTotalValue = (parseInt(numberOfShares.innerHTML) * parseFloat(currentPricePerShare.innerText)) / eurUsdRaw;
+                    console.log(cmpname);
+                }
+                else {
+                    currentTotalValue = 1000;
+                }
+
                 let currentTotalValueOutput = table.querySelectorAll('tr > td:nth-child(5)')[+i];
                 currentTotalValueOutput.innerHTML = currentTotalValue.toFixed(2);
                 let currentTotalValueSum = 0;
@@ -239,7 +293,7 @@ Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageC
         }
         else {
             document.getElementById('diffPSumOutput').style.color = 'green'
-        }      
+        }
     }
 
 </script>
