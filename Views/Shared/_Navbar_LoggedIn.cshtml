@@ -1,28 +1,23 @@
-﻿<div class="navbar navbar-inverse navbar-fixed-top">
+﻿<nav class="navbar navbar-inverse navbar-fixed-top" style="background-color:white;border:none; margin-left:1vw;margin-right:1vw;height:80px;padding-top:0.5vw;padding-bottom:0.5vw;border-radius:8px">
     <div class="container-fluid">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            @Html.ActionLink("StockMonitor", "Index", "Portfolio", new { area = "" }, new { @class = "navbar-brand" })
+            <a class="navbar-brand" style="border-left:0px">
+                <img src="~/Pics/Logo.svg" style="margin-left:0px; width:3vw;height:3vw" alt="StockMonitor logo" title="StockMonitor">
+            </a>
         </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li class="btn">@Html.ActionLink("Salkku", "Index", "Portfolio")</li>
-                <li class="btn">@Html.ActionLink("Kaupat", "Index", "Transactions")</li>
-                <li class="btn">
-                    @using System.Globalization
-                    @{
-                        string loggausInfo = "Olet kirjatunut käyttäjänä " + Session["UserName"];
-                    }
-                    <a class="nav-link" style="color:darkorange">@loggausInfo<span class="sr-only">(current)</span></a>
-
-                </li>
-                <li class="btn"><a class="nav-link" href="/Home/Logout">Kirjaudu ulos</a></li>
-                @*<li class="btn"><a class="btn btn-danger" style="color:white" href="/Home/Logout">Kirjaudu ulos</a></li>*@
-            </ul>
-        </div>
+        <ul class="nav navbar-nav">
+            <li class="menu-btn">@Html.ActionLink("Salkku", "Index", "Portfolio")</li>
+            <li class="menu-btn">@Html.ActionLink("Kaupat", "Index", "Transactions")</li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li class="btn" style="margin-right:0vw;padding-top:1vw">
+                @using System.Globalization
+                @{
+                    string loggausInfo = "Olet kirjautunut käyttäjänä " + Session["UserName"];
+                }
+                <a class="nav-link" style="font-size:1vw; padding-top:0.75vw;color:black">@loggausInfo<span class="sr-only">(current)</span></a>
+            </li>
+            <li><a href="/Home/Logout" class="logout-btn" style="color:black">Kirjaudu ulos</a></li>
+        </ul>
     </div>
-</div>
+</nav>

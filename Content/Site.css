@@ -33,6 +33,70 @@ textarea {
     /*width:100vw;*/
 }
 
+/* Navbar */
+.login_btn {
+    background-color: lawngreen;
+    color: white;
+}
+
+.menu-btn {
+    margin-top: 1vw;
+    margin-right: 1vw;
+    margin-left: 1vw;
+    justify-content: center;
+    height: 2.5vw;
+    font-size: 1vw;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    background-color: lightblue;
+}
+
+.login-btn {
+    margin-top: 1vw;
+    margin-right: 1vw;
+    margin-left: 1vw;
+    justify-content: center;
+    height: 2.5vw;
+    font-size: 1vw;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    background-color: green;
+}
+
+    .login-btn:hover {
+        background: lightgray;
+        color: black;
+        cursor: inherit;
+    }
+
+.nav-link:hover {
+    background: lightgray;
+    color: black;
+    cursor: inherit;
+}
+
+.li:hover {
+    background: lightgray;
+    color: black;
+    cursor: inherit;
+}
+
+.logout-btn {
+    margin-top: 1vw;
+    margin-right: 1vw;
+    margin-left: 1vw;
+    justify-content: center;
+    height: 2.5vw;
+    font-size: 1vw;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    background-color: orangered;
+}
+
+
 .tooltip {
     position: relative;
     display: inline-block;
