@@ -1,4 +1,4 @@
-﻿<nav class="navbar navresp navbar-fixed-top" style="background-color:white;border:none; margin-left:1vw;margin-right:1vw;height:80px;padding-top:0.5vw;padding-bottom:0.5vw;border-radius:8px">
+﻿<nav class="navbar navresp navbar-fixed-top" style="border-bottom: 0.20em solid rgb(128, 128, 128); background-color: white; margin-left: 1vw; margin-right: 1vw; height: 80px; padding-top: 0.5vw; padding-bottom: 0.5vw;">
     <div class="container-fluid">
         <div class="navbar-header">
             <p class="navbar-brand" style="border-left:0px">
@@ -11,13 +11,6 @@
             <li class="menu-btn">@Html.ActionLink("Käyttäjät", "Index", "Users")</li>
         </ul>
         <ul class="nav navbar-nav navbar-right" style="margin-right:1em">
-            <li class="btn" style="margin-right:0em;padding-top:1em">
-                @using System.Globalization
-                @{
-                    string loggausInfo = "Olet kirjautunut käyttäjänä " + Session["UserName"] + " (pääkäyttäjäoikeudet)";
-                }
-                <a class="nav-link" style="font-size:1em;cursor:none;padding-top:0.75em;color:black">@loggausInfo<span class="sr-only">(current)</span></a>
-            </li>
             <li><a href="/Home/Logout" class="logout-btn" style="color:black">Kirjaudu ulos</a></li>
         </ul>
     </div>

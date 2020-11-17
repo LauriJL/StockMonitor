@@ -31,6 +31,23 @@
         <hr />
         <footer>
             @using System.Globalization
+            @{
+                if (Session["UserName"] == null)
+                {
+                    string loggausInfo = "";
+                    <p> @loggausInfo <span class="sr-only">(current)</span></p>;
+                }
+                else if (Session["UserName"] != null && Session["Role"].Equals("Pääkäyttäjä"))
+                {
+                    string loggausInfo = "Olet kirjautunut käyttäjänä " + Session["UserName"] + " (pääkäyttäjäoikeudet)";
+                    <p style="font-weight:bold"> @loggausInfo <span class="sr-only">(current)</span></p>;
+                }
+                else
+                {
+                    string loggausInfo = "Olet kirjautunut käyttäjänä " + Session["UserName"];
+                    <p style="font-weight:bold"> @loggausInfo <span class="sr-only">(current)</span></p>;
+                }
+            }
             <p>&copy; @DateTime.Now.Year StockMonitor, @DateTime.Today.ToString("D", CultureInfo.CreateSpecificCulture("fi-FI"))</p>
         </footer>
     </div>
@@ -38,5 +55,6 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
 </body>
 </html>
