@@ -3,7 +3,6 @@
     padding-bottom: 20px;
 }
 
-/* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
@@ -23,52 +22,81 @@ textarea {
     max-width: 280px;
 }
 
-/* Omia määrityksiä */
-.card-header {
-    display: inline-block;
-}
-
-/* Set width on the form input elements since they're 100% wide by default */
-.card{
-    /*width:100vw;*/
-}
-
 /* Navbar */
+.navresp {
+    background-color: #333;
+    overflow: hidden;
+}
+
+    .navresp a {
+        float: left;
+        display: block;
+        color: #f2f2f2;
+        text-align: center;
+        padding: 1em 1em;
+        text-decoration: none;
+        font-size: 17px;
+    }
+
+        .navresp a:hover {
+            border-radius:1em;
+            background-color: #ddd;
+            color: black;
+        }
+
+        .navresp a.active {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .navresp .icon {
+            display: none;
+        }
+
 .login_btn {
     background-color: lawngreen;
     color: white;
 }
 
 .menu-btn {
-    margin-top: 1vw;
-    margin-right: 1vw;
-    margin-left: 1vw;
+    margin-top: 1em;
+    margin-right: 1em;
+    margin-left: 1em;
     justify-content: center;
-    height: 2.5vw;
-    font-size: 1vw;
+    height: 3.5em;
+    font-size: 1em;
     color: black;
     border: none;
-    border-radius: 5px;
+    border-radius: 1.25em;
     background-color: lightblue;
 }
 
+.navbar-brand2 {
+    margin-left:0em;
+}
+
+.navbar-brand2:hover {
+    background-color: transparent;
+}
+
 .login-btn {
-    margin-top: 1vw;
-    margin-right: 1vw;
-    margin-left: 1vw;
+    margin-top: 1em;
+    margin-right: 1em;
+    margin-left: 1em;
     justify-content: center;
-    height: 2.5vw;
-    font-size: 1vw;
+    height: 3em;
+    font-size: 1em;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 1em;
     background-color: green;
+    cursor:pointer;
 }
 
     .login-btn:hover {
         background: lightgray;
         color: black;
-        cursor: inherit;
+        cursor: pointer;
     }
 
 .nav-link:hover {
@@ -77,22 +105,22 @@ textarea {
     cursor: inherit;
 }
 
-.li:hover {
+/*.li:hover {
     background: lightgray;
     color: black;
     cursor: inherit;
-}
+}*/
 
 .logout-btn {
-    margin-top: 1vw;
-    margin-right: 1vw;
-    margin-left: 1vw;
+    margin-top: 1em;
+    margin-right: 1em;
+    margin-left: 1em;
     justify-content: center;
-    height: 2.5vw;
-    font-size: 1vw;
+    height: 3em;
+    font-size: 1em;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 1em;
     background-color: orangered;
 }
 
