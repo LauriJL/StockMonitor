@@ -554,3 +554,4 @@ C:\Users\laurileskinen\GitHub\StockMonitor\obj\Debug\StockMonitor_2.csproj.CoreC
 C:\Users\laurileskinen\GitHub\StockMonitor\obj\Debug\StockMonitor_2.csproj.CopyComplete
 C:\Users\laurileskinen\GitHub\StockMonitor\obj\Debug\StockMonitor_2.dll
 C:\Users\laurileskinen\GitHub\StockMonitor\obj\Debug\StockMonitor_2.pdb
+C:\Users\laurileskinen\GitHub\StockMonitor\obj\Debug\StockMonitor_2.csprojAssemblyReference.cache
