@@ -4,6 +4,7 @@
     ViewBag.Title = "Lisää";
 }
 <br />
+<br />
 <h2>Lisää uusi kauppa</h2>
 
 @using (Html.BeginForm())
@@ -20,14 +21,21 @@
                 @Html.ValidationMessageFor(model => model.Users.KayttajaNimi, "", new { @class = "text-danger" })
             </div>
         </div>
-
         <div class="form-group">
+            @Html.LabelFor(model => model.OstoMyynti, "Kaupan tyyppi", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <p>@Html.RadioButtonFor(m => m.OstoMyynti, "Osto", new { @checked = "checked"}) <b>Osto</b></p>
+                <p>@Html.RadioButtonFor(m => m.OstoMyynti, "Myynti") <b>Myynti</b></p>
+            </div>
+        </div>
+
+        @*<div class="form-group">
             @Html.LabelFor(model => model.OstoMyynti, "Osto vai Myynti", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("OstoMyynti", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.OstoMyynti, "", new { @class = "text-danger" })
             </div>
-        </div>
+        </div>*@
 
         <div class="form-group">
             @Html.LabelFor(model => model.Pvm, "Päivämäärä", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -41,7 +49,7 @@
             @Html.LabelFor(model => model.Yritys, "Yritys", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Yritys, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Yritys, "Syötä yrityksen lyhenne", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.Yritys, "Syötä yrityksen lyhenne", new { @class = "text" })
             </div>
         </div>
 
@@ -57,7 +65,7 @@
             @Html.LabelFor(model => model.aHinta, "Osakkeen hinta", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.aHinta, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.aHinta, "Syötä luku muodossa 123,000", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.aHinta, "Syötä luku muodossa 123,000", new { @class = "text" })
             </div>
         </div>
 
@@ -65,7 +73,7 @@
             @Html.LabelFor(model => model.Valuutta, "Valuutta", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("Valuutta", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Valuutta, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.Valuutta, "", new { @class = "text" })
             </div>
         </div>
 
@@ -73,7 +81,7 @@
             @Html.LabelFor(model => model.Kurssi, "Vaihtokurssi (jos valuutta muu kuin €)", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Kurssi, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Kurssi, "Syötä luku muodossa 1,000", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.Kurssi, "Syötä luku muodossa 1,000", new { @class = "text" })
             </div>
         </div>
 
@@ -81,7 +89,7 @@
             @Html.LabelFor(model => model.Kulut, "Kulut", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Kulut, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Kulut, "Syötä luku muodossa 1,000", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.Kulut, "Syötä luku muodossa 1,000", new { @class = "text" })
             </div>
         </div>
 
