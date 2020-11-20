@@ -252,7 +252,7 @@ Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageC
     function currentTotalSum() {
         for (var i = 1; i < table.rows.length-1; i++) {
             currentTotalValueSum += Number(parseFloat(table.rows[i].cells[4].innerHTML));
-            document.getElementById('currentTotalValueSumOutput').innerHTML = currentTotalValueSum.toFixed(2);
+            document.getElementById('currentTotalValueSumOutput').innerHTML = currentTotalValueSum.toFixed(2) + '€';
         }
     }
 
@@ -267,7 +267,7 @@ Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageC
     function currentDiffESum() {
         for (var i = 1; i < table.rows.length-1; i++) {
             currentTotalDiffESum =parseFloat(currentTotalValueSumOutput.innerText).toFixed(2) - purchasePriceTotal
-            document.getElementById('diffESumOutput').innerHTML = currentTotalDiffESum.toFixed(2);
+            document.getElementById('diffESumOutput').innerHTML = currentTotalDiffESum.toFixed(2) + '€';
             diffESum = currentTotalDiffESum.toFixed(2);
             if (diffESum < 0)
                 document.getElementById('diffESumOutput').style.color = 'red'
@@ -281,12 +281,11 @@ Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageC
         if (parseFloat(purchasePriceTotal) < parseFloat(currentTotalValueSumOutput.innerText)) {
             currentTotalDiffPSum = (parseFloat(currentTotalValueSumOutput.innerText).toFixed(2) * 100) / parseFloat(purchasePriceTotal).toFixed(2)  - 100
             document.getElementById('diffPSumOutput').innerHTML = currentTotalDiffPSum.toFixed(2) + '%';
-            //document.getElementById('diffESumOutput').style.color = 'red'
             diffPSum = currentTotalDiffPSum.toFixed(2);
         } else {
-            currentTotalDiffPSum = (parseFloat(purchasePriceTotal).toFixed(2) * 100 / parseFloat(currentTotalValueSumOutput.innerText).toFixed(2) - 100) * -1;
+            currentTotalDiffPSum = (currentTotalValueSum / parseFloat(purchasePriceTotal) * 100) - 100;
+            //currentTotalDiffPSum = (parseFloat(purchasePriceTotal).toFixed(2) * 100 / parseFloat(currentTotalValueSumOutput.innerText).toFixed(2) - 100) * -1;
             document.getElementById('diffPSumOutput').innerHTML = currentTotalDiffPSum.toFixed(2) + '%';
-            //document.getElementById('diffPSumOutput').style.color = 'green'
             diffPSum = currentTotalDiffPSum.toFixed(2);
         }
         if (diffPSum < 0) {
