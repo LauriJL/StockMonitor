@@ -20,13 +20,11 @@ namespace StockMonitor_2.Models
         {
             this.Transactions = new HashSet<Transactions>();
         }
-
         [Required(ErrorMessage = "Anna käyttäjätunnus")]
         public string KayttajaNimi { get; set; }
         public string Rooli { get; set; }
         public string Etunimi { get; set; }
         public string Sukunimi { get; set; }
-
         [DataType(DataType.Password)]
         [Required(ErrorMessage = "Anna salasana")]
         public string Salasana { get; set; }

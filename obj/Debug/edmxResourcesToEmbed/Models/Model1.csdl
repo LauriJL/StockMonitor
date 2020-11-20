@@ -29,14 +29,14 @@
     <Property Name="Yritys" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Maara" Type="Int32" Nullable="false" />
     <Property Name="MaaraForPortfolio" Type="Int32" annotation:StoreGeneratedPattern="Computed" />
-    <Property Name="aHinta" Type="Decimal" Precision="38" Scale="2" Nullable="false" />
-    <Property Name="Total" Type="Decimal" Precision="38" Scale="2" annotation:StoreGeneratedPattern="Computed" />
-    <Property Name="TotalForPortfolio" Type="Decimal" Precision="38" Scale="2" annotation:StoreGeneratedPattern="Computed" />
+    <Property Name="aHinta" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="Total" Type="Decimal" Precision="19" Scale="4" annotation:StoreGeneratedPattern="Computed" />
+    <Property Name="TotalForPortfolio" Type="Decimal" Precision="19" Scale="4" annotation:StoreGeneratedPattern="Computed" />
     <Property Name="Valuutta" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Kurssi" Type="Decimal" Precision="19" Scale="4" />
-    <Property Name="TotalEuros" Type="Decimal" Precision="38" Scale="2" annotation:StoreGeneratedPattern="Computed" />
-    <Property Name="Kulut" Type="Decimal" Precision="19" Scale="2" Nullable="false" />
-    <Property Name="Grandtotal" Type="Decimal" Precision="38" Scale="2" annotation:StoreGeneratedPattern="Computed" />
+    <Property Name="TotalEuros" Type="Decimal" Precision="19" Scale="4" annotation:StoreGeneratedPattern="Computed" />
+    <Property Name="Kulut" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="Grandtotal" Type="Decimal" Precision="19" Scale="4" annotation:StoreGeneratedPattern="Computed" />
     <NavigationProperty Name="Currency" Relationship="Self.FK__Transacti__Valuu__4CA06362" FromRole="Transactions" ToRole="Currency" />
     <NavigationProperty Name="Users" Relationship="Self.FK__Transacti__Kaytt__6477ECF3" FromRole="Transactions" ToRole="Users" />
     <NavigationProperty Name="TransactionTypes" Relationship="Self.FK__Transacti__OstoM__44FF419A" FromRole="Transactions" ToRole="TransactionTypes" />
