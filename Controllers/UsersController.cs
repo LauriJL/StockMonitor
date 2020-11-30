@@ -12,7 +12,7 @@ namespace StockMonitor_2.Views
 {
     public class UsersController : Controller
     {
-        private StockMonitorEntities11 db = new StockMonitorEntities11();
+        private StockEntities1 db = new StockEntities1();
 
         // GET: Users
         public ActionResult Index()
@@ -115,7 +115,7 @@ namespace StockMonitor_2.Views
         // POST: Users/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "KayttajaNimi,Rooli,Etunimi,Sukunimi,Salasana,Sahkoposti")] Users users)
+        public ActionResult Edit([Bind(Include = "ID,KayttajaNimi,Rooli,Etunimi,Sukunimi,Salasana,Sahkoposti")] Users users)
         {
             if (ModelState.IsValid)
             {

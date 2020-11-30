@@ -13,7 +13,7 @@ namespace StockMonitor_2.Controllers
 {
     public class PortfolioController : Controller
     {
-        private StockMonitorEntities11 db = new StockMonitorEntities11();
+        private StockEntities1 db = new StockEntities1();
 
         // GET: Portfolio
         public ActionResult Index(string searchString2, string sortOrder, string currentFilter1, int? page, int? pagesize)
@@ -39,7 +39,7 @@ namespace StockMonitor_2.Controllers
                 }
                 ViewBag.currentFilter1 = searchString2;
 
-                StockMonitorEntities11 db = new StockMonitorEntities11();
+                StockEntities1 db = new StockEntities1();
 
                 //Display only db items belonging to session user
                 var userId = Session["UserName"];

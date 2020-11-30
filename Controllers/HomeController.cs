@@ -18,7 +18,7 @@ namespace StockMonitor_2.Controllers
         [HttpPost]
         public ActionResult Authorize(Users LoginModel)
         {
-            StockMonitorEntities11 db = new StockMonitorEntities11();
+            StockEntities1 db = new StockEntities1();
 
             var LoggedUser = db.Users.SingleOrDefault(x => x.KayttajaNimi == LoginModel.KayttajaNimi && x.Salasana == LoginModel.Salasana);
             if (LoggedUser != null)
@@ -58,20 +58,6 @@ namespace StockMonitor_2.Controllers
             Session.Abandon();
             ViewBag.LoggedStatus = "Out";
             return RedirectToAction("Index", "Home");
-        }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
         }
     }
 }

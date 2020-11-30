@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="StockMonitorModelStoreContainer" CdmEntityContainer="StockMonitorEntities11">
+  <EntityContainerMapping StorageEntityContainer="StockModelStoreContainer" CdmEntityContainer="StockEntities1">
     <EntitySetMapping Name="Currency">
-      <EntityTypeMapping TypeName="StockMonitorModel.Currency">
+      <EntityTypeMapping TypeName="StockModel.Currency">
         <MappingFragment StoreEntitySet="Currency">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Currency1" ColumnName="Currency" />
@@ -10,7 +10,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Portfolio">
-      <EntityTypeMapping TypeName="StockMonitorModel.Portfolio">
+      <EntityTypeMapping TypeName="StockModel.Portfolio">
         <MappingFragment StoreEntitySet="Portfolio">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Kayttaja" ColumnName="Kayttaja" />
@@ -21,7 +21,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Transactions">
-      <EntityTypeMapping TypeName="StockMonitorModel.Transactions">
+      <EntityTypeMapping TypeName="StockModel.Transactions">
         <MappingFragment StoreEntitySet="Transactions">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Kayttaja" ColumnName="Kayttaja" />
@@ -42,7 +42,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="TransactionTypes">
-      <EntityTypeMapping TypeName="StockMonitorModel.TransactionTypes">
+      <EntityTypeMapping TypeName="StockModel.TransactionTypes">
         <MappingFragment StoreEntitySet="TransactionTypes">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Type" ColumnName="Type" />
@@ -50,14 +50,14 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="UserRoles">
-      <EntityTypeMapping TypeName="StockMonitorModel.UserRoles">
+      <EntityTypeMapping TypeName="StockModel.UserRoles">
         <MappingFragment StoreEntitySet="UserRoles">
           <ScalarProperty Name="Role" ColumnName="Role" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Users">
-      <EntityTypeMapping TypeName="StockMonitorModel.Users">
+      <EntityTypeMapping TypeName="StockModel.Users">
         <MappingFragment StoreEntitySet="Users">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="KayttajaNimi" ColumnName="KayttajaNimi" />

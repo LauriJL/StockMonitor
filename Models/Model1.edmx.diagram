@@ -4,17 +4,16 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="3a6e941b16364252800f39eb0494ad26" Name="Diagram1">
-        <EntityTypeShape EntityType="StockMonitorModel.Currency" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="StockMonitorModel.Portfolio" Width="1.5" PointX="7.5" PointY="5.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="StockMonitorModel.Transactions" Width="1.5" PointX="5.25" PointY="2.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="StockMonitorModel.TransactionTypes" Width="1.5" PointX="3" PointY="6.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="StockMonitorModel.UserRoles" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="StockMonitorModel.Users" Width="1.5" PointX="3" PointY="3.25" IsExpanded="true" />
-        <AssociationConnector Association="StockMonitorModel.FK__Transacti__Valuu__4CA06362" ManuallyRouted="false" />
-        <AssociationConnector Association="StockMonitorModel.FK__Transacti__Kaytt__6477ECF3" ManuallyRouted="false" />
-        <AssociationConnector Association="StockMonitorModel.FK__Transacti__OstoM__44FF419A" ManuallyRouted="false" />
-        <AssociationConnector Association="StockMonitorModel.FK__Users__Rooli__6754599E" ManuallyRouted="false" />
+      <Diagram DiagramId="d66d1153a24e4200a2f41d1b3430bde6" Name="Diagram1">
+        <EntityTypeShape EntityType="StockModel.Currency" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockModel.Portfolio" Width="1.5" PointX="5.75" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockModel.Transactions" Width="1.5" PointX="3" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockModel.TransactionTypes" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockModel.UserRoles" Width="1.5" PointX="5.75" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockModel.Users" Width="1.5" PointX="8" PointY="2.375" IsExpanded="true" />
+        <AssociationConnector Association="StockModel.FK__Transacti__Valuu__45F365D3" ManuallyRouted="false" />
+        <AssociationConnector Association="StockModel.FK__Transacti__OstoM__44FF419A" ManuallyRouted="false" />
+        <AssociationConnector Association="StockModel.FK__Users__Rooli__440B1D61" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
