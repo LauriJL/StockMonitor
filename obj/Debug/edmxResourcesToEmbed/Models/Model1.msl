@@ -59,6 +59,7 @@
     <EntitySetMapping Name="Users">
       <EntityTypeMapping TypeName="StockMonitorModel.Users">
         <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="KayttajaNimi" ColumnName="KayttajaNimi" />
           <ScalarProperty Name="Rooli" ColumnName="Rooli" />
           <ScalarProperty Name="Etunimi" ColumnName="Etunimi" />

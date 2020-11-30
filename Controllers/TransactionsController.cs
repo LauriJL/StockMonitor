@@ -203,7 +203,6 @@ namespace StockMonitor_2.Controllers
                 int pageSize = (pagesize ?? 10);
                 int pageNumber = (page ?? 1);
 
-                //return View(transactions.ToPagedList(pageNumber, pageSize));
                 return View(transactions.Where(t => t.Kayttaja == userId).ToPagedList(pageNumber, pageSize));
             }
         }
@@ -276,49 +275,6 @@ namespace StockMonitor_2.Controllers
             return View(transactions);
         }
 
-        public ActionResult _TransactionModalEdit(int? id)
-        {
-            //Session control
-            if (Session["UserName"] == null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-            else
-            {
-                if (id == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-                Transactions transactions = db.Transactions.Find(id);
-                if (transactions == null)
-                {
-                    return HttpNotFound();
-                }
-                ViewBag.Valuutta = new SelectList(db.Currency, "Currency1", "Currency1", transactions.Valuutta);
-                ViewBag.Kayttaja = new SelectList(db.Users, "KayttajaNimi", "Rooli", transactions.Kayttaja);
-                ViewBag.OstoMyynti = new SelectList(db.TransactionTypes, "Type", "Type", transactions.OstoMyynti);
-                return View(transactions);
-            }
-        }
-
-        // POST: Transactions/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult _TransactionModalEdit([Bind(Include = "ID,Kayttaja,OstoMyynti,Pvm,Yritys,Maara,MaaraForPortfolio,aHinta,Total,TotalForPortfolio,Valuutta,Kurssi,TotalEuros,Kulut,Grandtotal")] Transactions transactions)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(transactions).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.Valuutta = new SelectList(db.Currency, "Currency1", "Currency1", transactions.Valuutta);
-            ViewBag.Kayttaja = new SelectList(db.Users, "KayttajaNimi", "Rooli", transactions.Kayttaja);
-            ViewBag.OstoMyynti = new SelectList(db.TransactionTypes, "Type", "Type", transactions.OstoMyynti);
-            //return View(transactions);
-            return PartialView("_TransactionModalEdit", transactions);
-        }
-
         // GET: Transactions/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -361,29 +317,6 @@ namespace StockMonitor_2.Controllers
             ViewBag.OstoMyynti = new SelectList(db.TransactionTypes, "Type", "Type", transactions.OstoMyynti);
             //return View(transactions);
             return PartialView("_TransactionModalEdit", transactions);
-        }
-
-        // GET: Transactions/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            //Session control
-            if (Session["UserName"] == null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-            else
-            {
-                if (id == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-                Transactions transactions = db.Transactions.Find(id);
-                if (transactions == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(transactions);
-            }
         }
 
         public ActionResult _TransactionModalDelete(int? id)

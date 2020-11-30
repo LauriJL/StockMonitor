@@ -75,7 +75,7 @@ namespace StockMonitor_2.Views
         // POST: Users/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "KayttajaNimi,Rooli,Etunimi,Sukunimi,Salasana,Sahkoposti")] Users users)
+        public ActionResult Create([Bind(Include = "ID,KayttajaNimi,Rooli,Etunimi,Sukunimi,Salasana,Sahkoposti")] Users users)
         {
             if (ModelState.IsValid)
             {
