@@ -89,7 +89,7 @@ namespace StockMonitor_2.Views
         }
 
         // GET: Users/Edit/5
-        public ActionResult Edit(string id)
+        public ActionResult Edit(int? id)
         {
             //Session control
             if (!Session["Role"].Equals("Pääkäyttäjä"))

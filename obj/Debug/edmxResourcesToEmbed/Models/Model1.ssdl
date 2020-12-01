@@ -52,7 +52,7 @@
   </EntityType>
   <EntityType Name="Users">
     <Key>
-      <PropertyRef Name="KayttajaNimi" />
+      <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="KayttajaNimi" Type="nvarchar" MaxLength="20" Nullable="false" />

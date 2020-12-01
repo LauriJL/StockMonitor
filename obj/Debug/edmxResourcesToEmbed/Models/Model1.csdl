@@ -57,7 +57,7 @@
   </EntityType>
   <EntityType Name="Users">
     <Key>
-      <PropertyRef Name="KayttajaNimi" />
+      <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="KayttajaNimi" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />

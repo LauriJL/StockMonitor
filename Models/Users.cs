@@ -21,7 +21,6 @@ namespace StockMonitor_2.Models
             this.Transactions = new HashSet<Transactions>();
         }
         public int ID { get; set; }
-
         [Required(ErrorMessage = "Anna käyttäjätunnus")]
         public string KayttajaNimi { get; set; }
         public string Rooli { get; set; }
