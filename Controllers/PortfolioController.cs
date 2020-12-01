@@ -8,7 +8,6 @@ using System.Web;
 using System.Web.Mvc;
 using PagedList;
 using StockMonitor_2.Models;
-using StockMonitor_2.ViewModels;
 
 namespace StockMonitor_2.Controllers
 {
