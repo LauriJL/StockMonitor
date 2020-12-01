@@ -34,29 +34,6 @@ namespace StockMonitor_2.Views
             return View();
         }
 
-        // GET: Users/Details/5
-        public ActionResult Details(string id)
-        {
-            //Session control
-            if (!Session["Role"].Equals("Pääkäyttäjä"))
-            {
-                return RedirectToAction("AccessDenied", "Users");
-            }
-            else
-            {
-                if (id == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-                Users users = db.Users.Find(id);
-                if (users == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(users);
-            }
-        }
-
         // GET: Users/Create
         public ActionResult Create()
         {

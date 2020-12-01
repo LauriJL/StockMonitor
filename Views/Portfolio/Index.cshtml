@@ -49,7 +49,6 @@
             <td id="totalValue"></td>
             <td id="differenceE"></td>
             <td id="differenceP"></td>
-            @*<td><a class="btn btn-success" @Html.ActionLink("Tiedot", "Details", new { id = item.ID })</td>*@
             <td>
                 <a class="btn btn-default" style="border:none" title="Tiedot" href='~/Portfolio/Details/@item.ID'>
                     <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-info-circle" fill="green" xmlns="http://www.w3.org/2000/svg">
@@ -72,9 +71,6 @@
         <td id="diffPSumOutput" style="font-weight:bold"></td>
         <td></td>
     </tr>
-    @*@{
-            string num = @Model.Sum(v => v.VoittoTappioE).ToString().Replace(',', '.');
-        }*@
 
 </table>
 @using System.Globalization
@@ -149,7 +145,6 @@ Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageC
             for (let i = 0; i < cells.length-1; ++i) {
                 cells[i].innerHTML = quotelist[i];
             }
-            //console.log(quotelist);
         }
         //Input values into Arvo Nyt, Voitto/Tappio(€) and Voitto/Tappio(%) cells
         getAll();
@@ -284,7 +279,6 @@ Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageC
             diffPSum = currentTotalDiffPSum.toFixed(2);
         } else {
             currentTotalDiffPSum = (currentTotalValueSum / parseFloat(purchasePriceTotal) * 100) - 100;
-            //currentTotalDiffPSum = (parseFloat(purchasePriceTotal).toFixed(2) * 100 / parseFloat(currentTotalValueSumOutput.innerText).toFixed(2) - 100) * -1;
             document.getElementById('diffPSumOutput').innerHTML = currentTotalDiffPSum.toFixed(2) + '%';
             diffPSum = currentTotalDiffPSum.toFixed(2);
         }

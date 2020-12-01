@@ -89,53 +89,48 @@
             <li><a data-toggle="tab" href="#5years">5 vuotta</a></li>
             <li><a data-toggle="tab" href="#10years">10 vuotta</a></li>
         </ul>
+        <br/>
     </div>
     <div class="tab-content">
         <div id="5days" class="tab-pane fade in active">
             <br />
             <br />
-            @*<h3>Viikko</h3>*@
-            <div class="col-sm-11">
+            <div class="col-sm-12">
                 <canvas id="chart5days" style="height:5vw;width:20vw"></canvas>
             </div>
         </div>
         <div id="1month" class="tab-pane fade">
             <br />
             <br />
-            @*<h3>Kuukausi</h3>*@
-            <div class="col-sm-11" >
+            <div class="col-sm-12" >
                 <canvas id="chart1month" style="height:5vw;width:20vw"></canvas>
             </div>
         </div>
         <div id="6months" class="tab-pane fade">
             <br />
             <br />
-            @*<h3>Viimeiset 6 kuukautta</h3>*@
-            <div class="col-sm-11">
+            <div class="col-sm-12">
                 <canvas id="chart6months" style="height:5vw;width:20vw"></canvas>
             </div>
         </div>
         <div id="1year" class="tab-pane fade">
             <br />
             <br />
-            @*<h3>Viimeisin vuosi</h3>*@
-            <div class="col-sm-11">
+            <div class="col-sm-12">
                 <canvas id="chart1year" style="height:5vw;width:20vw"></canvas>
             </div>
         </div>
         <div id="5years" class="tab-pane fade">
             <br />
             <br />
-            @*<h3>Viimeiset 5 vuotta</h3>*@
-            <div class="col-sm-11">
+            <div class="col-sm-12">
                 <canvas id="chart5year" style="height:5vw;width:20vw"></canvas>
             </div>
         </div>
         <div id="10years" class="tab-pane fade">
             <br />
             <br />
-            @*<h3>Viimeiset 10 vuotta</h3>*@
-            <div class="col-sm-11">
+            <div class="col-sm-12">
                 <canvas id="chart10year" style="height:5vw;width:20vw"></canvas>
             </div>
         </div>
@@ -144,7 +139,6 @@
     <div class="col-sm-12">
         <br />
         <p>
-            @*<a class="btn btn-info" @Html.ActionLink("Takaisin", "Index")*@
             <a class="btn btn-default" style="border:none" title="Takaisin" href='~/Portfolio/Index/'>
                 <svg width="3em" height="3em" viewBox="0 0 16 16" class="bi bi-arrow-left-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
@@ -161,10 +155,8 @@
 //Get JSON data from rapidapi/yahoo-finance
 
     var companyName = "";
-    //var country = "";
     var currency = "";
     var exchange = "";
-    //var sector = "";
     var currentPrice = "";
     var openingPrice = "";
     var highPrice = "";
@@ -193,12 +185,9 @@
         // Storing data in JSON
         var data = await response.json();
         //console.log(data);
-        //date = data["quoteResponse"]["result"][0]["postMarketTime"];
         companyName = data["quoteResponse"]["result"][0]["longName"];
-        //country = data["quoteResponse"]["result"][0]["region"];
         currency = data["quoteResponse"]["result"][0]["currency"];
         exchange = data["quoteResponse"]["result"][0]["fullExchangeName"];
-        //sector = data["quoteResponse"]["result"][0]["fullExchangeName"];
         currentPrice = data["quoteResponse"]["result"][0]["regularMarketPrice"];
         let currentPriceFloat = parseFloat(currentPrice).toFixed(2);
         openingPrice = data["quoteResponse"]["result"][0]["regularMarketOpen"];
@@ -232,9 +221,7 @@
         //console.log(dateFormattedLong.getTimezoneOffset());
         //var dateFormattedShort = dateFormattedLong.toLocaleDateString();
 
-        //document.getElementById('date').textContent = dateFormatted;
         document.getElementById('companyName').textContent = companyName;
-        //document.getElementById('country').textContent = country;
         document.getElementById('currency').textContent = currency;
         document.getElementById('exchange').textContent = exchange;
         document.getElementById('currentPrice').textContent = currentPriceFloat;
@@ -250,7 +237,6 @@
         document.getElementById('ps').textContent = psFloat;
         document.getElementById('pb').textContent = pbFloat;
         document.getElementById('dividend').textContent = dividendFloat;
-        //document.getElementById('eps').textContent = eps;
         changeColor();
     }
     getDailyData();
@@ -304,17 +290,11 @@
                 return Number(element.toFixed(2));
             }        
         });
-        //console.log(adjustedClose1mo);
 
         timeStamps1mo = data["chart"]["result"][0]["timestamp"];
-        //console.log(timeStamps1mo);
 
         //Convert timestamps to dates
         timeStamps1moDates = timeStamps1mo.map(function (d) { return new Date(d * 1000) });
-        //timeStamps1moDates = timeStamps1mo.map(function (d) { return new Date(d * 1000).toLocaleTimeString() });
-
-        //timeStamps1moString = timeStamps1moDatesLocal.map(String);
-        //console.log(timeStamps1moString);
 
         //<--START CHART FOR 1 WEEK -->
         //Offset dat by one week (7days)
@@ -328,22 +308,18 @@
         oneWeek = timeStamps1moDates.filter(function (obj) {
             return obj >= startDate1wk && obj <= endDate1wk;
         });
-        //console.log(oneWeek);
 
         //Get last items from prices corresponding to days
         numberOfDays1wk = oneWeek.length;
-        //console.log(numberOfDays1wk);
 
         //Get appropriate number of prices (xs1Week)
         let pricesList1Wk = [];
         pricesList1Wk = adjustedClose1mo;
         xs1Week = pricesList1Wk.slice(Math.max(adjustedClose1mo.length - numberOfDays1wk, 0));
-        //console.log(xs1Week);
 
         //Dates with prices on chart (ys1Week)
         ys1Week = oneWeek;
         //--> NEED TO CONVERT DATES TO SHORTER FORMAT!
-        //console.log(ys1Week);
 
         //Draw chart 1 WEEK
         function createChartWeek() {
@@ -508,20 +484,16 @@
                 return Number(elements.toFixed(2));
             }
             });
-        //console.log(adjustedClose10y);
 
         timeStamps10y = data["chart"]["result"][0]["timestamp"];
-        //console.log(timeStamps10y);
 
         //Convert timestamps to dates
         timeStamps10yDates = timeStamps10y.map(function (d) { return new Date(d * 1000) });
-        //timeStamps10yDates = timeStamps10y.map(function (d) { return new Date(d * 1000).toLocaleString() });
 
         //<--START CHART FOR 6 MONTHS -->
         //Offset dat by six months (180 days)
         d6mo = new Date();
         d6mo.setDate(d6mo.getDate() - 180);
-        //console.log(d6mo);
 
         //Retrieve last 180 days of data
         startDate6mo = d6mo;
@@ -533,19 +505,15 @@
 
         //Get last items from prices corresponding to days
         numberOfDays6mo = sixMonths.length;
-        //console.log(numberOfDays6mo);
 
         //Get appropriate number of prices (xs6Month)
         let pricesList6Mo = [];
-        //pricesList6Mo = adjustedClose10y;
         pricesList6Mo = adjustedClose10y;
         xs6Month = pricesList6Mo.slice(Math.max(adjustedClose10y.length - numberOfDays6mo, 0));
-        //console.log(xs6Month);
 
         //Dates with prices on chart (ys6Month)
         ys6Month = sixMonths;
         //--> NEED TO CONVERT DATES TO SHORTER FORMAT!
-        //console.log(ys6Month);
 
         //Draw chart 6 MONTHS
         function createChart6Month() {
@@ -617,7 +585,6 @@
         //Offset dat by one year (365 days)
         d1yr = new Date();
         d1yr.setDate(d1yr.getDate() - 365);
-        //console.log(d1yr);
 
         //Retrieve last 365 days of data
         startDate1yr = d1yr;
@@ -625,22 +592,18 @@
         oneYear = timeStamps10yDates.filter(function (obj) {
             return obj >= startDate1yr && obj <= endDate1yr;
         });
-        //console.log(oneYear);
 
         //Get last items from prices corresponding to days   
         numberOfDays1yr = oneYear.length;
-        //console.log(numberOfDays5yr);
 
         //Get appropriate number of prices (xs5Year)
         let pricesList1Yr = [];
         pricesList1Yr = adjustedClose10y;
         xs1Year = pricesList1Yr.slice(Math.max(adjustedClose10y.length - numberOfDays1yr, 0));
-        //console.log(xs1Year);
 
         //Dates with prices on chart (ys1Year)
         ys1Year = oneYear;
         //--> NEED TO CONVERT DATES TO SHORTER FORMAT!
-        //console.log(ys1Year);
 
         //Draw chart 1 YEAR
         function createChart1Year() {
@@ -712,7 +675,6 @@
         //Offset dat by five years (1825 days)
         d5yr = new Date();
         d5yr.setDate(d5yr.getDate() - 1825);
-        //console.log(d5yr);
 
         //Retrieve last 1825 days of data
         startDate5yr = d5yr;
@@ -720,22 +682,18 @@
         fiveYears = timeStamps10yDates.filter(function (obj) {
             return obj >= startDate5yr && obj <= endDate5yr;
         });
-        //console.log(fiveYears);
 
         //Get last items from prices corresponding to days   
         numberOfDays5yr = fiveYears.length;
-        //console.log(numberOfDays5yr);
 
         //Get appropriate number of prices (xs5Year)
         let pricesList5Yr = [];
         pricesList5Yr = adjustedClose10y;
         xs5Year = pricesList5Yr.slice(Math.max(adjustedClose10y.length - numberOfDays5yr, 0));
-        //console.log(xs5Year);
 
         //Dates with prices on chart (ys5Year)
         ys5Year = fiveYears;
         //--> NEED TO CONVERT DATES TO SHORTER FORMAT!
-        //console.log(ys5Year);
 
         //Draw chart 5 YEARS
         function createChart5Year() {
