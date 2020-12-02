@@ -1,4 +1,6 @@
-﻿<nav class="navbar navresp navbar-fixed-top" style="border-bottom:0.20em solid rgb(128, 128, 128);background-color: white;  margin-left: 1vw; margin-right: 1vw; height: 80px; padding-top: 0.5vw; padding-bottom: 0.5vw;">
+﻿@*@model IEnumerable<StockMonitor_2.Models.Users>*@
+
+<nav class="navbar navresp navbar-fixed-top" style="border-bottom:0.20em solid rgb(128, 128, 128);background-color: white;  margin-left: 1vw; margin-right: 1vw; height: 80px; padding-top: 0.5vw; padding-bottom: 0.5vw;">
     <div class="container-fluid">
         <div class="navbar-header">
             <p class="navbar-brand" style="border-left:0px">
@@ -10,7 +12,8 @@
             <li class="menu-btn">@Html.ActionLink("Kaupat", "Index", "Transactions")</li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="/Home/Logout" class="logout-btn" style="color:black;">Kirjaudu ulos</a></li>
+            <li class="menu-btn">@Html.ActionLink("Omat tiedot", "ViewProfile", "Users")</li>
+            <li class="logout-btn"><a href="/Home/Logout">Kirjaudu ulos</a></li>
         </ul>
     </div>
 </nav>

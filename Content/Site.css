@@ -53,10 +53,10 @@ textarea {
             display: none;
         }
 
-.login_btn {
+/*.login_btn {
     background-color: lawngreen;
     color: white;
-}
+}*/
 
 .menu-btn {
     margin-top: 1em;
@@ -84,11 +84,11 @@ textarea {
     margin-right: 1em;
     margin-left: 1em;
     justify-content: center;
-    height: 3em;
+    height: 3.5em;
     font-size: 1em;
     color: white;
     border: none;
-    border-radius: 1em;
+    border-radius: 1.25em;
     background-color: green;
     cursor:pointer;
 }
@@ -105,25 +105,18 @@ textarea {
     cursor: inherit;
 }
 
-/*.li:hover {
-    background: lightgray;
-    color: black;
-    cursor: inherit;
-}*/
-
 .logout-btn {
     margin-top: 1em;
     margin-right: 1em;
     margin-left: 1em;
     justify-content: center;
-    height: 3em;
+    height: 3.5em;
     font-size: 1em;
-    color: white;
+    color: black;
     border: none;
-    border-radius: 1em;
+    border-radius: 1.25em;
     background-color: orangered;
 }
-
 
 .tooltip {
     position: relative;

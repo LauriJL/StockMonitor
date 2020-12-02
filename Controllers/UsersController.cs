@@ -29,6 +29,17 @@ namespace StockMonitor_2.Views
             }
         }
 
+        public ActionResult ViewProfile(string kayttaja)
+        {
+            if (Session["UserName"] != null)
+            {
+                kayttaja = Convert.ToString(Session["UserName"]);
+                var userDetails = db.Users.Where(x => x.KayttajaNimi == kayttaja);
+                return View(userDetails);
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
         public ActionResult AccessDenied()
         {
             return View();
@@ -104,6 +115,37 @@ namespace StockMonitor_2.Views
             return View(users);
         }
 
+        // GET: Users/EditOwnInfo
+        public ActionResult EditOwn(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Users users = db.Users.Find(id);
+            if (users == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.Rooli = new SelectList(db.UserRoles, "Role", "Role", users.Rooli);
+            return View(users);
+        }
+
+        // POST: Users/EditOwnInfo/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditOwn([Bind(Include = "KayttajaNimi,Rooli,Etunimi,Sukunimi,Salasana,Sahkoposti")] Users users)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(users).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("UserDataEdited");
+            }
+            ViewBag.Rooli = new SelectList(db.UserRoles, "Role", "Role", users.Rooli);
+            return View(users);
+        }
+
         // GET: Users/Delete/5
         public ActionResult Delete(string id)
         {
@@ -136,6 +178,11 @@ namespace StockMonitor_2.Views
             db.Users.Remove(users);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public ActionResult UserDataEdited()
+        {
+            return View();
         }
 
         protected override void Dispose(bool disposing)
