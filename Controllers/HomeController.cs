@@ -38,6 +38,7 @@ namespace StockMonitor_2.Controllers
                     ViewBag.LoginMessage = "Successful login";
                     ViewBag.LoggedStatus = "In";
                     ViewBag.LoginError = 0;
+                    ViewBag.User = LoggedUser.KayttajaNimi;
                     Session["UserName"] = LoggedUser.KayttajaNimi;
                     Session["LoginID"] = LoggedUser.Salasana;
                     Session["Role"] = LoggedUser.Rooli;

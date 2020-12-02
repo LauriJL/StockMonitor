@@ -1,0 +1,33 @@
+﻿@model IEnumerable<StockMonitor_2.Models.Users>
+
+@{
+    ViewBag.Title = "Omat tiedot";
+}
+<br />
+<br />
+<h2>Omat tiedot</h2>
+<table class="table">
+    <tr>
+        <th>Käyttäjänimi</th>
+        <th>Etunimi</th>
+        <th>Sukunimi</th>
+        <th>Sähköposti</th>
+        <th>Käyttäjäoikeudet</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>@Html.DisplayFor(modelItem => item.KayttajaNimi)</td>
+        <td>@Html.DisplayFor(modelItem => item.Etunimi)</td>
+        <td>@Html.DisplayFor(modelItem => item.Sukunimi)</td>
+        <td>@Html.DisplayFor(modelItem => item.Sahkoposti)</td>
+        <td>@Html.DisplayFor(modelItem => item.UserRoles.Role)</td>
+        <td>
+            <a class="btn btn-primary" @Html.ActionLink("Muokkaa tietoja", "EditOwn", new { id = item.KayttajaNimi })
+        </td>
+    </tr>
+    }
+
+</table>
