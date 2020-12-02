@@ -18,6 +18,7 @@
         <th>Sukunimi</th>
         <th>Sähköposti</th>
         <th>Käyttäjätunnus</th>
+        <th>Salasana</th>
         <th>Käyttöoikeudet</th>
         <th></th>
     </tr>
@@ -29,6 +30,7 @@
             <td>@Html.DisplayFor(modelItem => item.Sukunimi)</td>
             <td>@Html.DisplayFor(modelItem => item.Sahkoposti)</td>
             <td>@Html.DisplayFor(modelItem => item.KayttajaNimi)</td>
+            <td>@Html.DisplayFor(modelItem => item.Salasana)</td>
             <td>@Html.DisplayFor(modelItem => item.UserRoles.Role)</td>
             <td>
                 <a class="btn btn-primary" @Html.ActionLink("Muokkaa", "Edit", new { id = item.KayttajaNimi })
