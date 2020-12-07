@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StockMonitor</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body class="container-fluid">
+    @{
+        if (Session["UserName"] == null)
+        {
+            Html.RenderPartial("_Navbar_LoggedOut");
+        }
+        else if (Session["UserName"] != null && Session["Role"].Equals("Pääkäyttäjä"))
+        {
+            Html.RenderPartial("_Navbar_LoggedIn_SU");
+        }
+        else
+        {
+            Html.RenderPartial("_Navbar_LoggedIn");
+        }
+    }
+
+    <div class="col-sm-12">
+        @RenderBody()
+
+    </div>
+    <div class="col-sm-12">
+       
+        <footer >
+            <hr />
+            @using System.Globalization
+            @{
+                if (Session["UserName"] == null)
+                {
+                    string loggausInfo = "";
+                    <p> @loggausInfo <span class="sr-only">(current)</span></p>;
+                }
+                else if (Session["UserName"] != null && Session["Role"].Equals("Pääkäyttäjä"))
+                {
+                    string loggausInfo = "Olet kirjautunut käyttäjänä " + Session["UserName"] + " (pääkäyttäjäoikeudet)";
+                    <p style="font-weight:bold"> @loggausInfo <span class="sr-only">(current)</span></p>;
+                }
+                else
+                {
+                    string loggausInfo = "Olet kirjautunut käyttäjänä " + Session["UserName"];
+                    <p style="font-weight:bold"> @loggausInfo <span class="sr-only">(current)</span></p>;
+                }
+            }
+            <p>&copy; @DateTime.Now.Year StockMonitor, @DateTime.Today.ToString("D", CultureInfo.CreateSpecificCulture("fi-FI"))</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>

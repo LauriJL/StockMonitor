@@ -1,0 +1,49 @@
+﻿@model StockMonitor_2.Models.Users
+
+@{
+    ViewBag.Title = "StockMonitor";
+}
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+      integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
+      crossorigin="anonymous">
+
+@section scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    @*Login check*@
+    <script type="text/javascript">
+        $(window).on('load', function () {
+            if (@ViewBag.LoginError == 1) {
+                $('#LoginRuutu').modal('show'); }
+        });
+    </script>
+
+    @*Show password*@
+    <script type="text/javascript">
+        $(function () {
+            $("#showPassword").change(function () {
+                var checked = $(this).is(":checked");
+                if (checked) {
+                    $("#Salasana").attr("type", "text");
+                } else {
+                    $("#Salasana").attr("type", "Password");
+                }
+            });
+        });
+    </script>
+
+}
+
+<div class="jumbotron" style="margin-top:5em; border-radius:2em;background-color:lightskyblue">
+    <h2>StockMonitor</h2>
+    <p>Ole hyvä ja kirjaudu sisään järjestelmään.</p>
+</div>
+
+@{
+    Html.RenderPartial("_LoginModal");
+}
+
+<div class="row">
+
+</div>

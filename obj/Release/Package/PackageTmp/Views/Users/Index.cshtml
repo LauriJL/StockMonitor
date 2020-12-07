@@ -1,0 +1,42 @@
+﻿@model IEnumerable<StockMonitor_2.Models.Users>
+
+@{
+    ViewBag.Title = "Käyttäjät";
+}
+<br />
+<br />
+<h1>Käyttäjät</h1>
+
+<br />
+<p>
+    <a class="btn btn-success" @Html.ActionLink("Lisää uusi käyttäjä", "Create")
+</p>
+<br />
+<table class="table">
+    <tr>
+        <th>Etunimi</th>
+        <th>Sukunimi</th>
+        <th>Sähköposti</th>
+        <th>Käyttäjätunnus</th>
+        <th>Salasana</th>
+        <th>Käyttöoikeudet</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.Etunimi)</td>
+            <td>@Html.DisplayFor(modelItem => item.Sukunimi)</td>
+            <td>@Html.DisplayFor(modelItem => item.Sahkoposti)</td>
+            <td>@Html.DisplayFor(modelItem => item.KayttajaNimi)</td>
+            <td>@Html.DisplayFor(modelItem => item.Salasana)</td>
+            <td>@Html.DisplayFor(modelItem => item.UserRoles.Role)</td>
+            <td>
+                <a class="btn btn-primary" @Html.ActionLink("Muokkaa", "Edit", new { id = item.KayttajaNimi })
+                <a class="btn btn-danger" @Html.ActionLink("Poista", "Delete", new { id = item.KayttajaNimi })
+            </td>
+        </tr>
+    }
+
+</table>

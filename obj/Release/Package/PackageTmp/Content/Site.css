@@ -1,0 +1,158 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+/* Navbar */
+.navresp {
+    background-color: #333;
+    overflow: hidden;
+}
+
+    .navresp a {
+        float: left;
+        display: block;
+        color: #f2f2f2;
+        text-align: center;
+        padding: 1em 1em;
+        text-decoration: none;
+        font-size: 17px;
+    }
+
+        .navresp a:hover {
+            border-radius:1em;
+            background-color: #ddd;
+            color: black;
+        }
+
+        .navresp a.active {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .navresp .icon {
+            display: none;
+        }
+
+/*.login_btn {
+    background-color: lawngreen;
+    color: white;
+}*/
+
+.menu-btn {
+    margin-top: 1em;
+    margin-right: 1em;
+    margin-left: 1em;
+    justify-content: center;
+    height: 3.5em;
+    font-size: 1em;
+    color: black;
+    border: none;
+    border-radius: 1.25em;
+    background-color: lightblue;
+}
+
+.navbar-brand2 {
+    margin-left:0em;
+}
+
+.navbar-brand2:hover {
+    background-color: transparent;
+}
+
+.login-btn {
+    margin-top: 1em;
+    margin-right: 1em;
+    margin-left: 1em;
+    justify-content: center;
+    height: 3.5em;
+    font-size: 1em;
+    color: white;
+    border: none;
+    border-radius: 1.25em;
+    background-color: green;
+    cursor:pointer;
+}
+
+    .login-btn:hover {
+        background: lightgray;
+        color: black;
+        cursor: pointer;
+    }
+
+.nav-link:hover {
+    background: lightgray;
+    color: black;
+    cursor: inherit;
+}
+
+.logout-btn {
+    margin-top: 1em;
+    margin-right: 1em;
+    margin-left: 1em;
+    justify-content: center;
+    height: 3.5em;
+    font-size: 1em;
+    color: black;
+    border: none;
+    border-radius: 1.25em;
+    background-color: orangered;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}

@@ -1,0 +1,52 @@
+﻿@model StockMonitor_2.Models.Users
+
+<div class="modal" id="LoginRuutu">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Kirjaudu sisään</h2>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("Authorize", "Home", FormMethod.Post, new { id = "loginForm" }))
+
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @*@Html.HiddenFor(model => model.KayttajaNimi)*@
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.KayttajaNimi, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.KayttajaNimi, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.KayttajaNimi, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Salasana, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Salasana, new { htmlAttributes = new { @class = "form-control" } })
+                                <input type="checkbox" id="showPassword" /> <label for="password" style="font-weight:normal">Näytä salasana</label><br>
+                                @Html.ValidationMessageFor(model => model.Salasana, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <label class="text-danger">
+                            @Html.DisplayFor(model => model.LoginErrorMessage)
+                        </label>
+                    </div>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success" form="loginForm"><i class="fas fa-check"></i></button>
+                <a href="@Url.Action("Index","Home")" class="btn btn-danger"><i class="fas fa-times"></i></a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+

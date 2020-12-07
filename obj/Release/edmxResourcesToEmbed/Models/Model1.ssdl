@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="StockMonitorModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Currency">
+    <Key>
+      <PropertyRef Name="Currency" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="Currency" Type="nvarchar" MaxLength="5" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Portfolio">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Kayttaja" Type="nvarchar" MaxLength="20" />
+    <Property Name="Yritys" Type="nvarchar" MaxLength="20" />
+    <Property Name="MaaraYht" Type="int" />
+    <Property Name="HankintaArvo" Type="decimal" Precision="19" Scale="2" />
+  </EntityType>
+  <EntityType Name="Transactions">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Kayttaja" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="OstoMyynti" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="Pvm" Type="date" Nullable="false" />
+    <Property Name="Yritys" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="Maara" Type="int" Nullable="false" />
+    <Property Name="MaaraForPortfolio" Type="int" StoreGeneratedPattern="Computed" />
+    <Property Name="aHinta" Type="decimal" Precision="38" Scale="2" Nullable="false" />
+    <Property Name="Total" Type="decimal" Precision="38" Scale="2" StoreGeneratedPattern="Computed" />
+    <Property Name="TotalForPortfolio" Type="decimal" Precision="38" Scale="2" StoreGeneratedPattern="Computed" />
+    <Property Name="Valuutta" Type="nvarchar" MaxLength="5" Nullable="false" />
+    <Property Name="Kurssi" Type="decimal" Precision="19" Scale="4" />
+    <Property Name="TotalEuros" Type="decimal" Precision="38" Scale="2" StoreGeneratedPattern="Computed" />
+    <Property Name="Kulut" Type="decimal" Precision="19" Scale="2" Nullable="false" />
+    <Property Name="Grandtotal" Type="decimal" Precision="38" Scale="2" StoreGeneratedPattern="Computed" />
+  </EntityType>
+  <EntityType Name="TransactionTypes">
+    <Key>
+      <PropertyRef Name="Type" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="Type" Type="nvarchar" MaxLength="10" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserRoles">
+    <Key>
+      <PropertyRef Name="Role" />
+    </Key>
+    <Property Name="Role" Type="nvarchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="KayttajaNimi" />
+    </Key>
+    <Property Name="KayttajaNimi" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="Rooli" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="Etunimi" Type="nvarchar" MaxLength="10" />
+    <Property Name="Sukunimi" Type="nvarchar" MaxLength="30" />
+    <Property Name="Salasana" Type="nvarchar" MaxLength="10" />
+    <Property Name="Sahkoposti" Type="nvarchar" MaxLength="30" />
+  </EntityType>
+  <Association Name="FK__Transacti__OstoM__607251E5">
+    <End Role="TransactionTypes" Type="Self.TransactionTypes" Multiplicity="1" />
+    <End Role="Transactions" Type="Self.Transactions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TransactionTypes">
+        <PropertyRef Name="Type" />
+      </Principal>
+      <Dependent Role="Transactions">
+        <PropertyRef Name="OstoMyynti" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Transacti__Valuu__531856C7">
+    <End Role="Currency" Type="Self.Currency" Multiplicity="1" />
+    <End Role="Transactions" Type="Self.Transactions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Currency">
+        <PropertyRef Name="Currency" />
+      </Principal>
+      <Dependent Role="Transactions">
+        <PropertyRef Name="Valuutta" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Users__Rooli__6442E2C9">
+    <End Role="UserRoles" Type="Self.UserRoles" Multiplicity="1" />
+    <End Role="Users" Type="Self.Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserRoles">
+        <PropertyRef Name="Role" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="Rooli" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="StockMonitorModelStoreContainer">
+    <EntitySet Name="Currency" EntityType="Self.Currency" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Portfolio" EntityType="Self.Portfolio" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Transactions" EntityType="Self.Transactions" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TransactionTypes" EntityType="Self.TransactionTypes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserRoles" EntityType="Self.UserRoles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Transacti__OstoM__607251E5" Association="Self.FK__Transacti__OstoM__607251E5">
+      <End Role="TransactionTypes" EntitySet="TransactionTypes" />
+      <End Role="Transactions" EntitySet="Transactions" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Transacti__Valuu__531856C7" Association="Self.FK__Transacti__Valuu__531856C7">
+      <End Role="Currency" EntitySet="Currency" />
+      <End Role="Transactions" EntitySet="Transactions" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Users__Rooli__6442E2C9" Association="Self.FK__Users__Rooli__6442E2C9">
+      <End Role="UserRoles" EntitySet="UserRoles" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
