@@ -152,7 +152,7 @@
 
 <script>
 
-//Get JSON data from rapidapi/yahoo-finance
+//Get JSON data from Yahoo Finance API
 
     var companyName = "";
     var currency = "";
@@ -171,7 +171,6 @@
     var ps = "";
     var pb = "";
     var dividend = "";
-    //var eps = "";
 
     async function getDailyData() {
         // Storing response
@@ -184,7 +183,9 @@
         });
         // Storing data in JSON
         var data = await response.json();
-        //console.log(data);
+        console.log(data);
+
+        //Destructure JSON
         companyName = data["quoteResponse"]["result"][0]["longName"];
         currency = data["quoteResponse"]["result"][0]["currency"];
         exchange = data["quoteResponse"]["result"][0]["fullExchangeName"];

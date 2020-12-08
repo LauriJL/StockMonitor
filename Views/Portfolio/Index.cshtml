@@ -161,9 +161,7 @@ Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageC
     async function getFXEURUSD() {
         const response = await fetch(url);
         const data = await response.json();
-        console.log(data);
-        eurUsdRaw = data['Realtime Currency Exchange Rate']['5. Exchange Rate'];
-        console.log(eurUsdRaw);
+        eurUsdRaw = data['Realtime Currency Exchange Rate']['5. Exchange Rate'];       
         eurUsd = parseFloat(eurUsdRaw).toFixed(4);
         document.getElementById('fxEurUsd').innerHTML = eurUsd;
     }
@@ -176,26 +174,16 @@ Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageC
     async function getFXUSDEUR() {
         const response = await fetch(url);
         const data = await response.json();
-        console.log(data);
         usdEurRaw = data['Realtime Currency Exchange Rate']['5. Exchange Rate'];
-        console.log(usdEurRaw);
         usdEur = parseFloat(usdEurRaw).toFixed(4);
         document.getElementById('fxUsdEur').innerHTML = usdEur;
     }
     getFXUSDEUR();
 
-
-    //Refresh prices and rates
-    //function refresh() {
-    //    getPrices();
-    //    getFX();
-    //}
-
     //Optional: Set interval for automatically retrieving quotes
     //setInterval(getPrices, 6000);
 
     //Set Omistuksen Arvo Nyt, Voitto/Tappio(€) and Voitto/Tappio(%)
-    //var diffE = 0;
     function getAll() {
         for (var i = 1; i < table.rows.length-1; i++) {
             var targetRows = table.querySelectorAll('tr');
@@ -207,17 +195,11 @@ Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageC
 
                 //Calculate total value with current exchange rate
                 currentTotalValue = 0;
-                console.log(cmpname);
                 if (cmpname.length > 4) {
                     currentTotalValue = (parseInt(numberOfShares.innerHTML) * parseFloat(currentPricePerShare.innerText));
-                    console.log(cmpname);
-                }
-                else if (cmpname.length <= 4) {
-                    currentTotalValue = (parseInt(numberOfShares.innerHTML) * parseFloat(currentPricePerShare.innerText)) / eurUsdRaw;
-                    console.log(cmpname);
                 }
                 else {
-                    currentTotalValue = 1000;
+                    currentTotalValue = (parseInt(numberOfShares.innerHTML) * parseFloat(currentPricePerShare.innerText)) / eurUsd;
                 }
 
                 let currentTotalValueOutput = table.querySelectorAll('tr > td:nth-child(5)')[+i];
