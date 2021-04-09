@@ -132,7 +132,7 @@ Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageC
                 "method": "GET",
                 "headers": {
                     "x-rapidapi-host": "apidojo-yahoo-finance-v1.p.rapidapi.com",
-                    "x-rapidapi-key": "f7ee3d84ddmsh445490645db82aep166082jsnd9792b57303c"
+                    "x-rapidapi-key": "XXXXXXXXXXXXXXX"
                 }
             });
             //Store data in JSON
@@ -157,7 +157,7 @@ Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageC
     //Get FX EUR-USD
     var eurUsdRaw = 0;
     var eurUsd = 0;
-    var url = 'https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=EUR&to_currency=USD&apikey=P3FY8FMGNJ4C88D6';
+    var url = 'https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=EUR&to_currency=USD&apikey=XXXXXXXXXXX';
     async function getFXEURUSD() {
         const response = await fetch(url);
         const data = await response.json();
@@ -170,7 +170,7 @@ Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageC
     //Get FX USD-EUR
     var usdEurRaw = 0;
     var usdEur = 0;
-    var url = 'https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=USD&to_currency=EUR&apikey=P3FY8FMGNJ4C88D6';
+    var url = 'https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=USD&to_currency=EUR&apikey=XXXXXXXXXXX';
     async function getFXUSDEUR() {
         const response = await fetch(url);
         const data = await response.json();
